@@ -3,6 +3,7 @@
 | Contents |
 | :--- |
 | [What is React.js? And why would you use it?](#what-is-reactjs-and-why-would-you-use-it) |
+| [Create React Projects](#create-react-projects) |
 
 ## What is React.js? And why would you use it?
 
@@ -24,6 +25,114 @@ Now, you might wonder why we need React when JavaScript appears capable on its o
 - React offers a simpler mental model.
 
 <img src="https://drive.google.com/uc?export=view&id=12jTx4LJ0lKnIX9qlHOOICMHQL-IjbAET" height="350" width="700" alt="academind slide">
+
+## Create React Projects
+
+### Using React Sandbox
+
+One of the speediest ways to initiate React coding is by typing [react.new](https://codesandbox.io/p/sandbox/react-new?file=%2Fsrc%2Findex.js&utm_source=dotnew) in your browser's URL bar. Upon hitting Enter, CodeSandbox, a website, swiftly generates a fresh React project workspace for you. This platform offers an in-browser development space, enabling file manipulation, code writing, and live previews of your website—all without local installations.
+
+This approach is particularly advantageous for rapid starts and ideal if local software installation isn't feasible, perhaps due to restricted permissions on a company-issued computer.
+
+### Local Setup
+
+Creating a React project from scratch involves several steps and it can be quite tedious since it requires manual installation and configuration of all the dependencies ([manual installation example](https://www.freecodecamp.org/news/how-to-build-a-react-app-different-ways/#how-to-build-a-react-app)). Keep in mind this is a rare approach to use at the moment, since most apps are created through scripts that quickly take care of all this boilerplate. Some of the commonly use scripts are [create-react-app](https://github.com/facebook/create-react-app) and [Vite](https://vitejs.dev/guide/). Here are the installation steps:
+
+**Setting up a React project with Create React App:**
+
+<ins>*Step 1: Install Node.js and npm (Node Package Manager)*</ins>
+
+Ensure you have Node.js installed on your system as it includes npm, which is necessary for managing React projects. You can download and install Node.js from its [official website](https://nodejs.org/en/download).
+
+<ins>*Step 2: Install create-react-app (if not already installed)*</ins>
+
+Open your terminal or command prompt and run the following command to install [create-react-app](https://github.com/facebook/create-react-app) globally:
+
+```
+npm install -g create-react-app
+```
+
+<ins>*Step 3: Create a React project*</ins>
+
+Once installed, navigate to the directory where you want to create your React project using the terminal or command prompt. Run the following command:
+
+```
+npx create-react-app my-react-app
+```
+
+Replace `my-react-app` with your preferred project name.
+
+<ins>*Step 4: Navigate to the project*</ins>
+
+Enter the directory of your newly created React project:
+
+```
+cd my-react-app
+```
+
+<ins>*Step 5: Start the development server*</ins>
+
+```
+npm start
+```
+
+This command initiates a local development server and opens your default web browser to display the React app. Any changes made to the code will automatically update the browser.
+
+<ins>*Step 6: Begin coding*</ins>
+
+You can start editing the React project by modifying files within the `src` directory. The main file is usually `App.js`, and other components are created and imported into this file.
+
+**Setting up a React project with Vite:**
+
+<ins>*Step 1: Install Node.js and npm (Node Package Manager)*</ins>
+
+<ins>*Step 2: Install Vite (if not already installed)*</ins>
+
+Run the following command to install Vite globally:
+
+```
+npm install -g create-vite
+```
+
+<ins>*Step 3: Create a new React project with Vite*</ins>
+
+Navigate to the directory where you want to create your project and execute the following command:
+
+```
+npm create-vite@latest my-react-app --template react
+```
+
+Replace `my-react-app` with your preferred project name.
+
+<ins>*Step 4: Navigate to Project Directory*</ins>
+
+```
+cd my-react-app
+```
+
+<ins>*Step 5: Install Dependencies*</ins>
+
+Run the following command to install project dependencies:
+
+```
+npm install
+```
+
+<ins>*Step 6: Start the Development Server*</ins>
+
+Initiate the development server with the command:
+
+```
+npm run dev
+```
+
+Readings:
+
+- [Start a New React Project](https://react.dev/learn/start-a-new-react-project)
+
+- [How to Build a React Project with Create React App in 10 Steps](https://www.freecodecamp.org/news/how-to-build-a-react-project-with-create-react-app-in-10-steps/)
+
+- [Create react projects - Hitesh Choudhary](https://www.youtube.com/watch?v=lf8giXzuxVE)
 
 ***
 
