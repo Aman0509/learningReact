@@ -4,6 +4,7 @@
 | :--- |
 | [What is React.js? And why would you use it?](#what-is-reactjs-and-why-would-you-use-it) |
 | [Create React Projects](#create-react-projects) |
+| [Why do we need a special project setup?](#why-do-we-need-a-special-project-setup) |
 
 ## What is React.js? And why would you use it?
 
@@ -133,6 +134,22 @@ Readings:
 - [How to Build a React Project with Create React App in 10 Steps](https://www.freecodecamp.org/news/how-to-build-a-react-project-with-create-react-app-in-10-steps/)
 
 - [Create react projects - Hitesh Choudhary](https://www.youtube.com/watch?v=lf8giXzuxVE)
+
+## Why do we need a special project setup?
+
+Why not just create an HTML file and a JavaScript file, referencing the script file within the HTML, and then insert our React code there? Why isn't this a viable option?
+
+Well, it's not really feasible because when working with React, we rely on a unique feature called [JSX](https://react.dev/learn/writing-markup-with-jsx). We'll learn more about it later sections.
+
+The catch with this special syntax, which becomes an integral part of React coding, is that unfortunately, it doesn't function directly in the browser. This poses a significant hurdle.
+
+As a result, the code we write needs transformation into executable code for the browser. Additionally, for optimal performance, we aim to optimize this code by shortening variable and function names, removing excess whitespace, essentially making it as compact as possible for efficient website performance.
+
+Hence, the necessity to create React projects using supplementary tools like Vite. These tools come into play, ultimately transforming our code into an efficient, browser-compatible format.
+
+This clarifies why creating a basic HTML and script file doesn't suffice; instead, these additional tools are required.
+
+<img src="https://drive.google.com/uc?export=view&id=1HtUgR0wcwx2oCzUf2OjbkMIHo7ERFMin" height="350" width="700" alt="academind slide">
 
 ***
 
