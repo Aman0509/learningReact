@@ -3,6 +3,7 @@
 | Contents |
 | :--- |
 | [It's all about Components! [Core Concept]](#its-all-about-components-core-concept) |
+| [JSX & React Components [Core Concept]](#jsx--react-components-core-concept) |
 
 ## It's all about Components! [Core Concept]
 
@@ -53,6 +54,32 @@ A React component is a modular, reusable piece of code responsible for rendering
 Readings
 
 - [Components](https://legacy.reactjs.org/docs/components-and-props.html)
+
+## JSX & React Components [Core Concept]
+
+<img src="https://drive.google.com/uc?export=view&id=1U4KpDmrgrVVqrWdMTrxtPKztLpTVJ-Do" height="350" width="700" alt="academind slide">
+
+JSX, standing for JavaScript Syntax Extension, is a powerful feature in React that enables developers to describe and create HTML elements within JavaScript files. This capability is instrumental in React, where the focus lies on building user interfaces and their components.
+
+Despite being extensively used in React and adopted in various non-React projects, JSX isn't supported by browsers directly. For instance, the code written in files like index.jsx and App.jsx wouldn't function as is in browsers. Instead, React code, including JSX, undergoes transformation before reaching the browser. The development server compiles it into browser-compatible code behind the scenes.
+
+The key takeaway from JSX is its ability to provide a more convenient and intuitive way of defining user interfaces. In React, a crucial part of the code, like the App.jsx file, represents a React Component. Components, as emphasized in prior lectures, are essentially JavaScript functions. However, for React to recognize and utilize these functions as Components, they must adhere to specific rules:
+
+**Naming Convention:**
+
+- The function name must start with an uppercase character.
+
+**Return Value:**
+
+- The function must return a renderable value, typically comprising JSX code representing the HTML markup to be rendered.
+
+<img src="https://drive.google.com/uc?export=view&id=1y-EUDMX65Z0uKPq54F8Z2YUgiLdYGQdw" height="350" width="700" alt="academind slide">
+
+Readings:
+
+- [JSX in React – Explained with Examples](https://www.freecodecamp.org/news/jsx-in-react-introduction/)
+
+- [Create your own react library and JSX](https://www.youtube.com/watch?v=2xz-ADKsKzA)
 
 ***
 
