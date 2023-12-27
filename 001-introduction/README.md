@@ -153,4 +153,4 @@ This clarifies why creating a basic HTML and script file doesn't suffice; instea
 
 ***
 
-[<img align="center" src="../images/home.png" height="20" width="20"/> Index](../README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[WIP... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>]()
+[<img align="center" src="../images/home.png" height="20" width="20"/> Index](../README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[React Essentials - Components, JSX, Props, State & More <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../002-react-essentials/README.md)
