@@ -9,6 +9,7 @@
 | [Using and Outputting Dynamic Values [Core Concept]](#using-and-outputting-dynamic-values-core-concept) |
 | [Setting HTML Attributes Dynamically & Loading Image Files](#setting-html-attributes-dynamically--loading-image-files) |
 | [Making Components Reusable with Props [Core Concept]](#making-components-reusable-with-props-core-concept) |
+| [More Prop Syntaxes](#more-prop-syntaxes) |
 
 ## It's all about Components! [Core Concept]
 
@@ -264,6 +265,111 @@ export default App;
 ```
 
 In the `App` component, the `Header` component is used. Props (`title` and `description`) are passed to the `Header` component as attributes. The values passed as props are dynamically rendered in the `Header` component.
+
+Readings:
+
+- [How to Use Props in React.js](https://www.freecodecamp.org/news/how-to-use-props-in-reactjs/)
+
+- [React Props](https://refine.dev/blog/react-props/#props-in-react)
+
+## More Prop Syntaxes
+
+Beyond the various ways of setting and extracting props about which we learned in the previous section, there are even more ways of dealing with props.
+
+### Passing a Single Prop Object
+
+If you got data that's already organized as a JavaScript object, you can pass that object as a single prop value instead of splitting it across multiple props.
+
+i.e., instead of
+
+```javascript
+<CoreConcept
+  title={CORE_CONCEPTS[0].title}
+  description={CORE_CONCEPTS[0].description}
+  image={CORE_CONCEPTS[0].image}
+/>
+```
+
+Or
+
+```javascript
+<CoreConcept
+  {...CORE_CONCEPTS[0]}
+/>
+```
+
+you could also pass a single concept (or any name of your choice) prop to the `CoreConcept` component:
+
+```javascript
+<CoreConcept
+  concept={CORE_CONCEPTS[0]}
+/>
+```
+
+In the `CoreConcept` component, you would then get that one single prop:
+
+```javascript
+export default function CoreConcept({ concept }) {
+  // Use concept.title, concept.description etc.
+  // Or destructure the concept object: const { title, description, image } = concept;
+}
+```
+
+It is entirely up to you which syntax & approach you prefer.
+
+### Grouping Received Props Into a Single Object
+
+You can also pass multiple props to a component and then, in the component function, group them into a single object via JavaScript's [Rest Property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#rest_property) syntax.
+
+i.e., if a component is used like this:
+
+```javascript
+<CoreConcept
+  title={CORE_CONCEPTS[0].title}
+  description={CORE_CONCEPTS[0].description}
+  image={CORE_CONCEPTS[0].image}
+/>
+```
+
+You could group the received props into a single object like this:
+
+```javascript
+export default function CoreConcept({ ...concept }) {
+  // ...concept groups multiple values into a single object
+  // Use concept.title, concept.description etc.
+  // Or destructure the concept object: const { title, description, image } = concept;
+}
+```
+
+### Default Prop Values
+
+Sometimes, you'll build components that may receive an optional prop. For example, a custom `Button` component may receive a `type` prop.
+
+So the Button component should be usable either with a type being set:
+
+```javascript
+<Button type="submit" caption="My Button" />
+```
+
+Or without it:
+
+```javascript
+<Button caption="My Button" />
+```
+
+To make this component work, you might want to set a default value for the `type` prop - in case it's not passed.
+
+This can easily be achieved since JavaScript supports default values when using object destructuring:
+
+```javascript
+export default function Button({ caption, type = "submit" }) {
+  // caption has no default value, type has a default value of "submit"
+}
+```
+
+Readings:
+
+- [Passing Props to a Component](https://react.dev/learn/passing-props-to-a-component)
 
 ***
 
