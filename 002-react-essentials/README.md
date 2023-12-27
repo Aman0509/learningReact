@@ -5,6 +5,7 @@
 | [It's all about Components! [Core Concept]](#its-all-about-components-core-concept) |
 | [JSX & React Components [Core Concept]](#jsx--react-components-core-concept) |
 | [Components & File Extensions](#components--file-extensions) |
+| [How React handles Components and How it builds a "Component Tree" [Core Concept]](#how-react-handles-components-and-how-it-builds-a-component-tree-core-concept) |
 
 ## It's all about Components! [Core Concept]
 
@@ -101,6 +102,50 @@ It is emphasized here so that we'll not get confused if encountered with React p
 In addition, we'll also find projects that require the file extension as part of file imports (e.g., import App from './App.jsx') and we'll find other projects that don't require this (i.e., there, you could just use import App from './App').
 
 This, again, has nothing to do with the browser or "standard JavaScript" - instead it simply depends on the requirements of the code build process that's part of the project setup we chose.
+
+## How React handles Components and How it builds a "Component Tree" [Core Concept]
+
+In React, components play a pivotal role in constructing the user interface, forming a hierarchy known as a component tree. Let's break down how React handles and builds this tree of components (using our [starting-project](projects/01-starting-project/) as reference to explain):
+
+**Index.html and JavaScript Import:**
+
+- The website source code lacks specific content like headers (right click > View Page Source), indicating that React-generated elements aren't directly present in the source.
+- Instead, the `index.html` file primarily includes metadata and imports a JavaScript file (e.g., `index.jsx`).
+
+**App Component as Entry Point:**
+
+- The `index.jsx` file imports and renders the App component using JSX, acting as the starting point of the React app.
+- The `ReactDOM` library renders the App component's content onto the screen.
+
+**Component Rendering Process:**
+
+- The createRoot method sets a pre-existing HTML element (e.g., `<div id="root">`) as the React project's root.
+- React uses the `createRoot` and render methods to inject the App component's content into this root element.
+
+**Component Tree and Nesting:**
+
+- React renders the App component and its nested components, combining them to form the complete UI.
+- Nested components, such as the Header component, can further contain additional child components.
+
+    <img src="https://drive.google.com/uc?export=view&id=14i8B1dpvMHLIeFZdbkFDXb7RXBV5cu8s" height="350" width="700" alt="academind slide">
+
+**Tree of Components vs. Rendered DOM:**
+
+- While the component tree isn't directly visible in the rendered DOM, React analyzes the tree's JSX code to generate the actual elements visible on the screen.
+
+**Built-in Components vs Custom Components:**
+
+- React differentiates between built-in HTML elements (e.g., `div`, `header`) and custom components (e.g., `Header`) based on naming conventions.
+- Custom component names must start with an uppercase character to signify they're not built-in HTML elements.
+
+    <img src="https://drive.google.com/uc?export=view&id=1dPFjRXVSJDG8_-AAfe_oTxPq53M5qurT" height="350" width="700" alt="academind slide">
+
+**Handling Custom Components:**
+
+- Built-in elements are rendered as DOM nodes by React, while custom components, being functions, are executed and analyzed to generate JSX code.
+- React processes this JSX code, eventually rendering only built-in elements visible on the screen like below.
+
+    <img src="https://drive.google.com/uc?export=view&id=1GjmMRGWxOSfJPVFzQJMMvSKYmFuNXf8o" height="350" width="700" alt="academind slide">
 
 ***
 
