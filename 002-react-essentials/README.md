@@ -6,6 +6,7 @@
 | [JSX & React Components [Core Concept]](#jsx--react-components-core-concept) |
 | [Components & File Extensions](#components--file-extensions) |
 | [How React handles Components and How it builds a "Component Tree" [Core Concept]](#how-react-handles-components-and-how-it-builds-a-component-tree-core-concept) |
+| [Using and Outputting Dynamic Values [Core Concept]](#using-and-outputting-dynamic-values-core-concept) |
 
 ## It's all about Components! [Core Concept]
 
@@ -146,6 +147,16 @@ In React, components play a pivotal role in constructing the user interface, for
 - React processes this JSX code, eventually rendering only built-in elements visible on the screen like below.
 
     <img src="https://drive.google.com/uc?export=view&id=1GjmMRGWxOSfJPVFzQJMMvSKYmFuNXf8o" height="350" width="700" alt="academind slide">
+
+## Using and Outputting Dynamic Values [Core Concept]
+
+<img src="https://drive.google.com/uc?export=view&id=1Tx5ogKxCBi2ZrO0oj_pKVgYJLzOA21NC" height="350" width="700" alt="academind slide">
+
+JSX within React components can incorporate dynamic values by embedding them within curly braces `{}`.
+
+For instance, `<h1>Hello, {username}!</h1>` might render "Hello, John!" where `username` is a dynamic variable.
+
+Checkout [this](projects/01-starting-project/src/App.jsx) example for understanding.
 
 ***
 
