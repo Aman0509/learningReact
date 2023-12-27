@@ -8,6 +8,7 @@
 | [How React handles Components and How it builds a "Component Tree" [Core Concept]](#how-react-handles-components-and-how-it-builds-a-component-tree-core-concept) |
 | [Using and Outputting Dynamic Values [Core Concept]](#using-and-outputting-dynamic-values-core-concept) |
 | [Setting HTML Attributes Dynamically & Loading Image Files](#setting-html-attributes-dynamically--loading-image-files) |
+| [Making Components Reusable with Props [Core Concept]](#making-components-reusable-with-props-core-concept) |
 
 ## It's all about Components! [Core Concept]
 
@@ -178,6 +179,91 @@ When dynamically adding images in React, you can utilize the `import` statement 
     ```
 - This technique might seem unconventional since importing image files directly into JavaScript files is not a typical JavaScript behavior.
 - However, within React, this process works due to the build process, which transforms the import statements and JSX code during bundling and deployment.
+
+## Making Components Reusable with Props [Core Concept]
+
+Props in React are a way to pass data from parent components to child components. Here's a concise explanation of how they work:
+
+**Reusability with Components:**
+
+- Components in React are reusable, allowing you to use them multiple times across your application.
+
+**Introduction to Props:**
+
+- Props (short for properties) enable you to pass data from a parent component to a child component.
+- They provide a means of configuring components with specific data.
+
+    <img src="https://drive.google.com/uc?export=view&id=1tMYQ9707gaszLuvN6p44flVaooTAYvYI" height="350" width="700" alt="academind slide">
+
+**Usage of Props:**
+
+- To employ props, define custom attributes within your custom components. These attributes are completely up to you and act as props.
+- In JSX, set these props within your custom components just like regular HTML attributes.
+- You can pass various types of values as props: strings, numbers, objects, or arrays.
+
+    <img src="https://drive.google.com/uc?export=view&id=1TYEU6Shn9Y3ZcY6K2fcnfu1VZ-Iy_jKe" height="350" width="700" alt="academind slide">
+
+**Receiving and Using Props:**
+
+- In the child component (the one receiving the props), accept the `props` object as a parameter in the functional component.
+- React automatically passes the props object to the component when it's invoked.
+- Access the specific values passed via props using dot notation, like `props.image` or `props.title`.
+- Utilize these prop values within the component JSX to render dynamic content based on the passed data.
+
+    <img src="https://drive.google.com/uc?export=view&id=1Cfoourcv-OYU-VvehAHfr-6lpfgcee5a" height="350" width="700" alt="academind slide">
+
+**Dynamic Data Rendering:**
+
+- Using props allows you to render components dynamically by passing different data to the same component structure.
+
+**Naming Convention:**
+
+- The key-value pairs in the props object correspond to the attributes set on the component.
+- Ensure the key used to set a prop matches the key used to access that prop within the component.
+
+By leveraging props, you can create flexible and reusable components in React by passing and using different data to customize their behavior and appearance across your application.
+
+Here's a simple example demonstrating how props work in React:
+
+Suppose we have a `Header` component and an `App` component. The `App` component will pass data to the `Header` component using props.
+
+```javascript
+// Header.js - Child Component
+
+import React from 'react';
+
+const Header = (props) => {
+  return (
+    <header>
+      <h1>{props.title}</h1>
+      <p>{props.description}</p>
+    </header>
+  );
+};
+
+export default Header;
+```
+
+In the `Header` component, `props` are received and used to dynamically render the title and description passed from the parent component.
+
+```javascript
+// App.js - Parent Component
+
+import React from 'react';
+import Header from './Header'; // Assuming Header is in the same directory
+
+const App = () => {
+  return (
+    <div>
+      <Header title="Welcome to React" description="A JavaScript library for building user interfaces" />
+    </div>
+  );
+};
+
+export default App;
+```
+
+In the `App` component, the `Header` component is used. Props (`title` and `description`) are passed to the `Header` component as attributes. The values passed as props are dynamically rendered in the `Header` component.
 
 ***
 
