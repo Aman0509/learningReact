@@ -1,7 +1,7 @@
-function App() {
+// Add Header component
+function Header(){
   return (
-    <div>
-      <header>
+    <header>
         <img src="src/assets/react-core-concepts.png" alt="Stylized atom" />
         <h1>React Essentials</h1>
         <p>
@@ -9,6 +9,17 @@ function App() {
           going to build!
         </p>
       </header>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      {/*
+        You can also write like this:
+        <Header></Header>
+      */}
+      <Header />
       <main>
         <h2>Time to get started!</h2>
       </main>
