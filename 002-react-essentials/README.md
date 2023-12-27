@@ -7,6 +7,7 @@
 | [Components & File Extensions](#components--file-extensions) |
 | [How React handles Components and How it builds a "Component Tree" [Core Concept]](#how-react-handles-components-and-how-it-builds-a-component-tree-core-concept) |
 | [Using and Outputting Dynamic Values [Core Concept]](#using-and-outputting-dynamic-values-core-concept) |
+| [Setting HTML Attributes Dynamically & Loading Image Files](#setting-html-attributes-dynamically--loading-image-files) |
 
 ## It's all about Components! [Core Concept]
 
@@ -157,6 +158,26 @@ JSX within React components can incorporate dynamic values by embedding them wit
 For instance, `<h1>Hello, {username}!</h1>` might render "Hello, John!" where `username` is a dynamic variable.
 
 Checkout [this](projects/01-starting-project/src/App.jsx) example for understanding.
+
+## Setting HTML Attributes Dynamically & Loading Image Files
+
+When dynamically adding images in React, you can utilize the `import` statement to handle image imports efficiently.
+
+- Avoid direct `src` attributes in image tags (`<img src="...">`) as they might lead to image loss during deployment optimization.
+- Instead, use the import statement to import images directly into your React components.
+- Employ the `import` statement in your component file to import the image. For instance:
+
+    ```javascript
+    import ReactImage from './path/to/image.png';
+    ```
+- Within the component's JSX, utilize the imported image as a dynamic value for the `src` attribute.
+- Use curly braces `{}` to inject the imported image variable dynamically:
+
+    ```javascript
+    <img src={ReactImage} alt="Description" />
+    ```
+- This technique might seem unconventional since importing image files directly into JavaScript files is not a typical JavaScript behavior.
+- However, within React, this process works due to the build process, which transforms the import statements and JSX code during bundling and deployment.
 
 ***
 
