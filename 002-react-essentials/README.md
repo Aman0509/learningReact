@@ -10,6 +10,7 @@
 | [Setting HTML Attributes Dynamically & Loading Image Files](#setting-html-attributes-dynamically--loading-image-files) |
 | [Making Components Reusable with Props [Core Concept]](#making-components-reusable-with-props-core-concept) |
 | [More Prop Syntaxes](#more-prop-syntaxes) |
+| [Storing Components in Files & Using a Good Project Structure](#storing-components-in-files--using-a-good-project-structure) |
 
 ## It's all about Components! [Core Concept]
 
@@ -370,6 +371,28 @@ export default function Button({ caption, type = "submit" }) {
 Readings:
 
 - [Passing Props to a Component](https://react.dev/learn/passing-props-to-a-component)
+
+## Storing Components in Files & Using a Good Project Structure
+
+Organizing React components into separate files and folders is a best practice for managing larger projects. Here's a breakdown based on content (we'll take [starting-project](projects/01-starting-project/) as reference to explain):
+
+### Separating Components:
+
+- **Single File to Multiple Files:** Initially, all components (like `Header`, `CoreConcept`, `App`) reside in a single file (`App.jsx`), but as the project grows, it's best to store each component in its own file.
+- **Better Organization:** This separation improves code readability and maintainability. As the number of components increases, managing them in separate files becomes more manageable.
+
+### Project Structure:
+
+- **Component Subfolder:** Create a `Components` subfolder within the src directory to store your components.
+- **File Naming Convention:** Name the component files in a way that mirrors the component name. For instance, if a component is named `Header`, its file name could be `Header.jsx`.
+
+### Benefits of Separate Files:
+
+- **Easy Access:** Locating and working on specific components becomes more convenient when they are stored in their own files.
+- **Reusability:** Each component file becomes an independent module that can be reused across the application.
+- **Clarity and Scalability:** As the project scales, organizing components this way ensures clarity in the file structure and easier navigation.
+
+Following this practice ensures a more organized and scalable project structure, making it easier to manage and maintain as your React application grows.
 
 ***
 
