@@ -3,6 +3,7 @@
 ## Contents
 
 - [Introduction](001-introduction/README.md)
+- [React Essentials - Components, JSX, Props, State & More](002-react-essentials/README.md)
 
 ## References
 
