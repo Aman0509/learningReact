@@ -12,6 +12,7 @@
 | [More Prop Syntaxes](#more-prop-syntaxes) |
 | [Storing Components in Files & Using a Good Project Structure](#storing-components-in-files--using-a-good-project-structure) |
 | [Component Composition: The special `children` Prop [Core Concept]](#component-composition-the-special-children-prop-core-concept) |
+| [Reacting to Events [Core Concept](#reacting-to-events-core-concept)) |
 
 ## It's all about Components! [Core Concept]
 
@@ -433,6 +434,46 @@ The `children` prop provides a mechanism for incorporating dynamic content withi
 Readings:
 
 - [A quick intro to React’s props.children](https://codeburst.io/a-quick-intro-to-reacts-props-children-cb3d2fce4891)
+
+## Reacting to Events [Core Concept]
+
+**Declarative Event Handling:**
+
+In React, rather than directly interacting with the DOM like in traditional JavaScript (means selecting the targeted HTML element using `document`), you define event listeners by adding specific attributes (props) to elements.
+
+**Event Prop Syntax:**
+
+You attach event listeners to elements using JSX by specifying attributes like `onClick`, `onChange`, etc., followed by a function reference.
+
+**Example:**
+
+In the provided example, the objective is to handle click events on buttons (`TabButtons`) to showcase React's event handling mechanism.
+
+Handling Click Events in React:
+
+```javascript
+// Inside the TabButton component
+import React from 'react';
+
+const TabButton = () => {
+  const handleClick = () => {
+    console.log('Hello World!'); // Log a message when the button is clicked
+  };
+
+  return (
+    <button onClick={handleClick}>Click me!</button>
+  );
+};
+
+export default TabButton;
+```
+
+Explanation:
+
+- `**onClick` Prop**: Attached to the button element to handle the click event.
+- **`handleClick` Function**: Defines the action to be performed when the button is clicked.
+- **Function as a Value**: The handleClick function is provided as a value to the `onClick` prop without executing it (no parentheses).
+  - React will execute this function internally when the button is clicked, triggering the action.
 
 ***
 
