@@ -12,7 +12,8 @@
 | [More Prop Syntaxes](#more-prop-syntaxes) |
 | [Storing Components in Files & Using a Good Project Structure](#storing-components-in-files--using-a-good-project-structure) |
 | [Component Composition: The special `children` Prop [Core Concept]](#component-composition-the-special-children-prop-core-concept) |
-| [Reacting to Events [Core Concept](#reacting-to-events-core-concept)) |
+| [Reacting to Events [Core Concept]](#reacting-to-events-core-concept) |
+| [Managing State & Using Hooks [Core Concept]](#managing-state--using-hooks-core-concept)|
 
 ## It's all about Components! [Core Concept]
 
@@ -474,6 +475,89 @@ Explanation:
 - **`handleClick` Function**: Defines the action to be performed when the button is clicked.
 - **Function as a Value**: The handleClick function is provided as a value to the `onClick` prop without executing it (no parentheses).
   - React will execute this function internally when the button is clicked, triggering the action.
+
+## Managing State & Using Hooks [Core Concept]
+
+| | |
+|--|--|
+| <img src="https://drive.google.com/uc?export=view&id=1X_kPfP-FjhsRYZxc9hi5EpTbB50v7I80" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1mAKKQLe59WdDT_3LRtiuQSApZ9X10j3s" alt="academind slide"> |
+
+When working with components, ***state*** refers to the built-in object that stores data or information which is specific to a component and can change over time. It acts as the component's internal memory, allowing it to reflect dynamic changes in the UI. It is mutable and when changed or updated, React automatically re-renders the component and its children, reflecting the changes in the UI.
+
+While simple variables work for static data, they fall short when the data needs to change over time, like when responding to user actions. For instance, if we have a variable called name displaying `mario` initially and we want it to change to `luigi` on a button click, the variable alone won’t trigger a change in the displayed name.
+
+```javascript
+const Home = () => {
+  let name ='mario';
+
+  const handleClick = () => {
+    name = 'luigi';
+    console.log (name);
+  }
+  return (
+    <div className="home">
+      <h2>Homepage</h2>
+      <p>{name}</p>
+      <button onClick={handleClick}>Click me</button>
+    </div>
+  );
+  }
+export default Home;
+```
+
+<img src="https://drive.google.com/uc?export=view&id=1lSIRsYD8UsJ0UpZkZUpFSTeR_5VJd9cv" height="350" width="700" alt="net ninja screenshot">
+
+React provides a special tool, the [`useState`](https://react.dev/reference/react/useState) hook, to make data reactive. This hook creates a reactive value that React can watch for changes. By using this hook, we can declare a state variable and a function to update it.
+
+**Important Considerations**
+
+| | |
+|--|--|
+| <img src="https://drive.google.com/uc?export=view&id=1NNQooUQBBHgpxvpuqyQ9ZQ_Ow1_KrKNv" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1_sIEg7nu0d7BReUO3-tvBkmjWLWJIvau" alt="academind slide"> |
+
+- **Rules of Hooks:** Ensure `useState` (or any hook) is used at the top level of the functional component, not inside loops or conditionals.
+- **Accessing State:** Use the state variable (`name` & `age` in below example) to access the current state's value within the component.
+- **Delayed State Update:** React schedules state updates, and the component re-renders with the new state value. Immediate access after setting state may still reflect the previous state due to React's scheduling mechanism.
+- Use state judiciously to avoid unnecessary re-renders and performance issues.
+- Consider using external state management libraries like Redux for complex applications with shared state.
+
+Here's an example:
+
+```javascript
+import React, { useState } from 'react';
+
+const Home = () => {
+  const [name, setName] = useState('mario');
+  const [age, setAge] = useState(25);
+
+  const handleClick = () => {
+    setName('luigi');
+    setAge(30);
+  };
+
+  return (
+    <div className="home">
+      <h2>Homepage</h2>
+      <p>{name} is {age} years old</p>
+      <button onClick={handleClick}>Click me</button>
+    </div>
+  );
+};
+
+export default Home;
+```
+
+<img src="https://drive.google.com/uc?export=view&id=1gxBaVHBx6leYeI6U_9ESOTHhti1SQOlr" height="350" width="700" alt="net ninja screenshot">
+
+In this updated code, `useState` is utilized to manage two state variables: name and age. By calling useState, React creates these variables and functions (setName and setAge) to modify their values. Whenever these functions are invoked with a new value, React knows the state has changed, triggering a re-render that updates the displayed values in the template. This way, the displayed content becomes reactive to the state changes.
+
+Readings:
+
+- [Full React Tutorial #8 - Using State (useState hook)](https://www.youtube.com/watch?v=4pO-HcG2igk)
+- [React Hooks for Beginners – Learn to Use the useState Hook in 10 Minutes](https://www.freecodecamp.org/news/learn-react-usestate-hook-in-10-minutes/)
+- [React state management: What is it and why to use it?](https://www.loginradius.com/blog/engineering/react-state-management/)
+- [React interactivity: Events and state](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_interactivity_events_state)
+- [How To Manage State with Hooks on React Components](https://www.digitalocean.com/community/tutorials/how-to-manage-state-with-hooks-on-react-components)
 
 ***
 
