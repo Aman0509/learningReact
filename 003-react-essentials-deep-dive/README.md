@@ -2,7 +2,8 @@
 
 | Contents |
 | :--- |
-| You don't have to use JSX! |
+| [You don't have to use JSX!](#you-dont-have-to-use-jsx) |
+| [Working with Fragments](#working-with-fragments) |
 
 ## You don't have to use JSX!
 
@@ -44,6 +45,60 @@ const Hello = () => {
   return React.createElement('h1', { className: 'main-heading' }, 'Hello, JSX!');
 };
 ```
+
+## Working with Fragments
+
+Suppose you have a component that returns multiple sibling elements:
+
+```javascript
+import React from 'react';
+
+const MyComponent = () => {
+  return (
+    <h1>Hello</h1>
+    <p>Welcome to React!</p>
+  );
+};
+export default MyComponent;
+```
+
+Attempting to return these sibling elements directly will result in an error because JSX requires a single parent element. You could wrap these inside a `<div>`, but that would add an extra element that you might not need. To address this, you can utilize [`fragments`](https://react.dev/reference/react/Fragment):
+
+```javascript
+import React from 'react';
+
+const MyComponent = () => {
+  return (
+    <React.Fragment>
+      <h1>Hello</h1>
+      <p>Welcome to React!</p>
+    </React.Fragment>
+  );
+};
+export default MyComponent;
+```
+
+Alternatively, using the shorthand syntax:
+
+```javascript
+import React from 'react';
+
+const MyComponent = () => {
+  return (
+    <>
+      <h1>Hello</h1>
+      <p>Welcome to React!</p>
+    </>
+  );
+};
+export default MyComponent;
+```
+
+Both approaches allow you to group sibling elements without introducing an extra wrapping `div` in the rendered output, keeping your DOM structure clean and efficient.
+
+Readings:
+
+- [How to use React Fragments?](https://refine.dev/blog/how-react-fragments-is-works/#using-shortcut-version)
 
 ***
 

@@ -4,6 +4,7 @@
 
 - [Introduction](001-introduction/README.md)
 - [React Essentials - Components, JSX, Props, State & More](002-react-essentials/README.md)
+- [React Essentials - Deep Dive](003-react-essentials-deep-dive/README.md)
 
 ## References
 
