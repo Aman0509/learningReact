@@ -4,6 +4,7 @@
 | :--- |
 | [You don't have to use JSX!](#you-dont-have-to-use-jsx) |
 | [Working with Fragments](#working-with-fragments) |
+| [When should you split Components?](#when-should-you-split-components) |
 
 ## You don't have to use JSX!
 
@@ -99,6 +100,24 @@ Both approaches allow you to group sibling elements without introducing an extra
 Readings:
 
 - [How to use React Fragments?](https://refine.dev/blog/how-react-fragments-is-works/#using-shortcut-version)
+
+## When should you split Components?
+
+Here are some key pointers to consider when deciding to split components in React:
+
+- **Complexity:** If a component is handling multiple tasks, such as rendering, managing state, and handling user interactions, it might be too complex. Splitting it into smaller components can simplify the structure and make it more manageable.
+
+- **Responsibilities:** Components should ideally have a single responsibility. When a component does too much, it becomes harder to maintain and debug. Consider splitting it into smaller components, each handling a specific task.
+
+- **Reusability:** Components that could be reused elsewhere in the application or in different parts of the UI are good candidates for separation. Smaller, reusable components can enhance code maintainability.
+
+- **State Management:** If changes in one part of a component cause unnecessary re-renders in another unrelated part due to shared state, it might be wise to reorganize the components to manage state more efficiently.
+
+- **Clarity and Readability:** Breaking down complex components can improve the code's readability. Smaller, focused components are easier to understand and maintain.
+
+- **Performance:** When a component re-renders frequently, impacting performance due to unnecessary updates, splitting it might help isolate the elements that need updating.
+
+By keeping an eye on these considerations, developers can identify instances where splitting components will lead to a more efficient and maintainable React application.
 
 ***
 
