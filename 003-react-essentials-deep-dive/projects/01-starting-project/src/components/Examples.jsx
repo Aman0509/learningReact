@@ -30,7 +30,6 @@ export default function Examples() {
     // Alternatively, you can use `&&` or ternary operator in returned JSX below
     <Section id="examples" title="Examples">
       <Tabs
-        buttonsContainer="menu"
         buttons={
           <>
             {" "}
