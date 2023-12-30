@@ -31,7 +31,7 @@ function App() {
   }
 
   return (
-    <div>
+    <> {/* Alternatively, `<React.Fragment></React.Fragment>` can also be used */}
       {/*
         You can also write like this:
         <Header></Header>
@@ -63,7 +63,7 @@ function App() {
           {tabContent}
         </section>
       </main>
-    </div>
+    </>
   );
 }
 
