@@ -5,6 +5,7 @@
 | [You don't have to use JSX!](#you-dont-have-to-use-jsx) |
 | [Working with Fragments](#working-with-fragments) |
 | [When should you split Components?](#when-should-you-split-components) |
+| [Forwarding Props to Wrapped Elements](#forwarding-props-to-wrapped-elements) |
 
 ## You don't have to use JSX!
 
@@ -118,6 +119,53 @@ Here are some key pointers to consider when deciding to split components in Reac
 - **Performance:** When a component re-renders frequently, impacting performance due to unnecessary updates, splitting it might help isolate the elements that need updating.
 
 By keeping an eye on these considerations, developers can identify instances where splitting components will lead to a more efficient and maintainable React application.
+
+## Forwarding Props to Wrapped Elements
+
+When forwarding props in React, using the spread syntax (`...`) gathers any additional props received by a component, consolidating them into an object. This technique allows passing unspecified props to an inner element or component, enhancing flexibility and reusability.
+
+By using `...` with an identifier (like `props`), all extra props are collected into a single object within the component. This object (`props`) is then spread onto an inner element, allowing the forwarding of unextracted props to the inner component.
+
+This method is valuable for wrapper components, enabling the setting of various attributes without manually extracting each prop. It streamlines the process, making components more adaptable and easier to use while preserving functionality.
+
+For example,
+
+Suppose, you are creating a custom `Section` component that forwards additional props to an inner `section` element to make `section` reusable at different places (consider it demand of web page design):
+
+```javascript
+// Section.jsx components
+import React from 'react';
+
+const Section = ({ children, ...rest }) => {
+  return (
+    <section {...rest}>
+      {children}
+    </section>
+  );
+};
+
+export default Section;
+```
+
+When you use the `Section` component elsewhere in your code, any additional props you pass to it will automatically be applied to the underlying `section` element. For instance:
+
+```javascript
+import React from 'react';
+import Section from './Section';
+
+const App = () => {
+  return (
+    <div>
+      <Section id="main-section" className="custom-section">
+        <h1>Title</h1>
+        <p>Content goes here...</p>
+      </Section>
+    </div>
+  );
+};
+
+export default App;
+```
 
 ***
 
