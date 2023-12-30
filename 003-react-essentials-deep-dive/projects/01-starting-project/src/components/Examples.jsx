@@ -29,32 +29,39 @@ export default function Examples() {
   return (
     // Alternatively, you can use `&&` or ternary operator in returned JSX below
     <Section id="examples" title="Examples">
-      <Tabs buttons={<> {/* Since these are multiple buttons, needs to send it as single wrapped element, hence, using fragments here */}
-        <TabButton
-          isSelected={selectedTopic === "components"}
-          onClick={() => handleSelect("components")}
-        >
-          Components
-        </TabButton>
-        <TabButton
-          isSelected={selectedTopic === "jsx"}
-          onClick={() => handleSelect("jsx")}
-        >
-          JS
-        </TabButton>
-        <TabButton
-          isSelected={selectedTopic === "props"}
-          onClick={() => handleSelect("props")}
-        >
-          Props
-        </TabButton>
-        <TabButton
-          isSelected={selectedTopic === "state"}
-          onClick={() => handleSelect("state")}
-        >
-          State
-        </TabButton>
-      </>}>
+      <Tabs
+        buttonsContainer="menu"
+        buttons={
+          <>
+            {" "}
+            {/* Since these are multiple buttons, needs to send it as single wrapped element, hence, using fragments here */}
+            <TabButton
+              isSelected={selectedTopic === "components"}
+              onClick={() => handleSelect("components")}
+            >
+              Components
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === "jsx"}
+              onClick={() => handleSelect("jsx")}
+            >
+              JS
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === "props"}
+              onClick={() => handleSelect("props")}
+            >
+              Props
+            </TabButton>
+            <TabButton
+              isSelected={selectedTopic === "state"}
+              onClick={() => handleSelect("state")}
+            >
+              State
+            </TabButton>
+          </>
+        }
+      >
         {tabContent}
       </Tabs>
     </Section>
