@@ -561,4 +561,4 @@ Readings:
 
 ***
 
-[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Introduction](../001-introduction/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[WIP... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>]()
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Introduction](../001-introduction/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[React Essentials - Deep Dive <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../003-react-essentials-deep-dive/README.md)
