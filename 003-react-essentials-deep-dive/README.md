@@ -7,6 +7,7 @@
 | [When should you split Components?](#when-should-you-split-components) |
 | [Forwarding Props to Wrapped Elements](#forwarding-props-to-wrapped-elements) |
 | [Working with Multiple JSX Slots](#working-with-multiple-jsx-slots) |
+| [Setting Component Types Dynamically](#setting-component-types-dynamically) |
 
 ## You don't have to use JSX!
 
@@ -231,6 +232,65 @@ const App = () => {
 Readings:
 
 - [Pass Multiple Children to a React Component with Slots](https://www.codeproject.com/Articles/1254614/Pass-Multiple-Children-to-a-React-Component-with-S#:~:text=These%20cases%20are%20all%20easy,and%20make%20components%20more%20reusable.)
+
+## Setting Component Types Dynamically
+
+The concept of setting component types dynamically in React involves allowing a component to receive a prop that defines the type of wrapper or container it should render its content into. This enhances the component's flexibility and reusability across various parts of an application.
+
+Here's a basic example:
+
+Suppose you have a `Tabs` component that renders a set of buttons and you want to enable the flexibility to choose the container element (like `<menu>`, `<ul>`, or `<div>`) for these buttons based on where the component is used.
+
+```javascript
+import React from 'react';
+
+const Tabs = ({ buttonsContainer }) => {
+  const ButtonsContainer = buttonsContainer; // Capitalize for custom component usage
+  // Alternatively, directly accept a prop with an uppercase letter, for eg. ButtonsContainer, ensuring it's also passed with an uppercase letter when using the component.
+
+  return (
+    <ButtonsContainer>
+      {/* Buttons or content */}
+      <button>Button 1</button>
+      <button>Button 2</button>
+      {/* ... */}
+    </ButtonsContainer>
+  );
+};
+
+export default Tabs;
+```
+
+Using the `Tabs` component in another part of your application:
+
+```javascript
+import React from 'react';
+import Tabs from './Tabs';
+
+const Examples = () => {
+  return (
+    <div>
+      {/* Using the Tabs component with different wrapper elements */}
+      <Tabs buttonsContainer="div" />
+      <Tabs buttonsContainer="ul" />
+      {/* ... */}
+    </div>
+  );
+};
+
+export default Examples;
+```
+
+**Key Concepts:**
+
+- **Pass component identifiers as prop values:** Allow flexibility in choosing which component to render within a parent component.
+- **Built-in elements vs. custom components:**
+    - Pass string names for built-in elements (e.g., `div`, `menu`).
+    - Pass component function names for custom components (e.g., Section).
+- **Capitalization matters:** Components must start with an uppercase character to be treated as custom components by React.
+- **Remapping prop to a constant:** Remapping the prop to a constant with an uppercase letter is a common pattern for clarity and consistency.
+- **Directly accepting a prop with uppercase:** Alternatively, directly accept a prop with an uppercase letter, ensuring it's also passed with an uppercase letter when using the component.
+- **Flexibility and reusability:** This technique promotes flexible and reusable components that can adapt to different contexts and requirements.
 
 ***
 
