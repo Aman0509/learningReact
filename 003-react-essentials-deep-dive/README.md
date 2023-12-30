@@ -8,6 +8,7 @@
 | [Forwarding Props to Wrapped Elements](#forwarding-props-to-wrapped-elements) |
 | [Working with Multiple JSX Slots](#working-with-multiple-jsx-slots) |
 | [Setting Component Types Dynamically](#setting-component-types-dynamically) |
+| [Setting Default Prop Values](#setting-default-prop-values) |
 
 ## You don't have to use JSX!
 
@@ -291,6 +292,52 @@ export default Examples;
 - **Remapping prop to a constant:** Remapping the prop to a constant with an uppercase letter is a common pattern for clarity and consistency.
 - **Directly accepting a prop with uppercase:** Alternatively, directly accept a prop with an uppercase letter, ensuring it's also passed with an uppercase letter when using the component.
 - **Flexibility and reusability:** This technique promotes flexible and reusable components that can adapt to different contexts and requirements.
+
+## Setting Default Prop Values
+
+In the previous example, if you set a default value like `div` for `buttonsContainer`, you can omit specifying this prop when using the `Tab` component unless you specifically desire an element other than div.
+
+For example,
+
+```javascript
+import React from 'react';
+
+const Tabs = ({ buttonsContainer = 'div' }) => {
+  const ButtonsContainer = buttonsContainer; // Capitalize for custom component usage
+  // Alternatively, directly accept a prop with an uppercase letter, for eg. ButtonsContainer, ensuring it's also passed with an uppercase letter when using the component.
+
+  return (
+    <ButtonsContainer>
+      {/* Buttons or content */}
+      <button>Button 1</button>
+      <button>Button 2</button>
+      {/* ... */}
+    </ButtonsContainer>
+  );
+};
+
+export default Tabs;
+```
+
+`buttonsContainer='div'` is omitted for the first <Tab/> call.
+
+```javascript
+import React from 'react';
+import Tabs from './Tabs';
+
+const Examples = () => {
+  return (
+    <div>
+      {/* Using the Tabs component with different wrapper elements */}
+      <Tabs />
+      <Tabs buttonsContainer="ul" />
+      {/* ... */}
+    </div>
+  );
+};
+
+export default Examples;
+```
 
 ***
 
