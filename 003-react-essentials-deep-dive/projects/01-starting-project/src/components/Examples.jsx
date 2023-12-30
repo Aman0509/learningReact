@@ -3,6 +3,7 @@ import { useState } from "react";
 import { EXAMPLES } from "../data.js";
 import TabButton from "./TabButton.jsx";
 import Section from "./Section.jsx";
+import Tabs from "./Tabs.jsx";
 
 export default function Examples() {
   const [selectedTopic, setSelectedTopic] = useState();
@@ -28,7 +29,7 @@ export default function Examples() {
   return (
     // Alternatively, you can use `&&` or ternary operator in returned JSX below
     <Section id="examples" title="Examples">
-      <menu>
+      <Tabs buttons={<> {/* Since these are multiple buttons, needs to send it as single wrapped element, hence, using fragments here */}
         <TabButton
           isSelected={selectedTopic === "components"}
           onClick={() => handleSelect("components")}
@@ -53,8 +54,9 @@ export default function Examples() {
         >
           State
         </TabButton>
-      </menu>
-      {tabContent}
+      </>}>
+        {tabContent}
+      </Tabs>
     </Section>
   );
 }
