@@ -6,6 +6,7 @@
 | [Working with Fragments](#working-with-fragments) |
 | [When should you split Components?](#when-should-you-split-components) |
 | [Forwarding Props to Wrapped Elements](#forwarding-props-to-wrapped-elements) |
+| [Working with Multiple JSX Slots](#working-with-multiple-jsx-slots) |
 
 ## You don't have to use JSX!
 
@@ -166,6 +167,70 @@ const App = () => {
 
 export default App;
 ```
+
+## Working with Multiple JSX Slots
+
+Working with multiple JSX slots, often referred to as slots or children slots, involves handling multiple sections of content within a single component. This allows for dynamic insertion of content based on how the component is used.
+
+Here's a breakdown with a basic example:
+
+**Component with Multiple Slots:**
+
+```javascript
+import React from 'react';
+
+const Card = ({ header, content, footer }) => {
+  return (
+    <div className="card">
+      {header}
+      <div className="card-content">
+        {content}
+      </div>
+      {footer}
+    </div>
+  );
+};
+
+export default Card;
+```
+
+**Using the Component with Slots:**
+
+```javascript
+import Card from './Card';
+
+const App = () => {
+  return (
+    <Card
+      header={<h2>Welcome</h2>}
+      content={<p>This is the card's content.</p>}
+      footer={<button>Learn More</button>}
+    />
+  );
+};
+```
+
+**Explanation:**
+
+- **Slot Props:** The `Card` component defines three slot props: `header`, `content`, and `footer`. These props accept JSX elements as their values.
+- **Content Placement:** When using the `Card` component, you provide the content for each slot by passing JSX elements directly to the corresponding slot props.
+- **Rendering:** The `Card` component renders the provided content within the designated areas, creating a structured layout.
+
+**Key Points:**
+
+- **Default Slot:** React also has a default slot, accessible as the `children` prop. It's used for content that doesn't have a specific named slot.
+- **Named Slots:** Using named slots like this is a pattern, not an official React feature. It provides flexibility in component composition.
+- **Reusability:** Components with multiple slots enhance reusability by allowing customization of different parts of the component's structure.
+
+**Benefits:**
+
+- **Improved Component Composition:** Create more adaptable and reusable components.
+- **Clearer Content Organization:** Structure content within components for better readability and maintainability.
+- **Enhanced Flexibility:** Allow customization of component layouts without modifying the component's core structure.
+
+Readings:
+
+- [Pass Multiple Children to a React Component with Slots](https://www.codeproject.com/Articles/1254614/Pass-Multiple-Children-to-a-React-Component-with-S#:~:text=These%20cases%20are%20all%20easy,and%20make%20components%20more%20reusable.)
 
 ***
 
