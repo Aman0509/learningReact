@@ -15,6 +15,10 @@
 | [Reacting to Events [Core Concept]](#reacting-to-events-core-concept) |
 | [Managing State & Using Hooks [Core Concept]](#managing-state--using-hooks-core-concept)|
 
+&nbsp;
+
+:notebook_with_decorative_cover: [Projects](projects/)
+
 ## It's all about Components! [Core Concept]
 
 A React component is a modular, reusable piece of code responsible for rendering a part of a user interface. It encapsulates HTML, CSS, and JavaScript logic, representing specific sections or elements within an application's UI. Components can be composed, combined, and reused to build complex user interfaces. They can manage their own state, receive data via props, and are the fundamental building blocks used in React applications to structure and render UI elements.

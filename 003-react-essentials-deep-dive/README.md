@@ -10,6 +10,10 @@
 | [Setting Component Types Dynamically](#setting-component-types-dynamically) |
 | [Setting Default Prop Values](#setting-default-prop-values) |
 
+&nbsp;
+
+:notebook_with_decorative_cover: [Projects](projects/)
+
 ## You don't have to use JSX!
 
 **JSX Overview:**
