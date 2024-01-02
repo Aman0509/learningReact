@@ -11,6 +11,7 @@
 | [Setting Default Prop Values](#setting-default-prop-values) |
 | [Not all content must go into Components](#not-all-content-must-go-into-components) |
 | [Closer Look: `public/` vs `assets/` for Image Storage](#closer-look-public-vs-assets-for-image-storage) |
+| [Component Instance work in isolation!](#component-instance-work-in-isolation) |
 
 &nbsp;
 
@@ -401,6 +402,42 @@ Instead, files stored in `src/` (and subfolder) can be used in your code files. 
 You should use the `public/` folder for any images that should not be handled by the build process and that should be generally available. Good candidates are images used directly in the `index.html` file or favicons.
 
 On the other hand, images that are used inside of components should typically be stored in the `src/` folder (e.g., in `src/assets/`).
+
+## Component Instance work in isolation!
+
+React component instances work in isolation because they are each rendered independently of the rest of the DOM. This means that changes to one component will not affect the other components in the DOM.
+
+This is important because it allows React to be very efficient at updating the DOM. When a component changes, React only needs to update the DOM for that component, and not the entire DOM. This can make React applications very fast and responsive.
+
+Another benefit of component isolation is that it makes it easier to test React components. When a component is tested in isolation, you can be sure that the test is only testing that component, and not any other components in the DOM. This can make it easier to write and maintain tests for React applications.
+
+Here is a basic example of how React component instances work in isolation:
+
+```javascript
+const App = () => {
+  return (
+    <div>
+      <Counter />
+      <Counter />
+    </div>
+  );
+};
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+};
+```
+
+In this example, we have two `Counter` components rendered side by side. Each `Counter` component has its own, independent state. When we click the `Increment` button on one `Counter` component, the count for that component will be incremented, but the count for the other `Counter` component will not be affected.
+
+This is because each `Counter` component is rendered independently of the rest of the DOM. When a `Counter` component changes, React only needs to update the DOM for that component, and not the entire DOM.
 
 ***
 
