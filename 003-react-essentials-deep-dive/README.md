@@ -13,6 +13,7 @@
 | [Closer Look: `public/` vs `assets/` for Image Storage](#closer-look-public-vs-assets-for-image-storage) |
 | [Component Instance work in isolation!](#component-instance-work-in-isolation) |
 | [Updating State based on Old State Correctly](#updating-state-based-on-old-state-correctly) |
+| [User Input & Two-Way-Binding](#user-input--two-way-binding) |
 
 &nbsp;
 
@@ -487,6 +488,45 @@ function handleEditClick() {
 ```
 
 By using the function form, React guarantees that the inner function receives the latest state value at the time of execution. This ensures that state updates are based on the most recent state, even in scenarios where updates are scheduled asynchronously.
+
+## User Input & Two-Way-Binding
+
+Two-way binding in React refers to the synchronization of data between a user interface element and its underlying data model. This synchronization occurs in both directions: from the data model to the UI element and vice versa.
+
+Traditionally, in web development, one-way binding involves updating the UI based on changes in the data model. However, in two-way binding, changes made in the UI element (like an input field) are reflected in the underlying data model, and conversely, changes in the data model are immediately reflected in the UI.
+
+React usually implements a unidirectional data flow, where data flows in a single direction: from parent to child components via props. However, two-way binding can be achieved in React using controlled components. In controlled components, the value of the form element (like an input field) is controlled by React state. Changes to the input field trigger state updates, and the value of the input field is always controlled by React.
+
+For instance, a React component might have an input field whose value is tied directly to a piece of state. When the user types in the input field, the state is updated, and as the state changes, React re-renders the component, reflecting the updated state in the UI.
+
+Here's a basic example:
+
+```javascript
+import React, { useState } from 'react';
+
+function TwoWayBindingExample() {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value); // Update state with input value
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={inputValue} // Value controlled by React state
+        onChange={handleInputChange} // Update state on input change
+      />
+      <p>Input value: {inputValue}</p> {/* Reflect state value in UI */}
+    </div>
+  );
+}
+
+export default TwoWayBindingExample;
+```
+
+In this example, changes in the input field trigger `handleInputChange`, which updates the component's state using `setInputValue`. The value of the input field is controlled by the `inputValue` state variable, creating a two-way binding effect between the input and the component's state.
 
 ***
 
