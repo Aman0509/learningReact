@@ -9,6 +9,7 @@
 | [Working with Multiple JSX Slots](#working-with-multiple-jsx-slots) |
 | [Setting Component Types Dynamically](#setting-component-types-dynamically) |
 | [Setting Default Prop Values](#setting-default-prop-values) |
+| [Not all content must go into Components](#not-all-content-must-go-into-components) |
 
 &nbsp;
 
@@ -342,6 +343,37 @@ const Examples = () => {
 
 export default Examples;
 ```
+
+## Not all content must go into Components
+
+Sometimes, not all content needs to be crammed into React components, especially if it's static content that doesn't rely on changing data or states. For instance, a header that holds an image and a title might not need to be enclosed within a React component. You can place such static markup directly within the `index.html` file rather than within a React component.
+
+Here's a basic example to demonstrate this concept:
+
+Let's say you have an `index.html` file that renders a React app in a `div` with an `id` of `root`. Within this HTML file, you have a static header section with an image and a title:
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta tags, title, and other necessary head content -->
+</head>
+<body>
+  <header>
+    <img src="public/game-logo.png" alt="Hand-drawn tic-tac-toe game board">
+    <h1>Tic-Tac-Toe</h1>
+  </header>
+
+  <div id="root"></div>
+
+  <!-- Other scripts and links -->
+</body>
+</html>
+```
+
+This static header isn't dependent on any changing data or states, so it doesn't need to be a part of a React component. By placing it directly within the `index.html` file, you ensure that it's readily available when the page loads without the need for React to render it.
+
+This approach helps maintain clarity and simplicity within your React components by separating content that doesn't require dynamic rendering from those components that do.
 
 ***
 
