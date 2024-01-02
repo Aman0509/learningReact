@@ -12,6 +12,7 @@
 | [Not all content must go into Components](#not-all-content-must-go-into-components) |
 | [Closer Look: `public/` vs `assets/` for Image Storage](#closer-look-public-vs-assets-for-image-storage) |
 | [Component Instance work in isolation!](#component-instance-work-in-isolation) |
+| [Updating State based on Old State Correctly](#updating-state-based-on-old-state-correctly) |
 
 &nbsp;
 
@@ -30,7 +31,7 @@
 - [`createElement`](https://react.dev/reference/react/createElement) method constructs components using standard JavaScript.
 - Involves specifying component types, props, and child elements manually.
 
-<img src="https://drive.google.com/uc?export=view&id=1tO6L-ri72Q_V8qErOmuLVOtLRyW8u3cQ" alt="academind slide">
+<img src="https://drive.google.com/uc?export=view&id=1tO6L-ri72Q_V8qErOmuLVOtLRyW8u3cQ"  height="350" width="700" alt="academind slide">
 
 **JSX vs. Non-JSX:**
 
@@ -438,6 +439,54 @@ const Counter = () => {
 In this example, we have two `Counter` components rendered side by side. Each `Counter` component has its own, independent state. When we click the `Increment` button on one `Counter` component, the count for that component will be incremented, but the count for the other `Counter` component will not be affected.
 
 This is because each `Counter` component is rendered independently of the rest of the DOM. When a `Counter` component changes, React only needs to update the DOM for that component, and not the entire DOM.
+
+## Updating State based on Old State Correctly
+
+When updating the state based on the previous state, use the **functional form of `setState`**. This function accepts the previous state as an argument and returns the updated state based on it.
+
+Consider the following code snippet:
+
+```javascript
+export default function Player(){
+    const [isEditing, setIsEditing] = useState(false);
+
+    function handleEditClick() {
+        setIsEditing(!isEditing);
+        setIsEditing(!isEditing);
+    }
+    return (
+        <button onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
+    );
+}
+```
+
+<img src="https://drive.google.com/uc?export=view&id=1jCZOO8wg9DlGz_QeoGLZKyiPXXiY8Ek-" height="350" width="700" alt="academind slide">
+
+### The Pitfalls of Direct State Mutation
+
+In above code snippet, at first glance, it might seem like both calls to `setIsEditing` should result in a toggle between `true` and `false`. However, due to the asynchronous nature of state updates in React, this may not always be the case.
+
+Basically, when button is clicked for the first time, `isEditing` is already initialized with `false` and since React schedules state updates for future execution rather than executing them instantly, for both the lines, next state will be set to update as `true` rather from `true` to `false`.
+
+```javascript
+function handleEditClick() {
+        setIsEditing(!isEditing); // => schedules a state update to true
+        setIsEditing(!isEditing); // => schedules a state update to true
+    }
+```
+
+### The Function Form Solution
+
+To address this issue and ensure that state updates are based on the latest state value, it’s recommended to use the function form of the state updating function. Let’s modify the previous example:
+
+```javascript
+function handleEditClick() {
+    setIsEditing(editing => !editing); // first set to true
+    setIsEditing(editing => !editing); // set to false
+}
+```
+
+By using the function form, React guarantees that the inner function receives the latest state value at the time of execution. This ensures that state updates are based on the most recent state, even in scenarios where updates are scheduled asynchronously.
 
 ***
 
