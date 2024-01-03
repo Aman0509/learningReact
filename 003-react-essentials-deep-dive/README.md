@@ -15,6 +15,7 @@
 | [Best Practice: Updating State based on Old State Correctly](#best-practice-updating-state-based-on-old-state-correctly) |
 | [User Input & Two-Way-Binding](#user-input--two-way-binding)                                                             |
 | [Best Practice: Updating Object State Immutably](#best-practice-updating-object-state-immutably)                         |
+| [Lifting State Up [Core Concept]](#lifting-state-up-core-concept)                                                        |
 
 &nbsp;
 
@@ -610,6 +611,112 @@ export default ColorList;
 ```
 
 In this corrected version, `addColor` creates a new array `updatedColors` using the spread operator `[...colors, newColor]`. This approach creates a new copy of the colors array with the new color added at the end, maintaining the immutability of the original `colors` state. Finally, `setColors(updatedColors)` correctly updates the state with the new array, ensuring proper state management in React.
+
+## Lifting State Up [Core Concept]
+
+"Lifting State Up" in React refers to the practice of moving the state from a lower-level component to a higher-level component when multiple components need access to that state. This helps in sharing and managing state among related components effectively.
+
+Let's consider a basic example of a temperature converter application that consists of two components: `TemperatureInput` and `TemperatureCalculator`. The `TemperatureInput` component will handle the user input for temperatures in Fahrenheit and Celsius, while the `TemperatureCalculator` component will calculate the converted temperatures.
+
+<img src="https://drive.google.com/uc?export=view&id=1db_7KBSxBBs-eGHAdvyRVoiTzT4XWKF-"  height="350" width="700" alt="academind slide">
+
+Here's a simple implementation without lifting state up:
+
+```javascript
+import React, { useState } from "react";
+
+function TemperatureInput({ scale }) {
+  const [temperature, setTemperature] = useState("");
+
+  const handleInputChange = (e) => {
+    setTemperature(e.target.value);
+  };
+
+  return (
+    <fieldset>
+      <legend>Enter temperature in {scale}:</legend>
+      <input value={temperature} onChange={handleInputChange} />
+    </fieldset>
+  );
+}
+
+function TemperatureCalculator() {
+  return (
+    <div>
+      <TemperatureInput scale="Fahrenheit" />
+      <TemperatureInput scale="Celsius" />
+    </div>
+  );
+}
+
+export default TemperatureCalculator;
+```
+
+In this setup, each `TemperatureInput` component manages its own state for the temperature value. However, if we want these components to interact and convert temperatures dynamically as the user types, **_we'll need to lift the state up to a common ancestor component (`TemperatureCalculator` in this case)_**.
+
+Here's the modified implementation using lifted state:
+
+```javascript
+import React, { useState } from "react";
+
+function TemperatureInput({ scale, temperature, onTemperatureChange }) {
+  const handleInputChange = (e) => {
+    onTemperatureChange(e.target.value);
+  };
+
+  return (
+    <fieldset>
+      <legend>Enter temperature in {scale}:</legend>
+      <input value={temperature} onChange={handleInputChange} />
+    </fieldset>
+  );
+}
+
+function TemperatureCalculator() {
+  const [fahrenheit, setFahrenheit] = useState("");
+  const [celsius, setCelsius] = useState("");
+
+  const handleFahrenheitChange = (value) => {
+    setFahrenheit(value);
+    // Convert Fahrenheit to Celsius and update Celsius state
+    const convertedCelsius = ((parseFloat(value) - 32) * 5) / 9;
+    setCelsius(convertedCelsius.toFixed(2));
+  };
+
+  const handleCelsiusChange = (value) => {
+    setCelsius(value);
+    // Convert Celsius to Fahrenheit and update Fahrenheit state
+    const convertedFahrenheit = (parseFloat(value) * 9) / 5 + 32;
+    setFahrenheit(convertedFahrenheit.toFixed(2));
+  };
+
+  return (
+    <div>
+      <TemperatureInput
+        scale="Fahrenheit"
+        temperature={fahrenheit}
+        onTemperatureChange={handleFahrenheitChange}
+      />
+      <TemperatureInput
+        scale="Celsius"
+        temperature={celsius}
+        onTemperatureChange={handleCelsiusChange}
+      />
+    </div>
+  );
+}
+
+export default TemperatureCalculator;
+```
+
+In this updated version, the state for both Fahrenheit and Celsius temperatures is managed by the `TemperatureCalculator` component. The state and the logic for converting temperatures are lifted up to this component. The `TemperatureInput` components receive their respective temperature values and a callback function to update the state in the parent component.
+
+By lifting state up, the `TemperatureCalculator` component now controls the state and behavior of the temperature inputs, allowing them to interact and synchronize their values more effectively. This makes it easier to manage shared state among related components.
+
+Readings:
+
+- [Sharing State Between Components](https://react.dev/learn/sharing-state-between-components)
+- [Lifting State Up & Prop Drilling in React](https://medium.com/@kristinethejohnson/lifting-state-up-prop-drilling-in-react-3ef3367fca7a)
 
 ---
 
