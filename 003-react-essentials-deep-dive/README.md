@@ -1,20 +1,20 @@
 # React Essentials - Deep Dive
 
-| Contents |
-| :--- |
-| [You don't have to use JSX!](#you-dont-have-to-use-jsx) |
-| [Working with Fragments](#working-with-fragments) |
-| [When should you split Components?](#when-should-you-split-components) |
-| [Forwarding Props to Wrapped Elements](#forwarding-props-to-wrapped-elements) |
-| [Working with Multiple JSX Slots](#working-with-multiple-jsx-slots) |
-| [Setting Component Types Dynamically](#setting-component-types-dynamically) |
-| [Setting Default Prop Values](#setting-default-prop-values) |
-| [Not all content must go into Components](#not-all-content-must-go-into-components) |
-| [Closer Look: `public/` vs `assets/` for Image Storage](#closer-look-public-vs-assets-for-image-storage) |
-| [Component Instance work in isolation!](#component-instance-work-in-isolation) |
+| Contents                                                                                                                 |
+| :----------------------------------------------------------------------------------------------------------------------- |
+| [You don't have to use JSX!](#you-dont-have-to-use-jsx)                                                                  |
+| [Working with Fragments](#working-with-fragments)                                                                        |
+| [When should you split Components?](#when-should-you-split-components)                                                   |
+| [Forwarding Props to Wrapped Elements](#forwarding-props-to-wrapped-elements)                                            |
+| [Working with Multiple JSX Slots](#working-with-multiple-jsx-slots)                                                      |
+| [Setting Component Types Dynamically](#setting-component-types-dynamically)                                              |
+| [Setting Default Prop Values](#setting-default-prop-values)                                                              |
+| [Not all content must go into Components](#not-all-content-must-go-into-components)                                      |
+| [Closer Look: `public/` vs `assets/` for Image Storage](#closer-look-public-vs-assets-for-image-storage)                 |
+| [Component Instance work in isolation!](#component-instance-work-in-isolation)                                           |
 | [Best Practice: Updating State based on Old State Correctly](#best-practice-updating-state-based-on-old-state-correctly) |
-| [User Input & Two-Way-Binding](#user-input--two-way-binding) |
-| [Best Practice: Updating Object State Immutably](#best-practice-updating-object-state-immutably) |
+| [User Input & Two-Way-Binding](#user-input--two-way-binding)                                                             |
+| [Best Practice: Updating Object State Immutably](#best-practice-updating-object-state-immutably)                         |
 
 &nbsp;
 
@@ -57,7 +57,11 @@ const Hello = () => {
 ```javascript
 // Equivalent Component Using React.createElement
 const Hello = () => {
-  return React.createElement('h1', { className: 'main-heading' }, 'Hello, JSX!');
+  return React.createElement(
+    "h1",
+    { className: "main-heading" },
+    "Hello, JSX!"
+  );
 };
 ```
 
@@ -80,7 +84,7 @@ export default MyComponent;
 Attempting to return these sibling elements directly will result in an error because JSX requires a single parent element. You could wrap these inside a `<div>`, but that would add an extra element that you might not need. To address this, you can utilize [`fragments`](https://react.dev/reference/react/Fragment):
 
 ```javascript
-import React from 'react';
+import React from "react";
 
 const MyComponent = () => {
   return (
@@ -96,7 +100,7 @@ export default MyComponent;
 Alternatively, using the shorthand syntax:
 
 ```javascript
-import React from 'react';
+import React from "react";
 
 const MyComponent = () => {
   return (
@@ -147,14 +151,10 @@ Suppose, you are creating a custom `Section` component that forwards additional 
 
 ```javascript
 // Section.jsx components
-import React from 'react';
+import React from "react";
 
 const Section = ({ children, ...rest }) => {
-  return (
-    <section {...rest}>
-      {children}
-    </section>
-  );
+  return <section {...rest}>{children}</section>;
 };
 
 export default Section;
@@ -163,8 +163,8 @@ export default Section;
 When you use the `Section` component elsewhere in your code, any additional props you pass to it will automatically be applied to the underlying `section` element. For instance:
 
 ```javascript
-import React from 'react';
-import Section from './Section';
+import React from "react";
+import Section from "./Section";
 
 const App = () => {
   return (
@@ -189,15 +189,13 @@ Here's a breakdown with a basic example:
 **Component with Multiple Slots:**
 
 ```javascript
-import React from 'react';
+import React from "react";
 
 const Card = ({ header, content, footer }) => {
   return (
     <div className="card">
       {header}
-      <div className="card-content">
-        {content}
-      </div>
+      <div className="card-content">{content}</div>
       {footer}
     </div>
   );
@@ -209,7 +207,7 @@ export default Card;
 **Using the Component with Slots:**
 
 ```javascript
-import Card from './Card';
+import Card from "./Card";
 
 const App = () => {
   return (
@@ -253,7 +251,7 @@ Here's a basic example:
 Suppose you have a `Tabs` component that renders a set of buttons and you want to enable the flexibility to choose the container element (like `<menu>`, `<ul>`, or `<div>`) for these buttons based on where the component is used.
 
 ```javascript
-import React from 'react';
+import React from "react";
 
 const Tabs = ({ buttonsContainer }) => {
   const ButtonsContainer = buttonsContainer; // Capitalize for custom component usage
@@ -275,8 +273,8 @@ export default Tabs;
 Using the `Tabs` component in another part of your application:
 
 ```javascript
-import React from 'react';
-import Tabs from './Tabs';
+import React from "react";
+import Tabs from "./Tabs";
 
 const Examples = () => {
   return (
@@ -296,8 +294,8 @@ export default Examples;
 
 - **Pass component identifiers as prop values:** Allow flexibility in choosing which component to render within a parent component.
 - **Built-in elements vs. custom components:**
-    - Pass string names for built-in elements (e.g., `div`, `menu`).
-    - Pass component function names for custom components (e.g., Section).
+  - Pass string names for built-in elements (e.g., `div`, `menu`).
+  - Pass component function names for custom components (e.g., Section).
 - **Capitalization matters:** Components must start with an uppercase character to be treated as custom components by React.
 - **Remapping prop to a constant:** Remapping the prop to a constant with an uppercase letter is a common pattern for clarity and consistency.
 - **Directly accepting a prop with uppercase:** Alternatively, directly accept a prop with an uppercase letter, ensuring it's also passed with an uppercase letter when using the component.
@@ -310,9 +308,9 @@ In the previous example, if you set a default value like `div` for `buttonsConta
 For example,
 
 ```javascript
-import React from 'react';
+import React from "react";
 
-const Tabs = ({ buttonsContainer = 'div' }) => {
+const Tabs = ({ buttonsContainer = "div" }) => {
   const ButtonsContainer = buttonsContainer; // Capitalize for custom component usage
   // Alternatively, directly accept a prop with an uppercase letter, for eg. ButtonsContainer, ensuring it's also passed with an uppercase letter when using the component.
 
@@ -332,8 +330,8 @@ export default Tabs;
 `buttonsContainer='div'` is omitted for the first <Tab/> call.
 
 ```javascript
-import React from 'react';
-import Tabs from './Tabs';
+import React from "react";
+import Tabs from "./Tabs";
 
 const Examples = () => {
   return (
@@ -449,16 +447,16 @@ When updating the state based on the previous state, use the **functional form o
 Consider the following code snippet:
 
 ```javascript
-export default function Player(){
-    const [isEditing, setIsEditing] = useState(false);
+export default function Player() {
+  const [isEditing, setIsEditing] = useState(false);
 
-    function handleEditClick() {
-        setIsEditing(!isEditing);
-        setIsEditing(!isEditing);
-    }
-    return (
-        <button onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
-    );
+  function handleEditClick() {
+    setIsEditing(!isEditing);
+    setIsEditing(!isEditing);
+  }
+  return (
+    <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
+  );
 }
 ```
 
@@ -472,9 +470,9 @@ Basically, when button is clicked for the first time, `isEditing` is already ini
 
 ```javascript
 function handleEditClick() {
-        setIsEditing(!isEditing); // => schedules a state update to true
-        setIsEditing(!isEditing); // => schedules a state update to true
-    }
+  setIsEditing(!isEditing); // => schedules a state update to true
+  setIsEditing(!isEditing); // => schedules a state update to true
+}
 ```
 
 ### The Function Form Solution
@@ -483,12 +481,16 @@ To address this issue and ensure that state updates are based on the latest stat
 
 ```javascript
 function handleEditClick() {
-    setIsEditing(editing => !editing); // first set to true
-    setIsEditing(editing => !editing); // set to false
+  setIsEditing((editing) => !editing); // first set to true
+  setIsEditing((editing) => !editing); // set to false
 }
 ```
 
 By using the function form, React guarantees that the inner function receives the latest state value at the time of execution. This ensures that state updates are based on the most recent state, even in scenarios where updates are scheduled asynchronously.
+
+Readings:
+
+- [Best Practices for Updating React State Based on Previous State](https://blog.stackademic.com/best-practices-for-updating-react-state-based-on-previous-state-d07dd22d5f62)
 
 ## User Input & Two-Way-Binding
 
@@ -503,10 +505,10 @@ For instance, a React component might have an input field whose value is tied di
 Here's a basic example:
 
 ```javascript
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function TwoWayBindingExample() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value); // Update state with input value
@@ -546,10 +548,10 @@ Let's consider a simple scenario where we have a React component managing a list
 Suppose we have an initial state with a list of colors:
 
 ```javascript
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function ColorList() {
-  const [colors, setColors] = useState(['red', 'green', 'blue']);
+  const [colors, setColors] = useState(["red", "green", "blue"]);
 
   const addColor = (newColor) => {
     // Directly modifying state (Not recommended)
@@ -565,7 +567,7 @@ function ColorList() {
           <li key={index}>{color}</li>
         ))}
       </ul>
-      <button onClick={() => addColor('yellow')}>Add Yellow</button>
+      <button onClick={() => addColor("yellow")}>Add Yellow</button>
     </div>
   );
 }
@@ -580,10 +582,10 @@ However, this approach is incorrect because it directly modifies the existing st
 Here's the corrected version using the immutable update:
 
 ```javascript
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function ColorList() {
-  const [colors, setColors] = useState(['red', 'green', 'blue']);
+  const [colors, setColors] = useState(["red", "green", "blue"]);
 
   const addColor = (newColor) => {
     // Updating state immutably
@@ -599,7 +601,7 @@ function ColorList() {
           <li key={index}>{color}</li>
         ))}
       </ul>
-      <button onClick={() => addColor('yellow')}>Add Yellow</button>
+      <button onClick={() => addColor("yellow")}>Add Yellow</button>
     </div>
   );
 }
@@ -609,6 +611,6 @@ export default ColorList;
 
 In this corrected version, `addColor` creates a new array `updatedColors` using the spread operator `[...colors, newColor]`. This approach creates a new copy of the colors array with the new color added at the end, maintaining the immutability of the original `colors` state. Finally, `setColors(updatedColors)` correctly updates the state with the new array, ensuring proper state management in React.
 
-***
+---
 
 [<img align="center" src="../images/left_arrow.png" height="20" width="20"/> React Essentials - Components, JSX, Props, State & More](../002-react-essentials/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[WIP... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>]()
