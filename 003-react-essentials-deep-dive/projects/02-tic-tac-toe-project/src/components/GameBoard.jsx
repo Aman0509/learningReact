@@ -7,18 +7,20 @@ const initialGameBoard = [
 ];
 
 export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+  /* Commenting this because we'll now define state at App.jsx level so that, it would be utilize by this and Log component. In this way, we can avoid intersecting states if, by chance, we lift up the state for Logs components which also maintain same data as used by this component */
 
-  function handleSelectSquare(rowIndex, colIndex) {
-    setGameBoard((prevGameBoard) => {
-      const updatedGameBoard = [
-        ...prevGameBoard.map((innerArray) => [...innerArray]),
-      ];
-      updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
-      return updatedGameBoard;
-    });
-    onSelectSquare();
-  }
+  // const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
+  // function handleSelectSquare(rowIndex, colIndex) {
+  //   setGameBoard((prevGameBoard) => {
+  //     const updatedGameBoard = [
+  //       ...prevGameBoard.map((innerArray) => [...innerArray]),
+  //     ];
+  //     updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
+  //     return updatedGameBoard;
+  //   });
+  //   onSelectSquare();
+  // }
 
   return (
     <ol id="game-board">
