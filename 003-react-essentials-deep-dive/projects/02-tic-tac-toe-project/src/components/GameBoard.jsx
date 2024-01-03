@@ -1,12 +1,10 @@
-import { useState } from "react";
-
 const initialGameBoard = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
 
-export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
+export default function GameBoard({ onSelectSquare }) {
   /* Commenting this because we'll now define state at App.jsx level so that, it would be utilize by this and Log component. In this way, we can avoid intersecting states if, by chance, we lift up the state for Logs components which also maintain same data as used by this component */
 
   // const [gameBoard, setGameBoard] = useState(initialGameBoard);
@@ -29,9 +27,7 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
           <ol>
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
-                <button onClick={() => handleSelectSquare(rowIndex, colIndex)}>
-                  {playerSymbol}
-                </button>
+                <button onClick={onSelectSquare}>{playerSymbol}</button>
               </li>
             ))}
           </ol>

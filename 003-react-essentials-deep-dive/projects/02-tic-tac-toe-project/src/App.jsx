@@ -8,8 +8,20 @@ function App() {
   const [gameTurns, setGameTurns] = useState([]);
   const [activePlayer, setActivePlayer] = useState("X");
 
-  function handleSelectSquare() {
+  function handleSelectSquare(rowIndex, colIndex) {
     setActivePlayer((currentPlayer) => (currentPlayer === "X" ? "O" : "X"));
+    setGameTurns((prevTurns) => {
+      // by doing this way, we make ensure, states won't merge which might cause irregular behavior
+      let currentPlayer = "X";
+      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
+        currentPlayer = "O";
+      }
+      const updatedTurns = [
+        { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
+        ...prevTurns,
+      ];
+      return updatedTurns;
+    });
   }
 
   return (
