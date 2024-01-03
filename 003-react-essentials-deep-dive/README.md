@@ -12,8 +12,9 @@
 | [Not all content must go into Components](#not-all-content-must-go-into-components) |
 | [Closer Look: `public/` vs `assets/` for Image Storage](#closer-look-public-vs-assets-for-image-storage) |
 | [Component Instance work in isolation!](#component-instance-work-in-isolation) |
-| [Updating State based on Old State Correctly](#updating-state-based-on-old-state-correctly) |
+| [Best Practice: Updating State based on Old State Correctly](#best-practice-updating-state-based-on-old-state-correctly) |
 | [User Input & Two-Way-Binding](#user-input--two-way-binding) |
+| [Best Practice: Updating Object State Immutably](#best-practice-updating-object-state-immutably) |
 
 &nbsp;
 
@@ -441,7 +442,7 @@ In this example, we have two `Counter` components rendered side by side. Each `C
 
 This is because each `Counter` component is rendered independently of the rest of the DOM. When a `Counter` component changes, React only needs to update the DOM for that component, and not the entire DOM.
 
-## Updating State based on Old State Correctly
+## Best Practice: Updating State based on Old State Correctly
 
 When updating the state based on the previous state, use the **functional form of `setState`**. This function accepts the previous state as an argument and returns the updated state based on it.
 
@@ -527,6 +528,86 @@ export default TwoWayBindingExample;
 ```
 
 In this example, changes in the input field trigger `handleInputChange`, which updates the component's state using `setInputValue`. The value of the input field is controlled by the `inputValue` state variable, creating a two-way binding effect between the input and the component's state.
+
+## Best Practice: Updating Object State Immutably
+
+Updating object state immutably is considered a good practice in React, especially when dealing with complex state structures like arrays or objects. This approach involves creating a new copy of the object or array instead of directly modifying the existing state.
+
+When state is updated directly (mutated), it can lead to unexpected behavior and bugs, especially in large applications where multiple components might be sharing the same state. JavaScript handles objects and arrays as reference values, meaning when you modify the state directly, you're altering the original reference, affecting all the components sharing that state. This can result in unintentional side effects or inconsistencies in your application.
+
+To update the state immutably, you create a new copy of the state object or array. In React, this is often achieved using functions like `map`, `concat`, `slice`, or the spread operator (`...`). For instance, when dealing with arrays, you can use `map` to create a new array with updated elements while keeping the original array unchanged.
+
+<img src="https://drive.google.com/uc?export=view&id=11AJCweveNh30zGoHourMxFSKFudmdrOn"  height="350" width="700" alt="academind slide">
+
+This approach ensures that the state remains consistent and predictable across different components that rely on the same state. By maintaining immutability, you're working with copies of the state, preventing unintended side effects and ensuring that updates occur predictably and consistently.
+
+Let's consider a simple scenario where we have a React component managing a list of items. We'll demonstrate the importance of updating state immutably.
+
+Suppose we have an initial state with a list of colors:
+
+```javascript
+import React, { useState } from 'react';
+
+function ColorList() {
+  const [colors, setColors] = useState(['red', 'green', 'blue']);
+
+  const addColor = (newColor) => {
+    // Directly modifying state (Not recommended)
+    colors.push(newColor);
+    setColors(colors); // This is not updating the state correctly!
+  };
+
+  return (
+    <div>
+      <h2>Colors</h2>
+      <ul>
+        {colors.map((color, index) => (
+          <li key={index}>{color}</li>
+        ))}
+      </ul>
+      <button onClick={() => addColor('yellow')}>Add Yellow</button>
+    </div>
+  );
+}
+
+export default ColorList;
+```
+
+In this example, we have a `ColorList` component managing a list of colors. When the "Add Yellow" button is clicked, it calls the `addColor` function, which tries to add 'yellow' to the existing `colors` array by directly modifying the array and then updating the state using `setColors`.
+
+However, this approach is incorrect because it directly modifies the existing state (`colors.push(newColor)`), which can lead to unexpected behavior in React. Instead, we need to update the state immutably.
+
+Here's the corrected version using the immutable update:
+
+```javascript
+import React, { useState } from 'react';
+
+function ColorList() {
+  const [colors, setColors] = useState(['red', 'green', 'blue']);
+
+  const addColor = (newColor) => {
+    // Updating state immutably
+    const updatedColors = [...colors, newColor]; // Creating a new array
+    setColors(updatedColors); // Updating the state correctly
+  };
+
+  return (
+    <div>
+      <h2>Colors</h2>
+      <ul>
+        {colors.map((color, index) => (
+          <li key={index}>{color}</li>
+        ))}
+      </ul>
+      <button onClick={() => addColor('yellow')}>Add Yellow</button>
+    </div>
+  );
+}
+
+export default ColorList;
+```
+
+In this corrected version, `addColor` creates a new array `updatedColors` using the spread operator `[...colors, newColor]`. This approach creates a new copy of the colors array with the new color added at the end, maintaining the immutability of the original `colors` state. Finally, `setColors(updatedColors)` correctly updates the state with the new array, ensuring proper state management in React.
 
 ***
 
