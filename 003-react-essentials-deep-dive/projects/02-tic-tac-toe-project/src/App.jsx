@@ -4,18 +4,27 @@ import Player from "./components/Player.jsx";
 import GameBoard from "./components/Gameboard.jsx";
 import Log from "./components/Log.jsx";
 
+function deriveActivePlayer(gameTurns) {
+  let currentPlayer = "X";
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+  return currentPlayer;
+}
+
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
-  const [activePlayer, setActivePlayer] = useState("X");
+  /* This seems to be an unnecessary state, hence commenting it for reference and created the function `deriveActivePlayer()` as the optimum way to go */
+  // const [activePlayer, setActivePlayer] = useState("X");
+  const activePlayer = deriveActivePlayer(gameTurns);
 
   function handleSelectSquare(rowIndex, colIndex) {
-    setActivePlayer((currentPlayer) => (currentPlayer === "X" ? "O" : "X"));
+    // setActivePlayer((currentPlayer) => (currentPlayer === "X" ? "O" : "X"));
+
     setGameTurns((prevTurns) => {
       // by doing this way, we make ensure, states won't merge which might cause irregular behavior
-      let currentPlayer = "X";
-      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
-        currentPlayer = "O";
-      }
+      const currentPlayer = deriveActivePlayer(prevTurns);
+
       const updatedTurns = [
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
         ...prevTurns,
