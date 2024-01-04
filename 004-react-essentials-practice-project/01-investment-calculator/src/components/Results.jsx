@@ -1,4 +1,11 @@
+import { calculateInvestmentResults, formatter } from "../util/investment.js";
+
 export default function Results({ data }) {
+  const resultsData = calculateInvestmentResults(data);
+  const initialInvestment =
+    resultsData[0].valueEndOfYear -
+    resultsData[0].interest -
+    resultsData[0].annualInvestment;
   return (
     <table id="result">
       <thead>
@@ -10,7 +17,24 @@ export default function Results({ data }) {
           <th>Invested Capital</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+        {resultsData.map((rowData) => {
+          const totalInterest =
+            rowData.valueEndOfYear -
+            rowData.annualInvestment * rowData.year -
+            initialInvestment;
+          const totalAmountInvested = rowData.valueEndOfYear - totalInterest;
+          return (
+            <tr key={rowData.year}>
+              <td>{rowData.year}</td>
+              <td>{formatter.format(rowData.valueEndOfYear)}</td>
+              <td>{formatter.format(rowData.interest)}</td>
+              <td>{formatter.format(totalInterest)}</td>
+              <td>{formatter.format(totalAmountInvested)}</td>
+            </tr>
+          );
+        })}
+      </tbody>
     </table>
   );
 }
