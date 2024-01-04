@@ -1,14 +1,14 @@
 # Introduction
 
-| Contents |
-| :--- |
+| Contents                                                                                 |
+| :--------------------------------------------------------------------------------------- |
 | [What is React.js? And why would you use it?](#what-is-reactjs-and-why-would-you-use-it) |
-| [Create React Projects](#create-react-projects) |
-| [Why do we need a special project setup?](#why-do-we-need-a-special-project-setup) |
+| [Create React Projects](#create-react-projects)                                          |
+| [Why do we need a special project setup?](#why-do-we-need-a-special-project-setup)       |
 
 ## What is React.js? And why would you use it?
 
-***React.js, commonly known as React, is an open-source JavaScript library primarily used for building user interfaces (UI) and handling the view layer for web and mobile applications. Developed by Facebook, React allows developers to create interactive, reusable UI components. Its key feature is the ability to efficiently update and render components when the underlying data changes, thanks to its virtual DOM (Document Object Model) implementation. React follows a declarative and component-based approach, enabling developers to create complex UIs by composing small, isolated components. This library is widely favored for its performance optimizations, maintainability, and its capability to create dynamic, fast, and responsive user interfaces.***
+**_React.js, commonly known as React, is an open-source JavaScript library primarily used for building user interfaces (UI) and handling the view layer for web and mobile applications. Developed by Facebook, React allows developers to create interactive, reusable UI components. Its key feature is the ability to efficiently update and render components when the underlying data changes, thanks to its virtual DOM (Document Object Model) implementation. React follows a declarative and component-based approach, enabling developers to create complex UIs by composing small, isolated components. This library is widely favored for its performance optimizations, maintainability, and its capability to create dynamic, fast, and responsive user interfaces._**
 
 When you explore the official webpage, [react.dev](https://react.dev/), the essence becomes clear. React serves as a library designed for crafting user interfaces, both for web and native platforms. In simpler terms, it streamlines the creation of user interfaces.
 
@@ -41,11 +41,11 @@ Creating a React project from scratch involves several steps and it can be quite
 
 **Setting up a React project with Create React App:**
 
-<ins>*Step 1: Install Node.js and npm (Node Package Manager)*</ins>
+<ins>_Step 1: Install Node.js and npm (Node Package Manager)_</ins>
 
 Ensure you have Node.js installed on your system as it includes npm, which is necessary for managing React projects. You can download and install Node.js from its [official website](https://nodejs.org/en/download).
 
-<ins>*Step 2: Install create-react-app (if not already installed)*</ins>
+<ins>_Step 2: Install create-react-app (if not already installed)_</ins>
 
 Open your terminal or command prompt and run the following command to install [create-react-app](https://github.com/facebook/create-react-app) globally:
 
@@ -53,7 +53,7 @@ Open your terminal or command prompt and run the following command to install [c
 npm install -g create-react-app
 ```
 
-<ins>*Step 3: Create a React project*</ins>
+<ins>_Step 3: Create a React project_</ins>
 
 Once installed, navigate to the directory where you want to create your React project using the terminal or command prompt. Run the following command:
 
@@ -63,7 +63,7 @@ npx create-react-app my-react-app
 
 Replace `my-react-app` with your preferred project name.
 
-<ins>*Step 4: Navigate to the project*</ins>
+<ins>_Step 4: Navigate to the project_</ins>
 
 Enter the directory of your newly created React project:
 
@@ -71,7 +71,7 @@ Enter the directory of your newly created React project:
 cd my-react-app
 ```
 
-<ins>*Step 5: Start the development server*</ins>
+<ins>_Step 5: Start the development server_</ins>
 
 ```
 npm start
@@ -79,15 +79,15 @@ npm start
 
 This command initiates a local development server and opens your default web browser to display the React app. Any changes made to the code will automatically update the browser.
 
-<ins>*Step 6: Begin coding*</ins>
+<ins>_Step 6: Begin coding_</ins>
 
 You can start editing the React project by modifying files within the `src` directory. The main file is usually `App.js`, and other components are created and imported into this file.
 
 **Setting up a React project with Vite:**
 
-<ins>*Step 1: Install Node.js and npm (Node Package Manager)*</ins>
+<ins>_Step 1: Install Node.js and npm (Node Package Manager)_</ins>
 
-<ins>*Step 2: Install Vite (if not already installed)*</ins>
+<ins>_Step 2: Install Vite (if not already installed)_</ins>
 
 Run the following command to install Vite globally:
 
@@ -95,7 +95,7 @@ Run the following command to install Vite globally:
 npm install -g create-vite
 ```
 
-<ins>*Step 3: Create a new React project with Vite*</ins>
+<ins>_Step 3: Create a new React project with Vite_</ins>
 
 Navigate to the directory where you want to create your project and execute the following command:
 
@@ -105,13 +105,13 @@ npm create-vite@latest my-react-app --template react
 
 Replace `my-react-app` with your preferred project name.
 
-<ins>*Step 4: Navigate to Project Directory*</ins>
+<ins>_Step 4: Navigate to Project Directory_</ins>
 
 ```
 cd my-react-app
 ```
 
-<ins>*Step 5: Install Dependencies*</ins>
+<ins>_Step 5: Install Dependencies_</ins>
 
 Run the following command to install project dependencies:
 
@@ -119,7 +119,7 @@ Run the following command to install project dependencies:
 npm install
 ```
 
-<ins>*Step 6: Start the Development Server*</ins>
+<ins>_Step 6: Start the Development Server_</ins>
 
 Initiate the development server with the command:
 
@@ -151,6 +151,6 @@ This clarifies why creating a basic HTML and script file doesn't suffice; instea
 
 <img src="https://drive.google.com/uc?export=view&id=1HtUgR0wcwx2oCzUf2OjbkMIHo7ERFMin" height="350" width="700" alt="academind slide">
 
-***
+---
 
 [<img align="center" src="../images/home.png" height="20" width="20"/> Index](../README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[React Essentials - Components, JSX, Props, State & More <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../002-react-essentials/README.md)

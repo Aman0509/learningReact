@@ -1,19 +1,19 @@
 # React Essentials - Components, JSX, Props, State & More
 
-| Contents |
-| :--- |
-| [It's all about Components! [Core Concept]](#its-all-about-components-core-concept) |
-| [JSX & React Components [Core Concept]](#jsx--react-components-core-concept) |
-| [Components & File Extensions](#components--file-extensions) |
+| Contents                                                                                                                                                          |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [It's all about Components! [Core Concept]](#its-all-about-components-core-concept)                                                                               |
+| [JSX & React Components [Core Concept]](#jsx--react-components-core-concept)                                                                                      |
+| [Components & File Extensions](#components--file-extensions)                                                                                                      |
 | [How React handles Components and How it builds a "Component Tree" [Core Concept]](#how-react-handles-components-and-how-it-builds-a-component-tree-core-concept) |
-| [Using and Outputting Dynamic Values [Core Concept]](#using-and-outputting-dynamic-values-core-concept) |
-| [Setting HTML Attributes Dynamically & Loading Image Files](#setting-html-attributes-dynamically--loading-image-files) |
-| [Making Components Reusable with Props [Core Concept]](#making-components-reusable-with-props-core-concept) |
-| [More Prop Syntaxes](#more-prop-syntaxes) |
-| [Storing Components in Files & Using a Good Project Structure](#storing-components-in-files--using-a-good-project-structure) |
-| [Component Composition: The special `children` Prop [Core Concept]](#component-composition-the-special-children-prop-core-concept) |
-| [Reacting to Events [Core Concept]](#reacting-to-events-core-concept) |
-| [Managing State & Using Hooks [Core Concept]](#managing-state--using-hooks-core-concept)|
+| [Using and Outputting Dynamic Values [Core Concept]](#using-and-outputting-dynamic-values-core-concept)                                                           |
+| [Setting HTML Attributes Dynamically & Loading Image Files](#setting-html-attributes-dynamically--loading-image-files)                                            |
+| [Making Components Reusable with Props [Core Concept]](#making-components-reusable-with-props-core-concept)                                                       |
+| [More Prop Syntaxes](#more-prop-syntaxes)                                                                                                                         |
+| [Storing Components in Files & Using a Good Project Structure](#storing-components-in-files--using-a-good-project-structure)                                      |
+| [Component Composition: The special `children` Prop [Core Concept]](#component-composition-the-special-children-prop-core-concept)                                |
+| [Reacting to Events [Core Concept]](#reacting-to-events-core-concept)                                                                                             |
+| [Managing State & Using Hooks [Core Concept]](#managing-state--using-hooks-core-concept)                                                                          |
 
 &nbsp;
 
@@ -28,14 +28,14 @@ A React component is a modular, reusable piece of code responsible for rendering
 - React revolves around Components, the reusable building blocks for UI construction.
 - They're combined to form the entire user interface in React applications.
 
-    <img src="https://drive.google.com/uc?export=view&id=1F2VBpNnC77lAWB_O_SLQHE6YhIKKouOv" height="350" width="700" alt="academind slide">
+  <img src="https://drive.google.com/uc?export=view&id=1F2VBpNnC77lAWB_O_SLQHE6YhIKKouOv" height="350" width="700" alt="academind slide">
 
 **Essential Role of Components**
 
 - Every React app, regardless of complexity, relies on Components as its foundation.
 - They encapsulate HTML, CSS, and related JavaScript logic, controlling specific UI sections.
 
-    <img src="https://drive.google.com/uc?export=view&id=1J4zsWiZEtN0vyltcO7wiEJQm8CGFDtrN" height="350" width="700" alt="academind slide">
+	<img src="https://drive.google.com/uc?export=view&id=1J4zsWiZEtN0vyltcO7wiEJQm8CGFDtrN" height="350" width="700" alt="academind slide">
 
 **Universal Concept Beyond React**
 
@@ -55,7 +55,7 @@ A React component is a modular, reusable piece of code responsible for rendering
 - Enables code reusability, reducing errors by allowing changes in one location.
 - Organizes related code cohesively, unlike scattered markup and JavaScript files.
 
-    <img src="https://drive.google.com/uc?export=view&id=1KM-IGGcykzMQPKc0g5b4VYv09G0Gk9ns" height="350" width="700" alt="academind slide">
+	<img src="https://drive.google.com/uc?export=view&id=1KM-IGGcykzMQPKc0g5b4VYv09G0Gk9ns" height="350" width="700" alt="academind slide">
 
 **Separation of Concerns**
 
@@ -139,7 +139,7 @@ In React, components play a pivotal role in constructing the user interface, for
 - React renders the App component and its nested components, combining them to form the complete UI.
 - Nested components, such as the Header component, can further contain additional child components.
 
-    <img src="https://drive.google.com/uc?export=view&id=14i8B1dpvMHLIeFZdbkFDXb7RXBV5cu8s" height="350" width="700" alt="academind slide">
+  <img src="https://drive.google.com/uc?export=view&id=14i8B1dpvMHLIeFZdbkFDXb7RXBV5cu8s" height="350" width="700" alt="academind slide">
 
 **Tree of Components vs. Rendered DOM:**
 
@@ -150,14 +150,14 @@ In React, components play a pivotal role in constructing the user interface, for
 - React differentiates between built-in HTML elements (e.g., `div`, `header`) and custom components (e.g., `Header`) based on naming conventions.
 - Custom component names must start with an uppercase character to signify they're not built-in HTML elements.
 
-    <img src="https://drive.google.com/uc?export=view&id=1dPFjRXVSJDG8_-AAfe_oTxPq53M5qurT" height="350" width="700" alt="academind slide">
+	<img src="https://drive.google.com/uc?export=view&id=1dPFjRXVSJDG8_-AAfe_oTxPq53M5qurT" height="350" width="700" alt="academind slide">
 
 **Handling Custom Components:**
 
 - Built-in elements are rendered as DOM nodes by React, while custom components, being functions, are executed and analyzed to generate JSX code.
 - React processes this JSX code, eventually rendering only built-in elements visible on the screen like below.
 
-    <img src="https://drive.google.com/uc?export=view&id=1GjmMRGWxOSfJPVFzQJMMvSKYmFuNXf8o" height="350" width="700" alt="academind slide">
+	<img src="https://drive.google.com/uc?export=view&id=1GjmMRGWxOSfJPVFzQJMMvSKYmFuNXf8o" height="350" width="700" alt="academind slide">
 
 ## Using and Outputting Dynamic Values [Core Concept]
 
@@ -177,15 +177,17 @@ When dynamically adding images in React, you can utilize the `import` statement 
 - Instead, use the import statement to import images directly into your React components.
 - Employ the `import` statement in your component file to import the image. For instance:
 
-    ```javascript
-    import ReactImage from './path/to/image.png';
-    ```
+  ```javascript
+  import ReactImage from "./path/to/image.png";
+  ```
+
 - Within the component's JSX, utilize the imported image as a dynamic value for the `src` attribute.
 - Use curly braces `{}` to inject the imported image variable dynamically:
 
-    ```javascript
-    <img src={ReactImage} alt="Description" />
-    ```
+  ```javascript
+  <img src={ReactImage} alt="Description" />
+  ```
+
 - This technique might seem unconventional since importing image files directly into JavaScript files is not a typical JavaScript behavior.
 - However, within React, this process works due to the build process, which transforms the import statements and JSX code during bundling and deployment.
 
@@ -202,7 +204,7 @@ Props in React are a way to pass data from parent components to child components
 - Props (short for properties) enable you to pass data from a parent component to a child component.
 - They provide a means of configuring components with specific data.
 
-    <img src="https://drive.google.com/uc?export=view&id=1tMYQ9707gaszLuvN6p44flVaooTAYvYI" height="350" width="700" alt="academind slide">
+	<img src="https://drive.google.com/uc?export=view&id=1tMYQ9707gaszLuvN6p44flVaooTAYvYI" height="350" width="700" alt="academind slide">
 
 **Usage of Props:**
 
@@ -210,7 +212,7 @@ Props in React are a way to pass data from parent components to child components
 - In JSX, set these props within your custom components just like regular HTML attributes.
 - You can pass various types of values as props: strings, numbers, objects, or arrays.
 
-    <img src="https://drive.google.com/uc?export=view&id=1TYEU6Shn9Y3ZcY6K2fcnfu1VZ-Iy_jKe" height="350" width="700" alt="academind slide">
+	<img src="https://drive.google.com/uc?export=view&id=1TYEU6Shn9Y3ZcY6K2fcnfu1VZ-Iy_jKe" height="350" width="700" alt="academind slide">
 
 **Receiving and Using Props:**
 
@@ -219,7 +221,7 @@ Props in React are a way to pass data from parent components to child components
 - Access the specific values passed via props using dot notation, like `props.image` or `props.title`.
 - Utilize these prop values within the component JSX to render dynamic content based on the passed data.
 
-    <img src="https://drive.google.com/uc?export=view&id=1Cfoourcv-OYU-VvehAHfr-6lpfgcee5a" height="350" width="700" alt="academind slide">
+	<img src="https://drive.google.com/uc?export=view&id=1Cfoourcv-OYU-VvehAHfr-6lpfgcee5a" height="350" width="700" alt="academind slide">
 
 **Dynamic Data Rendering:**
 
@@ -239,7 +241,7 @@ Suppose we have a `Header` component and an `App` component. The `App` component
 ```javascript
 // Header.js - Child Component
 
-import React from 'react';
+import React from "react";
 
 const Header = (props) => {
   return (
@@ -258,13 +260,16 @@ In the `Header` component, `props` are received and used to dynamically render t
 ```javascript
 // App.js - Parent Component
 
-import React from 'react';
-import Header from './Header'; // Assuming Header is in the same directory
+import React from "react";
+import Header from "./Header"; // Assuming Header is in the same directory
 
 const App = () => {
   return (
     <div>
-      <Header title="Welcome to React" description="A JavaScript library for building user interfaces" />
+      <Header
+        title="Welcome to React"
+        description="A JavaScript library for building user interfaces"
+      />
     </div>
   );
 };
@@ -301,17 +306,13 @@ i.e., instead of
 Or
 
 ```javascript
-<CoreConcept
-  {...CORE_CONCEPTS[0]}
-/>
+<CoreConcept {...CORE_CONCEPTS[0]} />
 ```
 
 you could also pass a single concept (or any name of your choice) prop to the `CoreConcept` component:
 
 ```javascript
-<CoreConcept
-  concept={CORE_CONCEPTS[0]}
-/>
+<CoreConcept concept={CORE_CONCEPTS[0]} />
 ```
 
 In the `CoreConcept` component, you would then get that one single prop:
@@ -422,7 +423,7 @@ The `children prop` in React is a special prop that allows components to accept 
 - **Flexibility in Rendering:** The `children` prop allows components to be more flexible in rendering content. It enables components to wrap other components or render additional content specified within their tags.
 - **Choice of Implementation:** React offers multiple ways to manage content within components, including passing props explicitly (like `label`) or utilizing the `children` prop for more dynamic content inclusion.
 
-    <img src="https://drive.google.com/uc?export=view&id=1YicvbKOLVI2zYCOxjMqRsHgPdcT69o9B" height="350" width="700" alt="academind slide">
+	<img src="https://drive.google.com/uc?export=view&id=1YicvbKOLVI2zYCOxjMqRsHgPdcT69o9B" height="350" width="700" alt="academind slide">
 
 ### Flexibility in Approach:
 
@@ -458,16 +459,14 @@ Handling Click Events in React:
 
 ```javascript
 // Inside the TabButton component
-import React from 'react';
+import React from "react";
 
 const TabButton = () => {
   const handleClick = () => {
-    console.log('Hello World!'); // Log a message when the button is clicked
+    console.log("Hello World!"); // Log a message when the button is clicked
   };
 
-  return (
-    <button onClick={handleClick}>Click me!</button>
-  );
+  return <button onClick={handleClick}>Click me!</button>;
 };
 
 export default TabButton;
@@ -475,29 +474,29 @@ export default TabButton;
 
 Explanation:
 
-- `**onClick` Prop**: Attached to the button element to handle the click event.
+- `**onClick` Prop\*\*: Attached to the button element to handle the click event.
 - **`handleClick` Function**: Defines the action to be performed when the button is clicked.
 - **Function as a Value**: The handleClick function is provided as a value to the `onClick` prop without executing it (no parentheses).
   - React will execute this function internally when the button is clicked, triggering the action.
 
 ## Managing State & Using Hooks [Core Concept]
 
-| | |
-|--|--|
+|                                                                                                                |                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | <img src="https://drive.google.com/uc?export=view&id=1X_kPfP-FjhsRYZxc9hi5EpTbB50v7I80" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1mAKKQLe59WdDT_3LRtiuQSApZ9X10j3s" alt="academind slide"> |
 
-When working with components, ***state*** refers to the built-in object that stores data or information which is specific to a component and can change over time. It acts as the component's internal memory, allowing it to reflect dynamic changes in the UI. It is mutable and when changed or updated, React automatically re-renders the component and its children, reflecting the changes in the UI.
+When working with components, **_state_** refers to the built-in object that stores data or information which is specific to a component and can change over time. It acts as the component's internal memory, allowing it to reflect dynamic changes in the UI. It is mutable and when changed or updated, React automatically re-renders the component and its children, reflecting the changes in the UI.
 
 While simple variables work for static data, they fall short when the data needs to change over time, like when responding to user actions. For instance, if we have a variable called name displaying `mario` initially and we want it to change to `luigi` on a button click, the variable alone won’t trigger a change in the displayed name.
 
 ```javascript
 const Home = () => {
-  let name ='mario';
+  let name = "mario";
 
   const handleClick = () => {
-    name = 'luigi';
-    console.log (name);
-  }
+    name = "luigi";
+    console.log(name);
+  };
   return (
     <div className="home">
       <h2>Homepage</h2>
@@ -505,7 +504,7 @@ const Home = () => {
       <button onClick={handleClick}>Click me</button>
     </div>
   );
-  }
+};
 export default Home;
 ```
 
@@ -515,8 +514,8 @@ React provides a special tool, the [`useState`](https://react.dev/reference/reac
 
 **Important Considerations**
 
-| | |
-|--|--|
+|                                                                                                                |                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | <img src="https://drive.google.com/uc?export=view&id=1NNQooUQBBHgpxvpuqyQ9ZQ_Ow1_KrKNv" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1_sIEg7nu0d7BReUO3-tvBkmjWLWJIvau" alt="academind slide"> |
 
 - **Rules of Hooks:** Ensure `useState` (or any hook) is used at the top level of the functional component, not inside loops or conditionals.
@@ -528,21 +527,23 @@ React provides a special tool, the [`useState`](https://react.dev/reference/reac
 Here's an example:
 
 ```javascript
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Home = () => {
-  const [name, setName] = useState('mario');
+  const [name, setName] = useState("mario");
   const [age, setAge] = useState(25);
 
   const handleClick = () => {
-    setName('luigi');
+    setName("luigi");
     setAge(30);
   };
 
   return (
     <div className="home">
       <h2>Homepage</h2>
-      <p>{name} is {age} years old</p>
+      <p>
+        {name} is {age} years old
+      </p>
       <button onClick={handleClick}>Click me</button>
     </div>
   );
@@ -563,6 +564,6 @@ Readings:
 - [React interactivity: Events and state](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_interactivity_events_state)
 - [How To Manage State with Hooks on React Components](https://www.digitalocean.com/community/tutorials/how-to-manage-state-with-hooks-on-react-components)
 
-***
+---
 
 [<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Introduction](../001-introduction/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[React Essentials - Deep Dive <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../003-react-essentials-deep-dive/README.md)
