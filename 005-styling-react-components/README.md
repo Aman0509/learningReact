@@ -5,6 +5,7 @@
 | [Splitting CSS Code Across Multiple Files](#splitting-css-code-across-multiple-files)                  |
 | [Styling React Apps with Vanilla CSS - Pros & Cons](#styling-react-apps-with-vanilla-css---pros--cons) |
 | [Vanilla CSS styles are not Scoped to Components!](#vanilla-css-styles-are-not-scoped-to-components)   |
+| [Styling React Apps with Inline Styles](#styling-react-apps-with-inline-styles)                        |
 
 &nbsp;
 
@@ -220,6 +221,53 @@ export default App;
 ```
 
 Both instances of the `Button` component will inherit the styles defined in `button.css`, regardless of their location within different components. This lack of encapsulation means that the styles defined in `button.css` can affect all elements with the class name `.button` throughout the application, not just the intended button components.
+
+## Styling React Apps with Inline Styles
+
+Using inline styles in React provides a way to style components directly within your JSX code.
+
+**Key Points:**
+
+- **Applying Styles Directly in JSX:** Inline styles let you apply CSS styles directly within JSX elements, rather than using separate CSS files.
+
+- **Using the `style` Prop:** Add a `style` prop to JSX elements and pass an object containing style properties and their values:
+  ```javascript
+  <p style={{ color: "red", textAlign: "left" }}>
+    This paragraph is red and aligned to the left.
+  </p>
+  ```
+- **Camel Case for Property Names:** Use camel case for CSS property names (e.g., `textAlign` instead of `text-align`).
+- **Dynamic Styling:** Inline styles can be dynamically calculated based on component state or props, enabling conditional styling.
+
+<img src="https://drive.google.com/uc?export=view&id=1bkRHhIfx4JEdL46hr6ABGUq2fU5rIs1x"  height="350" width="700" alt="academind slide">
+
+**Advantages:**
+
+- **Scope to Individual Elements:** Inline styles only affect the specific element they're applied to, preventing unintended style conflicts.
+- **Dynamic Styling Capabilities:** Well-suited for conditional or dynamic styling based on component state or user interactions.
+
+**Disadvantages:**
+
+- **Redundancy:** Can lead to code repetition if multiple elements need the same styles.
+- **Separation of Concerns:** Mixes styling and structure within JSX, potentially affecting code readability and maintainability.
+- **Maintenance Challenges:** Updating styles for multiple elements requires changes in multiple places.
+
+**Example:**
+
+```javascript
+function MyComponent() {
+  const isHovered = false; // Example state variable
+
+  return (
+    <div>
+      <h1 style={{ color: "blue" }}>Hello, world!</h1>
+      <p style={{ color: isHovered ? "red" : "black" }}>
+        This paragraph changes color on hover.
+      </p>
+    </div>
+  );
+}
+```
 
 ---
 
