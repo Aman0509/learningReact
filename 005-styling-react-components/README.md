@@ -7,6 +7,7 @@
 | [Vanilla CSS styles are not Scoped to Components!](#vanilla-css-styles-are-not-scoped-to-components)                 |
 | [Styling React Apps with Inline Styles](#styling-react-apps-with-inline-styles)                                      |
 | [Dynamic & Conditional Styling with CSS Files and Classes](#dynamic--conditional-styling-with-css-files-and-classes) |
+| [Scoping CSS Rules with CSS Modules](#scoping-css-rules-with-css-modules)                                            |
 
 &nbsp;
 
@@ -307,6 +308,63 @@ function MyComponent() {
 ```
 
 Dynamic and conditional styling with CSS classes allows you to create flexible and interactive React components while maintaining a clear separation of concerns between styling and component logic.
+
+## Scoping CSS Rules with CSS Modules
+
+CSS modules are a powerful tool for styling components in React applications. They provide a way to create modular and scoped CSS styles, eliminating the risk of class name clashes and allowing for easy reuse of styles across components.
+
+**_CSS Modules is not an official spec or an implementation in the browser but rather a process in a build step (with the help of Webpack or Browserify or Vite etc) that changes class names and selectors to be scoped (i.e. kinda like namespaced)._**
+
+Let's say you have a scenario where your CSS rules unintentionally affect components outside their intended scope. For instance, you have a rule that centers all paragraphs, affecting labels inside some paragraphs, which isn't desired.
+
+```css
+/* Header.module.css */
+
+.paragraph {
+  text-align: center;
+}
+```
+
+To enable CSS Modules, rename your CSS file to follow the naming convention with a `.module.css` extension, like `Header.module.css`. This naming convention signals the build tool to process the file differently.
+
+Now, when importing this CSS file into your component:
+
+```javascript
+// Header.jsx
+
+import React from "react";
+import styles from "./Header.module.css"; // Importing CSS module
+// while importing, any name can be given. Currently, `styles` is assigned
+
+const Header = () => {
+  return (
+    <header>
+      <p className={styles.paragraph}>Hello</p>
+    </header>
+  );
+};
+
+export default Header;
+```
+
+Notice the import statement: `import styles from './Header.module.css';`. _This import generates a JavaScript object (in this case, object named `styles`) containing unique identifiers for the classes defined in the CSS file._
+
+In the JSX, instead of using regular class names, you use the scoped classes from the imported styles object:
+
+```javascript
+<p className={styles.paragraph}>Hello</p>
+```
+
+When this code compiles, the generated class names will look something like `Header_paragraph__[random characters]`. These unique class names ensure that the defined styles only apply to the components importing those classes.
+
+The build tool automatically transforms the class names in the CSS Modules to unique, scoped names. This ensures that your CSS rules are contained within the specific component file, preventing them from affecting other components unintentionally.
+
+<img src="https://drive.google.com/uc?export=view&id=18D72ttrjjQdlluoddTdRdLfVC4kUwJcE"  height="350" width="700" alt="academind slide">
+
+Readings:
+
+- [What are CSS Modules and why do we need them?](https://css-tricks.com/css-modules-part-1-need/)
+- [Using CSS modules in React](https://bootcamp.uxdesign.cc/using-css-modules-in-react-cc17f7c81247)
 
 ---
 
