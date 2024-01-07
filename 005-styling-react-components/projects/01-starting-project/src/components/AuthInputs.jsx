@@ -24,17 +24,25 @@ export default function AuthInputs() {
     <div id="auth-inputs">
       <div className="controls">
         <p>
-          <label>Email</label>
+          {/* example of merging 2 classes */}
+          <label className={`label ${emailNotValid ? "invalid" : ""}`}>
+            Email
+          </label>
           <input
             type="email"
+            // example of conditional class application
             className={emailNotValid ? "invalid" : undefined}
             onChange={(event) => handleInputChange("email", event.target.value)}
           />
         </p>
         <p>
-          <label>Password</label>
+          {/* example of merging 2 classes */}
+          <label className={`label ${passwordNotValid ? "invalid" : ""}`}>
+            Password
+          </label>
           <input
             type="password"
+            // example of conditional class application
             className={passwordNotValid ? "invalid" : undefined}
             onChange={(event) =>
               handleInputChange("password", event.target.value)
