@@ -1,8 +1,9 @@
 # Styling React Components
 
-| Contents                                                                              |
-| :------------------------------------------------------------------------------------ |
-| [Splitting CSS Code Across Multiple Files](#splitting-css-code-across-multiple-files) |
+| Contents                                                                                               |
+| :----------------------------------------------------------------------------------------------------- |
+| [Splitting CSS Code Across Multiple Files](#splitting-css-code-across-multiple-files)                  |
+| [Styling React Apps with Vanilla CSS - Pros & Cons](#styling-react-apps-with-vanilla-css---pros--cons) |
 
 &nbsp;
 
@@ -119,6 +120,10 @@ This separation allows for:
 - **Better Scalability:** As your application grows, organizing styles by component helps in managing a larger codebase.
 
 Remember, you can apply this approach to other components as well, splitting styles across different CSS files based on their specific functionalities or components they are associated with.
+
+## Styling React Apps with Vanilla CSS - Pros & Cons
+
+<img src="https://drive.google.com/uc?export=view&id=19ACRxsQH8yv1fERGNjJk61OBuE-b1q3f"  height="350" width="700" alt="academind slide">
 
 ---
 
