@@ -4,6 +4,7 @@
 | :----------------------------------------------------------------------------------------------------- |
 | [Splitting CSS Code Across Multiple Files](#splitting-css-code-across-multiple-files)                  |
 | [Styling React Apps with Vanilla CSS - Pros & Cons](#styling-react-apps-with-vanilla-css---pros--cons) |
+| [Vanilla CSS styles are not Scoped to Components!](#vanilla-css-styles-are-not-scoped-to-components)   |
 
 &nbsp;
 
@@ -124,6 +125,101 @@ Remember, you can apply this approach to other components as well, splitting sty
 ## Styling React Apps with Vanilla CSS - Pros & Cons
 
 <img src="https://drive.google.com/uc?export=view&id=19ACRxsQH8yv1fERGNjJk61OBuE-b1q3f"  height="350" width="700" alt="academind slide">
+
+## Vanilla CSS styles are not Scoped to Components!
+
+In vanilla CSS, styles are global and not inherently scoped to individual components. Here's a simple example to illustrate this:
+
+Consider a scenario where you have two components, `Button` and `Card`, and you want to apply different styles to each component.
+
+**Button.jsx**
+
+```javascript
+import React from "react";
+import "./button.css";
+
+function Button() {
+  return <button className="button">Click me</button>;
+}
+
+export default Button;
+```
+
+**button.css**
+
+```CSS
+/* button.css */
+
+/* Styles for the Button component */
+.button {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+```
+
+**Card.jsx**
+
+```javascript
+import React from "react";
+import "./card.css";
+
+function Card() {
+  return (
+    <div className="card">
+      <h2>Card Title</h2>
+      <p>This is a card component</p>
+    </div>
+  );
+}
+
+export default Card;
+```
+
+**card.css**
+
+```CSS
+/* card.css */
+
+/* Styles for the Card component */
+.card {
+  border: 1px solid black;
+  padding: 16px;
+  margin: 8px;
+  border-radius: 8px;
+  background-color: lightgray;
+}
+```
+
+In this setup, even though `button.css` and `card.css` contain class names like `.button` and `.card`, respectively, these styles aren't scoped solely to their respective components.
+
+For instance, if you use the `Button` component inside the `Card` component:
+
+**App.jsx**
+
+```javascript
+import React from "react";
+import Button from "./Button.jsx";
+import Card from "./Card.jsx";
+
+function App() {
+  return (
+    <div className="app">
+      <Button />
+      <Card>
+        <Button /> {/* Using Button component inside Card */}
+      </Card>
+    </div>
+  );
+}
+
+export default App;
+```
+
+Both instances of the `Button` component will inherit the styles defined in `button.css`, regardless of their location within different components. This lack of encapsulation means that the styles defined in `button.css` can affect all elements with the class name `.button` throughout the application, not just the intended button components.
 
 ---
 
