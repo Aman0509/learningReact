@@ -6,6 +6,7 @@
 - [React Essentials - Components, JSX, Props, State & More](002-react-essentials/README.md)
 - [React Essentials - Deep Dive](003-react-essentials-deep-dive/README.md)
 - [React Essentials - Practice Projects](004-react-essentials-practice-project/README.md)
+- [Styling React Components](005-styling-react-components/README.md)
 
 ## References
 
