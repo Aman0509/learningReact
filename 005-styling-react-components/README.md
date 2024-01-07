@@ -1,11 +1,12 @@
 # Styling React Components
 
-| Contents                                                                                               |
-| :----------------------------------------------------------------------------------------------------- |
-| [Splitting CSS Code Across Multiple Files](#splitting-css-code-across-multiple-files)                  |
-| [Styling React Apps with Vanilla CSS - Pros & Cons](#styling-react-apps-with-vanilla-css---pros--cons) |
-| [Vanilla CSS styles are not Scoped to Components!](#vanilla-css-styles-are-not-scoped-to-components)   |
-| [Styling React Apps with Inline Styles](#styling-react-apps-with-inline-styles)                        |
+| Contents                                                                                                             |
+| :------------------------------------------------------------------------------------------------------------------- |
+| [Splitting CSS Code Across Multiple Files](#splitting-css-code-across-multiple-files)                                |
+| [Styling React Apps with Vanilla CSS - Pros & Cons](#styling-react-apps-with-vanilla-css---pros--cons)               |
+| [Vanilla CSS styles are not Scoped to Components!](#vanilla-css-styles-are-not-scoped-to-components)                 |
+| [Styling React Apps with Inline Styles](#styling-react-apps-with-inline-styles)                                      |
+| [Dynamic & Conditional Styling with CSS Files and Classes](#dynamic--conditional-styling-with-css-files-and-classes) |
 
 &nbsp;
 
@@ -268,6 +269,44 @@ function MyComponent() {
   );
 }
 ```
+
+## Dynamic & Conditional Styling with CSS Files and Classes
+
+When working with React, dynamic and conditional styling can also be achieved using CSS files and classes, allowing you to apply styles based on certain conditions.
+
+- **Conditional Class Application:** Use ternary expressions within the className prop to apply classes conditionally based on state or props:
+  ```javascript
+  <div className={isHovered ? "hovered-class" : undefined}>Hover over me</div>
+  ```
+- **Merging Multiple Classes:** Combine static and conditional classes using template literals and string interpolation:
+  ```javascript
+  <label className=`label ${isEmailValid ? '' : 'invalid'}`>Email</label>
+  ```
+- **Dynamic Class Updates:** Trigger class changes based on user interactions or data changes to achieve interactive styling effects.
+
+**Example**
+
+```javascript
+function MyComponent() {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+
+  return (
+    <div>
+      <div
+        className={isHovered ? "highlighted" : ""}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        Hover over me
+      </div>
+      <label className={`label ${isEmailValid ? "" : "invalid"}`}>Email</label>
+    </div>
+  );
+}
+```
+
+Dynamic and conditional styling with CSS classes allows you to create flexible and interactive React components while maintaining a clear separation of concerns between styling and component logic.
 
 ---
 
