@@ -9,6 +9,7 @@
 | [Dynamic & Conditional Styling with CSS Files and Classes](#dynamic--conditional-styling-with-css-files-and-classes) |
 | [Scoping CSS Rules with CSS Modules](#scoping-css-rules-with-css-modules)                                            |
 | [Introducing "Styled Components" (Third Party Package)](#introducing-styled-components-third-party-package)          |
+| [Creating Flexible Components with Styled Components](#creating-flexible-components-with-styled-components)          |
 
 &nbsp;
 
@@ -456,6 +457,52 @@ Readings:
   ](https://medium.com/styled-components/how-styled-components-works-618a69970421)
 
 - [How to Use Styled Components in Your React Apps](https://www.freecodecamp.org/news/styled-components-in-react/)
+
+## Creating Flexible Components with Styled Components
+
+Creating flexible components with Styled Components involves leveraging the capabilities of styled components to encapsulate styles and behaviors while retaining flexibility with props.
+
+Styled components efficiently pass props set on the styled component to the underlying HTML element (e.g., forwarding a `className` prop to a built-in `label`). This enables seamless migration and use of various props like event listeners (`onChange`) and HTML attributes (`type` for `input` elements). This ensures that the components not only look visually appealing but also retain their original behavior.
+
+**Example:**
+
+```javascript
+// Import necessary packages
+import React from "react";
+import styled from "styled-components";
+
+// Create a styled button component
+const StyledButton = styled.button`
+  /* Define styles using template literals */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  /* Add hover effect */
+  &:hover {
+    background-color: #2980b9;
+  }
+`;
+
+// Define a functional component using the styled button
+const CustomContainer = () => {
+  return (
+    <div>
+      <h2>Styled Button</h2>
+      {/* Styled component allows the addition of props, such as `onClick`, seamlessly.  */}
+      <StyledButton onClick={() => console.log("Clicked!")}>
+        Click me too!
+      </StyledButton>
+    </div>
+  );
+};
+
+export default CustomContainer;
+```
 
 ---
 
