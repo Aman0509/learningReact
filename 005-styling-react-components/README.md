@@ -1,16 +1,17 @@
 # Styling React Components
 
-| Contents                                                                                                             |
-| :------------------------------------------------------------------------------------------------------------------- |
-| [Splitting CSS Code Across Multiple Files](#splitting-css-code-across-multiple-files)                                |
-| [Styling React Apps with Vanilla CSS - Pros & Cons](#styling-react-apps-with-vanilla-css---pros--cons)               |
-| [Vanilla CSS styles are not Scoped to Components!](#vanilla-css-styles-are-not-scoped-to-components)                 |
-| [Styling React Apps with Inline Styles](#styling-react-apps-with-inline-styles)                                      |
-| [Dynamic & Conditional Styling with CSS Files and Classes](#dynamic--conditional-styling-with-css-files-and-classes) |
-| [Scoping CSS Rules with CSS Modules](#scoping-css-rules-with-css-modules)                                            |
-| [Introducing "Styled Components" (Third Party Package)](#introducing-styled-components-third-party-package)          |
-| [Creating Flexible Components with Styled Components](#creating-flexible-components-with-styled-components)          |
-| [Dynamic & Conditional Styling with Styled Components](#dynamic--conditional-styling-with-styled-components)         |
+| Contents                                                                                                                                                          |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Splitting CSS Code Across Multiple Files](#splitting-css-code-across-multiple-files)                                                                             |
+| [Styling React Apps with Vanilla CSS - Pros & Cons](#styling-react-apps-with-vanilla-css---pros--cons)                                                            |
+| [Vanilla CSS styles are not Scoped to Components!](#vanilla-css-styles-are-not-scoped-to-components)                                                              |
+| [Styling React Apps with Inline Styles](#styling-react-apps-with-inline-styles)                                                                                   |
+| [Dynamic & Conditional Styling with CSS Files and Classes](#dynamic--conditional-styling-with-css-files-and-classes)                                              |
+| [Scoping CSS Rules with CSS Modules](#scoping-css-rules-with-css-modules)                                                                                         |
+| [Introducing "Styled Components" (Third Party Package)](#introducing-styled-components-third-party-package)                                                       |
+| [Creating Flexible Components with Styled Components](#creating-flexible-components-with-styled-components)                                                       |
+| [Dynamic & Conditional Styling with Styled Components](#dynamic--conditional-styling-with-styled-components)                                                      |
+| [Handling Pseudo Selectors, Nested Rules, and Media Queries in Styled Components](#handling-pseudo-selectors-nested-rules-and-media-queries-in-styled-components) |
 
 &nbsp;
 
@@ -598,6 +599,69 @@ When using Styled Components, if the props you pass to your styled component cla
 3. **Forwarding Props Carefully:** When using props to style elements or modify their behavior, ensure that only intended props are forwarded to the underlying HTML elements. You can use techniques like object destructuring or filtering to selectively forward props.
 
 By applying these practices, you can prevent naming clashes between your custom props and standard HTML attributes, ensuring a smoother integration of Styled Components within your React application.
+
+## Handling Pseudo Selectors, Nested Rules, and Media Queries in Styled Components
+
+- **Ampersand (`&`) Symbol:** Used to reference the styled component itself within its styles, enabling nested rules and pseudo selectors.
+- **Nested Rules:** Target child elements by using `&` followed by a space and the child selector (e.g., `& image`, `& h1`).
+- **Media Queries:** Apply styles based on screen size or other conditions using standard CSS media query syntax within the styled component (e.g., `@media (max-width: 600px) { ... }`).
+- **Pseudo Selectors:** Apply styles based on element states like hover, focus, etc., using `&:` followed by the selector (e.g., `&:hover`).
+
+**Example:**
+
+1. Handling Nested Rules and Media Queries in a Header:
+
+   ```javascript
+   import styled from "styled-components";
+
+   const StyledHeader = styled.header`
+     /* Base styles for the header */
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     /* ... */
+
+     /* Styles for nested elements */
+     & img {
+       width: 100px;
+       height: auto;
+     }
+
+     & h1 {
+       margin-left: 10px;
+     }
+
+     /* Media query for larger screens */
+     @media (min-width: 768px) {
+       margin-bottom: 4rem;
+
+       & h1 {
+         font-size: 2rem;
+       }
+     }
+   `;
+   ```
+
+2. Handling Pseudo Selectors in a Button:
+
+   ```javascript
+   const Button = styled.button`
+     /* Base button styles */
+     background-color: blue;
+     color: white;
+     padding: 10px 20px;
+
+     /* Hover styles */
+     &:hover {
+       background-color: tomato;
+     }
+   `;
+   ```
+
+**Remember:**
+
+- Styled components generate unique class names, preventing style conflicts.
+- You can create complex and dynamic styles using these features, enhancing UI responsiveness and interactivity.
 
 ---
 
