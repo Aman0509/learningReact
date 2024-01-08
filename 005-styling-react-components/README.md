@@ -10,6 +10,7 @@
 | [Scoping CSS Rules with CSS Modules](#scoping-css-rules-with-css-modules)                                            |
 | [Introducing "Styled Components" (Third Party Package)](#introducing-styled-components-third-party-package)          |
 | [Creating Flexible Components with Styled Components](#creating-flexible-components-with-styled-components)          |
+| [Dynamic & Conditional Styling with Styled Components](#dynamic--conditional-styling-with-styled-components)         |
 
 &nbsp;
 
@@ -503,6 +504,100 @@ const CustomContainer = () => {
 
 export default CustomContainer;
 ```
+
+## Dynamic & Conditional Styling with Styled Components
+
+Dynamic and conditional styling with Styled Components involves using props to alter the styles of components based on certain conditions or dynamic values. Let's break it down into a basic example:
+
+Consider a scenario where you want to style a button component based on its state, let's say 'disabled'. We'll use Styled Components to achieve this.
+
+First, let's create a Button component:
+
+```javascript
+import React from "react";
+import styled from "styled-components";
+
+// Create a styled button component
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: ${(props) => (props.disabled ? "#CCCCCC" : "#3498db")};
+  color: ${(props) => (props.disabled ? "#888888" : "#ffffff")};
+  border: none;
+  border-radius: 5px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.disabled ? "0.6" : "1")};
+`;
+
+// Define a functional component using the styled button
+const Button = ({ disabled, onClick, children }) => {
+  return (
+    <StyledButton disabled={disabled} onClick={onClick}>
+      {children}
+    </StyledButton>
+  );
+};
+
+export default Button;
+```
+
+**Explanation:**
+
+- `StyledButton` is a styled component created using `styled.button`.
+- It uses props to conditionally alter styles based on the `disabled` prop.
+- When `disabled` is true, it changes background color, text color, cursor, and opacity to represent a disabled state.
+
+Now, use this `Button` component in your app:
+
+```javascript
+import React from "react";
+import Button from "./Button"; // Import the Button component
+
+const App = () => {
+  const handleButtonClick = () => {
+    console.log("Button clicked!");
+  };
+
+  return (
+    <div>
+      {/* A normal button */}
+      <Button onClick={handleButtonClick}>Click me!</Button>
+
+      {/* A disabled button */}
+      <Button disabled onClick={handleButtonClick}>
+        Disabled Button
+      </Button>
+    </div>
+  );
+};
+
+export default App;
+```
+
+**Explanation:**
+
+- The `Button` component is used twice, once as a regular button and once as a `disabled` button.
+- The `disabled` prop is passed to the second button to apply conditional styles.
+
+### Prop Name Clash with HTML Attribute Names
+
+When using Styled Components, if the props you pass to your styled component clash with existing HTML attribute names, you can encounter issues or warnings (we will see the warnings in previous given example as well). To handle this and avoid conflicts:
+
+1. **Prefix Props:** Prefix your custom props with a symbol or unique string like a dollar sign (`$`) to differentiate them from standard HTML attributes. For instance, if you have a prop named `disabled`, which clashes with the HTML `disabled` attribute, rename it to `$disabled` within your styled component to prevent conflicts.
+
+2. **Modify in Styled Component Definition:** Within your styled component definition, ensure to destructure or rename props to avoid clashes. For example:
+
+   ```javascript
+   const StyledComponent = styled.div`
+     color: ${(props) => (props.$customProp ? "red" : "blue")};
+   `;
+   ```
+
+   Here, `$customProp` is used instead of `customProp` to avoid conflicts with HTML attributes.
+
+3. **Forwarding Props Carefully:** When using props to style elements or modify their behavior, ensure that only intended props are forwarded to the underlying HTML elements. You can use techniques like object destructuring or filtering to selectively forward props.
+
+By applying these practices, you can prevent naming clashes between your custom props and standard HTML attributes, ensuring a smoother integration of Styled Components within your React application.
 
 ---
 
