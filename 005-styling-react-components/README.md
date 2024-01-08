@@ -12,6 +12,7 @@
 | [Creating Flexible Components with Styled Components](#creating-flexible-components-with-styled-components)                                                       |
 | [Dynamic & Conditional Styling with Styled Components](#dynamic--conditional-styling-with-styled-components)                                                      |
 | [Handling Pseudo Selectors, Nested Rules, and Media Queries in Styled Components](#handling-pseudo-selectors-nested-rules-and-media-queries-in-styled-components) |
+| [Creating Reusable Components & Component Combinations](#creating-reusable-components--component-combinations)                                                    |
 
 &nbsp;
 
@@ -662,6 +663,78 @@ By applying these practices, you can prevent naming clashes between your custom 
 
 - Styled components generate unique class names, preventing style conflicts.
 - You can create complex and dynamic styles using these features, enhancing UI responsiveness and interactivity.
+
+## Creating Reusable Components & Component Combinations
+
+**Reusable Styled Components:**
+
+- Move styled components that are likely to be used in multiple parts of the application into separate files for better organization and reusability.
+- Example: Creating a `Button.jsx` file to house a reusable Button styled component.
+
+  ```javascript
+  /* Button.jsx */
+  import styled from "styled-components";
+
+  const Button = styled.button`
+    /* Button styles */
+  `;
+
+  export default Button;
+
+  /* AuthInputs.jsx */
+  import Button from "./Button.jsx";
+
+  // Use the Button component
+  export default function AuthInput(){
+  	return(
+  		// Some other components
+  		 <Button>Click me</Button>;
+  	);
+  }
+  ```
+
+**Combining Components:**
+
+- For common combinations of elements (e.g., `label` and `input`), create composite components that encapsulate their styling and structure.
+- This improves reusability and code maintainability.
+- Example: Creating a `CustomInput` component that combines a styled `label` and styled `input`.
+
+  ```javascript
+  /* CustomInput.jsx */
+  import styled from "styled-components";
+
+  const StyledLabel = styled.label`
+    /* Label styles */
+  `;
+
+  const StyledInput = styled.input`
+    /* Input styles */
+  `;
+
+  export default function CustomInput({ label, invalid, ...props }) {
+    return (
+      <p>
+        <StyledLabel $invalid={invalid}>{label}</StyledLabel>
+        <StyledInput $invalid={invalid} {...props} />
+      </p>
+    );
+  }
+
+  /* AuthInputs.jsx */
+  import CustomInput from "./CustomInput.jsx";
+
+  // Use the combined input component
+  <CustomInput
+    label="Email"
+    invalid={isInvalidEmail}
+    value={email}
+    onChange={handleEmailChange}
+  />;
+  ```
+
+### Pros & Cons of Styled Components
+
+<img src="https://drive.google.com/uc?export=view&id=1D-rogUW1pvpHJ2QjfO3Dg7aP-Xnt7TQN"  height="350" width="700" alt="academind slide">
 
 ---
 
