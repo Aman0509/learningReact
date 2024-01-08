@@ -8,6 +8,7 @@
 | [Styling React Apps with Inline Styles](#styling-react-apps-with-inline-styles)                                      |
 | [Dynamic & Conditional Styling with CSS Files and Classes](#dynamic--conditional-styling-with-css-files-and-classes) |
 | [Scoping CSS Rules with CSS Modules](#scoping-css-rules-with-css-modules)                                            |
+| [Introducing "Styled Components" (Third Party Package)](#introducing-styled-components-third-party-package)          |
 
 &nbsp;
 
@@ -365,6 +366,96 @@ Readings:
 
 - [What are CSS Modules and why do we need them?](https://css-tricks.com/css-modules-part-1-need/)
 - [Using CSS modules in React](https://bootcamp.uxdesign.cc/using-css-modules-in-react-cc17f7c81247)
+
+## Introducing "Styled Components" (Third Party Package)
+
+Styled Components is a library that allows you to write CSS directly inside your React components, keeping styles scoped and directly associated with the components they style.
+
+1. To start using Styled Components, you'll first need to install the library:
+
+   ```bash
+   npm install styled-components
+   ```
+
+2. **Importing `styled`:**
+
+   In the `styled-components` library, `styled` is a function. You first import the `styled` function from the `styled-components` library:
+
+   ```javascript
+   import styled from "styled-components";
+   ```
+
+3. **Creating Styled Components:**
+
+   To create a styled component, you call the `styled` function with the following arguments:
+
+   - **Base Component:** The HTML tag or React component you want to style (e.g., `button`, `div`, or a custom component).
+
+   - **Template Literal:** Contains the CSS styles to be applied, written within backticks (\`).
+
+   ```javascript
+   const StyledButton = styled.button`
+     /* CSS styles go here */
+   `;
+   ```
+
+   Or
+
+   ```javascript
+   const StyledCustomComponent = styled(CustomComponent)`
+     /* CSS styles go here */
+   `;
+   ```
+
+4. **Functionality:**
+
+- When you call `styled.tag`, it doesn't create a styled component directly.
+- Instead, it returns a function that accepts a template literal containing the CSS styles.
+- This function, when invoked, generates a new React component with the specified styles.
+
+Let's understand with an example:
+
+```javascript
+// StyledComponentExample.jsx
+
+import React from "react";
+import styled from "styled-components";
+
+// Creating a styled component
+const StyledParagraph = styled.p`
+  color: blue;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const StyledComponentExample = () => {
+  return (
+    <div>
+      <h1>Welcome</h1>
+      <StyledParagraph>This is a styled paragraph.</StyledParagraph>
+    </div>
+  );
+};
+
+export default StyledComponentExample;
+```
+
+In this example, the `styled` function from `styled-components` is used to create a `StyledParagraph` component. The CSS rules specified inside the backticks (\`\`), using the [Tagged Template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) concept, are applied to the `p` element rendered by `StyledParagraph`.
+
+You can then use `StyledParagraph` in your JSX just like any other React component and it can also wrapped around the content which will be captured by special `children` prop.
+
+```javascript
+<StyledParagraph>This is a styled paragraph.</StyledParagraph>
+```
+
+Behind the scenes, Styled Components generates unique class names for your styles and attaches them to the appropriate elements. This keeps your styles encapsulated within the component, preventing global style conflicts and making your code more maintainable.
+
+Readings:
+
+- [How styled-components works: A deep dive under the hood
+  ](https://medium.com/styled-components/how-styled-components-works-618a69970421)
+
+- [How to Use Styled Components in Your React Apps](https://www.freecodecamp.org/news/styled-components-in-react/)
 
 ---
 
