@@ -1,10 +1,11 @@
 # Debugging React Apps
 
-| Contents                                                                       |
-| :----------------------------------------------------------------------------- |
-| [Understanding React Error Message](#understanding-react-error-message)        |
-| [Using the Browser Debugger & Breakpoints](#understanding-react-error-message) |
-| [Understanding React's "Strict Mode"](#understanding-reacts-strict-mode)       |
+| Contents                                                                                      |
+| :-------------------------------------------------------------------------------------------- |
+| [Understanding React Error Message](#understanding-react-error-message)                       |
+| [Using the Browser Debugger & Breakpoints](#understanding-react-error-message)                |
+| [Understanding React's "Strict Mode"](#understanding-reacts-strict-mode)                      |
+| [Using the React Dev Tools (Browser Extension)](#using-the-react-dev-tools-browser-extension) |
 
 &nbsp;
 
@@ -114,6 +115,14 @@ Readings:
 
 - [What is Strict Mode in React?](https://dev.to/codeofrelevancy/what-is-strict-mode-in-react-3p5b)
 - [What is StrictMode in React? - StackOverflow](https://stackoverflow.com/questions/53183362/what-is-strictmode-in-react)
+
+## Using the React Dev Tools (Browser Extension)
+
+Please refer below readings to learn about this extension.
+
+Readings:
+
+- [How to Use React Dev Tools – With Example Code and Videos](https://www.freecodecamp.org/news/how-to-use-react-dev-tools/)
 
 ---
 
