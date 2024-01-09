@@ -13,6 +13,7 @@
 | [Dynamic & Conditional Styling with Styled Components](#dynamic--conditional-styling-with-styled-components)                                                      |
 | [Handling Pseudo Selectors, Nested Rules, and Media Queries in Styled Components](#handling-pseudo-selectors-nested-rules-and-media-queries-in-styled-components) |
 | [Creating Reusable Components & Component Combinations](#creating-reusable-components--component-combinations)                                                    |
+| [Introducing Tailwind CSS for React App Styling](#introducing-tailwind-css-for-react-app-styling)                                                                 |
 
 &nbsp;
 
@@ -735,6 +736,16 @@ By applying these practices, you can prevent naming clashes between your custom 
 ### Pros & Cons of Styled Components
 
 <img src="https://drive.google.com/uc?export=view&id=1D-rogUW1pvpHJ2QjfO3Dg7aP-Xnt7TQN"  height="350" width="700" alt="academind slide">
+
+## Introducing Tailwind CSS for React App Styling
+
+Tailwind CSS is a highly popular framework for styling web applications that doesn't specifically target React but integrates seamlessly with it. It offers a utility-first approach, allowing developers to apply tiny, single-purpose CSS classes directly to HTML elements to build component styles incrementally.
+
+It is a utility-first CSS framework that streamlines the styling process by offering a comprehensive set of pre-defined utility classes. It's different from traditional CSS frameworks as it provides low-level utility classes that developers can combine to create custom designs rather than relying on pre-designed components.
+
+Find [here](https://tailwindcss.com/docs/installation/framework-guides) the process of configuring Tailwind into a React project.
+
+<img src="https://drive.google.com/uc?export=view&id=1ojMEJKS1gv2WnaIfWMaz1RRtvb03bjD3"  height="350" width="700" alt="academind slide">
 
 ---
 
