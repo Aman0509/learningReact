@@ -1,8 +1,9 @@
 # Debugging React Apps
 
-| Contents |
-| :------- |
-|          |
+| Contents                                                                       |
+| :----------------------------------------------------------------------------- |
+| [Understanding React Error Message](#understanding-react-error-message)        |
+| [Using the Browser Debugger & Breakpoints](#understanding-react-error-message) |
 
 &nbsp;
 
@@ -66,6 +67,16 @@ When you encounter an error message in React, the approach you take to understan
 13. **Learn from the Experience:**
 
 - Each error presents an opportunity to learn. Reflect on how you resolved the issue and what you learned in the process. It'll help you tackle similar issues more effectively in the future.
+
+## Using the Browser Debugger & Breakpoints
+
+Please refer below readings to understand about the working of browser developer tools.
+
+Readings:
+
+- [A Beginner’s Guide to JavaScript Debugging in Chrome](https://coderpad.io/blog/development/javascript-debugging-in-chrome/)
+- [Debugging in the browser](https://javascript.info/debugging-chrome)
+- [Pause your code with breakpoints](https://developer.chrome.com/docs/devtools/javascript/breakpoints)
 
 ---
 
