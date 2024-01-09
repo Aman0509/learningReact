@@ -16,4 +16,4 @@ Download the boilerplate for this project from [here](https://github.com/academi
 
 ---
 
-[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> React Essentials - Deep Dive](../003-react-essentials-deep-dive/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>]()
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> React Essentials - Deep Dive](../003-react-essentials-deep-dive/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Styling React Components <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../005-styling-react-components/README.md)
