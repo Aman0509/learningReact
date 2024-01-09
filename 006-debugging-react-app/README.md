@@ -4,6 +4,7 @@
 | :----------------------------------------------------------------------------- |
 | [Understanding React Error Message](#understanding-react-error-message)        |
 | [Using the Browser Debugger & Breakpoints](#understanding-react-error-message) |
+| [Understanding React's "Strict Mode"](#understanding-reacts-strict-mode)       |
 
 &nbsp;
 
@@ -77,6 +78,42 @@ Readings:
 - [A Beginner’s Guide to JavaScript Debugging in Chrome](https://coderpad.io/blog/development/javascript-debugging-in-chrome/)
 - [Debugging in the browser](https://javascript.info/debugging-chrome)
 - [Pause your code with breakpoints](https://developer.chrome.com/docs/devtools/javascript/breakpoints)
+
+## Understanding React's "Strict Mode"
+
+StrictMode is a development-only tool in React that helps identify potential problems in your code before they cause issues in production. Here's a summary of its key features:
+
+**Purpose:**
+
+- **Catches potential bugs early:** It reveals issues that might not be immediately apparent otherwise, leading to a more robust application.
+- **Promotes best practices:** It encourages the use of modern React patterns and discourages outdated or unsafe practices.
+- **Improves code quality:** By identifying potential problems early, it helps you write cleaner and more predictable React code.
+
+**How It Works:**
+
+- **Wrapping Components:** You typically wrap the root component of your application in `<StrictMode>` tags in your `index.jsx` file, but you can also use it selectively for specific components.
+
+```javascript
+<StrictMode>
+  <YourApp />
+</StrictMode>
+```
+
+- **Double Rendering:** During development, StrictMode triggers two renders for every component function it wraps. This double rendering can expose potential issues.
+
+- **Additional Checks:** It performs other checks, such as:
+  - Warning about legacy lifecycle methods that might be unsafe.
+  - Detecting usage of deprecated features.
+  - Encouraging reusable state.
+
+**Development-Only:**
+
+- **No Production Impact:** StrictMode only runs in development mode and doesn't affect the production build of your app. It's designed to help you write better code during development, not to add overhead in production.
+
+Readings:
+
+- [What is Strict Mode in React?](https://dev.to/codeofrelevancy/what-is-strict-mode-in-react-3p5b)
+- [What is StrictMode in React? - StackOverflow](https://stackoverflow.com/questions/53183362/what-is-strictmode-in-react)
 
 ---
 
