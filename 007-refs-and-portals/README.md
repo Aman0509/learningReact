@@ -3,6 +3,7 @@
 | Contents                              |
 | :------------------------------------ |
 | [Introducing Refs](#introducing-refs) |
+| [Manipulating the DOM via Refs](#manipulating-the-dom-via-refs) |
 
 &nbsp;
 
@@ -68,6 +69,39 @@ Readings:
 
 - [Referencing Values with Refs](https://react.dev/learn/referencing-values-with-refs)
 - [React Refs – A Complete Guide](https://codedamn.com/news/reactjs/react-refs-a-complete-guide)
+
+## Manipulating the DOM via Refs
+
+- **Direct DOM Manipulation:** Refs allow you to directly interact with DOM elements outside React's typical declarative paradigm.
+- **Trade-offs:** While refs can be useful for specific tasks, it's essential to balance their benefits with potential drawbacks.
+- **Declarative vs. Imperative:** React generally promotes a declarative approach, where you describe the desired UI state, and React handles updates. Refs introduce imperative code, where you directly control DOM elements.
+- **Judicious Use:** Use refs sparingly and for appropriate use cases to avoid overstepping React's control and potentially hindering its optimizations.
+
+**Example: Clearing an Input**
+
+1. Create a ref:
+
+   ```javascript
+   const inputRef = useRef(null);
+   ```
+
+2. Attach it to the input:
+
+   ```javascript
+   <input type="text" ref={inputRef} />
+   ```
+
+3. Clear the input on a button click:
+
+   ```javascript
+   function handleClick() {
+     inputRef.current.value = ""; // Clear input value - Imperative Approach
+   }
+   ```
+
+In above example, we're just clearing the input which is not really connected to any other state. Writing this way in imperative approach can be considered in scenario like this since it allows to save writing lot of code.
+
+But you should definitely be careful that you don't start using refs to read and manipulate all kinds of values on your page because that's really not the idea behind React.
 
 ---
 
