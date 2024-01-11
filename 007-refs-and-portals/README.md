@@ -1,9 +1,10 @@
 # Working with Refs & Portals
 
-| Contents                              |
-| :------------------------------------ |
-| [Introducing Refs](#introducing-refs) |
+| Contents                                                        |
+| :-------------------------------------------------------------- |
+| [Introducing Refs](#introducing-refs)                           |
 | [Manipulating the DOM via Refs](#manipulating-the-dom-via-refs) |
+| [Refs vs State Values](#refs-vs-state-values)                   |
 
 &nbsp;
 
@@ -102,6 +103,124 @@ Readings:
 In above example, we're just clearing the input which is not really connected to any other state. Writing this way in imperative approach can be considered in scenario like this since it allows to save writing lot of code.
 
 But you should definitely be careful that you don't start using refs to read and manipulate all kinds of values on your page because that's really not the idea behind React.
+
+## Refs vs State Values
+
+<img src="https://drive.google.com/uc?export=view&id=1cU34tuzbmTo2Pj7FeXkU3SKxnGpCxgpj"  height="350" width="700" alt="academind slide">
+
+Here's a breakdown of the differences between Refs and State in React:
+
+<table>
+  <thead>
+		<tr>
+			<th>Basis</th>
+			<th>State</th>
+			<th>Refs</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th>Purpose</th>
+			<td>
+				Manages data that drives UI updates and re-renders. Changes to state trigger re-rendering of the component and its children.
+			</td>
+			<td>
+				Provide direct access to DOM elements or component instances, primarily for:
+					<ul>
+						<li>
+							Direct DOM manipulation (e.g., focusing elements, measuring dimensions)
+						</li>
+						<li>
+							Integrating third-party libraries that require DOM access
+						</li>
+					</ul>
+			</td>
+		</tr>
+		<tr>
+			<th>Creation</th>
+			<td>
+				Use the <code>useState</code> hook to create state variables:
+				<pre>
+					const [count, setCount] = useState(0);
+				</pre>
+			</td>
+			<td>
+				Use the <code>useRef</code> hook to create refs:
+				<pre>const inputRef = useRef(null);</pre>
+			</td>
+		</tr>
+		<tr>
+			<th>Attachment</th>
+			<td>
+				Pass state values to elements using props:
+				<pre>&lt;p&gt;You clicked {count} times&lt;/p&gt;</pre> 
+			</td>
+			<td>
+				Attach refs to elements using the <code>refs</code> prop: <pre>&lt;input type="text" ref={inputRef} /&gt;</pre>
+			</td>
+		</tr>
+		<tr>
+			<th>Accessing Values</th>
+			<td>
+				Access state values directly:
+				<pre>const doubleCount = count * 2;</pre>
+			</td>
+			<td>
+				Access the referenced element or component instance through the <code>current</code> property:
+				<pre>inputRef.current.focus();</pre>
+			</td>
+		</tr>
+		<tr>
+			<th>Triggering Re-renders</th>
+			<td>
+				Updating state values triggers a re-render of the component and its children, reflecting changes in the UI.
+				<pre>
+					setCount(count + 1);
+				</pre>
+			</td>
+			<td>
+				Updating a ref's value does not trigger a re-render.
+			</td>
+		</tr>
+		<tr>
+			<th>Example</th>
+			<td>
+				Counting clicks:
+				<pre>
+					function Counter() {
+    				const [count, setCount] = useState(0);
+						const handleClick = () => {
+								setCount(count + 1);
+						};
+					return (
+        		&lt;div&gt;
+            	&lt;p&gt;You clicked {count} times&lt;/p&gt;
+            	&lt;button onClick={handleClick}>Click me&lt;/button&gt;
+        		&lt;/div&gt;
+    				);
+					}
+				</pre>
+			</td>
+			<td>
+				Focusing an Input:
+				<pre>
+					function MyComponent() {
+    				const inputRef = useRef(null);
+						const handleClick = () => {
+        			inputRef.current.focus();
+    				};
+    				return (
+						&lt;div&gt;
+								&lt;input type="text" ref={inputRef} /&gt;
+								&lt;button onClick={handleClick}>Focus input&lt;/button&gt;
+						&lt;/div&gt;
+    				);
+					}
+				</pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 ---
 
