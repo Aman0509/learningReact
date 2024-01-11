@@ -1,10 +1,11 @@
 # Working with Refs & Portals
 
-| Contents                                                        |
-| :-------------------------------------------------------------- |
-| [Introducing Refs](#introducing-refs)                           |
-| [Manipulating the DOM via Refs](#manipulating-the-dom-via-refs) |
-| [Refs vs State Values](#refs-vs-state-values)                   |
+| Contents                                                                                                |
+| :------------------------------------------------------------------------------------------------------ |
+| [Introducing Refs](#introducing-refs)                                                                   |
+| [Manipulating the DOM via Refs](#manipulating-the-dom-via-refs)                                         |
+| [Refs vs State Values](#refs-vs-state-values)                                                           |
+| [Using Refs for more than "DOM Element Connections"](#using-refs-for-more-than-dom-element-connections) |
 
 &nbsp;
 
@@ -221,6 +222,14 @@ Here's a breakdown of the differences between Refs and State in React:
 		</tr>
 	</tbody>
 </table>
+
+## Using Refs for more than "DOM Element Connections"
+
+- **Refs for Non-DOM Values:** While refs are often used to access DOM elements, they can also store any kind of mutable value that needs to persist across renders without triggering re-renders.
+- **Persistence Across Renders:** React maintains ref values even when a component re-renders, ensuring data isn't lost.
+- **Instance-Specific Values:** Refs defined within a component function are unique to each component instance, allowing independent values for multiple instances.
+
+Checkout the [starter-project](./projects/01-starting-project/) to understand this concept.
 
 ---
 
