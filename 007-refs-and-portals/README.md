@@ -6,6 +6,7 @@
 | [Manipulating the DOM via Refs](#manipulating-the-dom-via-refs)                                         |
 | [Refs vs State Values](#refs-vs-state-values)                                                           |
 | [Using Refs for more than "DOM Element Connections"](#using-refs-for-more-than-dom-element-connections) |
+| [Forwarding Refs to Custom Components](#forwarding-refs-to-custom-components)                           |
 
 &nbsp;
 
@@ -230,6 +231,60 @@ Here's a breakdown of the differences between Refs and State in React:
 - **Instance-Specific Values:** Refs defined within a component function are unique to each component instance, allowing independent values for multiple instances.
 
 Checkout the [starter-project](./projects/01-starting-project/) to understand this concept.
+
+## Forwarding Refs to Custom Components
+
+In React, forwarding refs is a technique that allows a parent component to pass its ref to a child component. This is particularly useful when you want to access or manipulate the child component's DOM element from the parent component. Forwarding refs is commonly used when you are working with custom components or higher-order components.
+
+**How Forwarding Works:**
+
+1. **Attach Ref to Custom Component:**
+
+   - Attach a ref to the custom component using the `ref` prop.
+   - React passes this ref as a special prop ([`forwardedRef`](https://react.dev/reference/react/forwardRef)) to the custom component.
+
+2. **Forward Ref to Child:**
+
+   - Within the custom component, use `React.forwardRef` to "forward" the ref to a specific child element or component.
+   - This connects the ref to the desired element or component instance.
+
+**Example:**
+
+```javascript
+// Custom input component with ref forwarding
+const CustomInput = React.forwardRef((props, ref) => {
+  return <input type="text" ref={ref} {...props} />;
+});
+
+// Using the custom component and accessing its input element
+function MyComponent() {
+  const inputRef = useRef(null);
+
+  const handleFocus = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <div>
+      <CustomInput ref={inputRef} />
+      <button onClick={handleFocus}>Focus Input</button>
+    </div>
+  );
+}
+```
+
+**Key Points:**
+
+- **`React.forwardRef:`** This function creates a component that can accept a ref and forward it to a child.
+- **Ref as Prop:** React passes the ref as a prop (forwardedRef) to the custom component.
+- **`ref` Argument:** The forwardRef function's second argument (ref) receives the forwarded ref.
+- **Accessing Child Elements:** You can now access the child element's methods and properties using the ref attached to the custom component.
+
+Readings:
+
+- [Forwarding Refs](https://legacy.reactjs.org/docs/forwarding-refs.html)
+- [Forwarding refs to components](https://medium.com/@mariokandut/forwarding-refs-to-components-85e4fd315ab9)
+- [How to use forwardRef in React](https://blog.logrocket.com/use-forwardref-react/#:~:text=Forwarding%20refs%20in%20React%20using%20forwardRef,-When%20a%20child&text=The%20technique%20is%20called%20ref,ref%20to%20a%20child%20component.)
 
 ---
 
