@@ -1,12 +1,13 @@
 # Working with Refs & Portals
 
-| Contents                                                                                                |
-| :------------------------------------------------------------------------------------------------------ |
-| [Introducing Refs](#introducing-refs)                                                                   |
-| [Manipulating the DOM via Refs](#manipulating-the-dom-via-refs)                                         |
-| [Refs vs State Values](#refs-vs-state-values)                                                           |
-| [Using Refs for more than "DOM Element Connections"](#using-refs-for-more-than-dom-element-connections) |
-| [Forwarding Refs to Custom Components](#forwarding-refs-to-custom-components)                           |
+| Contents                                                                                                                |
+| :---------------------------------------------------------------------------------------------------------------------- |
+| [Introducing Refs](#introducing-refs)                                                                                   |
+| [Manipulating the DOM via Refs](#manipulating-the-dom-via-refs)                                                         |
+| [Refs vs State Values](#refs-vs-state-values)                                                                           |
+| [Using Refs for more than "DOM Element Connections"](#using-refs-for-more-than-dom-element-connections)                 |
+| [Forwarding Refs to Custom Components](#forwarding-refs-to-custom-components)                                           |
+| [Exposing Component APIs via the `useImperativeHandle` hook](#exposing-component-apis-via-the-useimperativehandle-hook) |
 
 &nbsp;
 
@@ -285,6 +286,83 @@ Readings:
 - [Forwarding Refs](https://legacy.reactjs.org/docs/forwarding-refs.html)
 - [Forwarding refs to components](https://medium.com/@mariokandut/forwarding-refs-to-components-85e4fd315ab9)
 - [How to use forwardRef in React](https://blog.logrocket.com/use-forwardref-react/#:~:text=Forwarding%20refs%20in%20React%20using%20forwardRef,-When%20a%20child&text=The%20technique%20is%20called%20ref,ref%20to%20a%20child%20component.)
+
+## Exposing Component APIs via the [`useImperativeHandle`](https://react.dev/reference/react/useImperativeHandle) hook
+
+The purpose of exposing a component API is to provide a clear and stable interface for interacting with a component from the outside, without exposing the internal implementation details. This practice enhances the encapsulation of a component, allowing developers to interact with it through a well-defined set of methods or properties.
+
+**Key Points:**
+
+- **Purpose:** To expose specific properties or methods of a component to be accessed and called imperatively from outside the component using a ref.
+
+- **Usage:** Often used for:
+
+  - Creating custom components with imperative actions (e.g., opening a modal dialog).
+  - Interacting with third-party libraries that require direct DOM access.
+
+- **Relationship with `forwardRef`:** Frequently used together to forward a ref to a component while also defining an API for external interaction.
+
+**Example:**
+
+```javascript
+// ResultModal component (using forwardRef and useImperativeHandle)
+const ResultModal = React.forwardRef((props, ref) => {
+  const dialogRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    open() {
+      dialogRef.current.showModal();
+    },
+  }));
+
+  return <dialog ref={dialogRef}>{/* Modal content */}</dialog>;
+});
+
+// TimerChallenge component (using the ref)
+const TimerChallenge = () => {
+  const dialogRef = useRef(null);
+
+  const handleStart = () => {
+    // ...
+    dialogRef.current.open(); // Call the exposed 'open' method
+  };
+
+  return (
+    <div>
+      {/* ... */}
+      <ResultModal ref={dialogRef} />
+      <button onClick={handleStart}>Start</button>
+    </div>
+  );
+};
+```
+
+1. **Forward Ref to Component:** Use `React.forwardRef` to create the `ResultModal` component, accepting a ref.
+
+2. **Use `useImperativeHandle`:** Inside `ResultModal`, call `useImperativeHandle` with two arguments:
+
+   - The forwarded ref received from `forwardRef`.
+   - A function that returns an object containing the exposed API.
+
+3. **Expose Methods and Properties:**
+
+   - In the object returned by the function, define the methods or properties to be exposed (e.g., `open`).
+   - These methods can access and manipulate the component's internal state or DOM elements.
+
+4. **Attach Ref and Call Exposed Methods:**
+   - In the parent component (`TimerChallenge`), attach a ref to the `ResultModal` component.
+   - Use the ref's current property to access the exposed methods and call them (e.g., `dialog.current.open()`).
+
+**Benefits:**
+
+- **Encapsulation:** Controls how a component is interacted with from outside, promoting better organization and maintainability.
+- **Flexibility:** Allows for more imperative interactions with components when necessary, without relying solely on declarative data flow.
+- **Reusability:** Components can be reused in different contexts while maintaining a consistent API for interaction.
+
+Readings:
+
+- [Understanding useImperativeHandle: A Powerful Hook for React Development](https://medium.com/@nadeem.ahmad.na/understanding-useimperativehandle-a-powerful-hook-for-react-development-46063e44e52a)
+- [React Hooks Explained: useImperativeHandle](https://dev.to/anikcreative/react-hooks-explained-useimperativehandle-5g44)
 
 ---
 
