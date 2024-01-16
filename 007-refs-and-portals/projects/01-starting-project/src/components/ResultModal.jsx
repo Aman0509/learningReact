@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 
 // Wrapping a component function with `forwardRef` will results in receiving
 // another parameter called `ref` which contains the ref pass into the component
@@ -7,8 +7,17 @@ const ResultModal = forwardRef(function ResultModal(
   { result, targetTime },
   ref
 ) {
+  const dialog = useRef();
+  useImperativeHandle(ref, () => {
+    return {
+      open() {
+        dialog.current.showModal();
+      },
+    };
+  });
+
   return (
-    <dialog ref={ref} className="result-modal">
+    <dialog ref={dialog} className="result-modal">
       <h2>You {result}</h2>
       <p>
         The target time was <strong>{targetTime} seconds.</strong>
