@@ -1,3 +1,16 @@
 # Projects (Refs and Portals)
 
 ## [Starting Project](./01-starting-project/)
+
+1. [Add Project (Boilerplate)](https://github.com/Aman0509/learningReact/pull/7/commits/14ed72f3aa04448231b8925f80b7ee371b9bdf62)
+2. [Demonstrate again User Input with State (2-Way Binding)](https://github.com/Aman0509/learningReact/pull/7/commits/ccaa59977f109265ae23eae591960773081fb584)
+3. [Replace 2-Way Binding Approach with Refs](https://github.com/Aman0509/learningReact/pull/7/commits/3a7567adeb4de7dbd2cfbf2786768e10a4f28457)
+4. [Manipulating DOM via Refs](https://github.com/Aman0509/learningReact/pull/7/commits/e410a3332819c6c5fa99ccbef27bfcb55efe9254)
+5. [Add Challenges to the Demo Project](https://github.com/Aman0509/learningReact/pull/7/commits/ef998a4baed5803820a7044fd907d70ed542f614)
+6. [Settings Timer & Managing State](https://github.com/Aman0509/learningReact/pull/7/commits/9ddf6c770d80f04426d17f9333c91bb4c46a37a6)
+7. [Using Refs to Store Values](https://github.com/Aman0509/learningReact/pull/7/commits/604408c8345da54a0381249b486fff9effc4568d)
+8. [Forwarding Refs and `<dialog>` HTML Element](https://github.com/Aman0509/learningReact/pull/7/commits/1fc74c345ff97dbc68c8cbd04dccbdc396ac2e8b)
+9. [Exposing Component APIs via `useImperativeHandler` Hook](https://github.com/Aman0509/learningReact/pull/7/commits/f467d63b3ed6cabc439c0ceba543b232781760ba)
+10. [More Examples about When to Use Refs & State](https://github.com/Aman0509/learningReact/pull/7/commits/e984a2199e69e117c58880b606a94ba697d59da2)
+11. [Sharing State across Components & Enhancing `ResultModal`](https://github.com/Aman0509/learningReact/pull/7/commits/0d247f41679081958fe1042c21893e6a2c51311d)
+12. [Use Portals to Implement Modals](https://github.com/Aman0509/learningReact/pull/7/commits/356e3f22968d0842af83cfef289b175cafb2c0b4)
