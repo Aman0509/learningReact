@@ -8,6 +8,7 @@
 - [React Essentials - Practice Projects](004-react-essentials-practice-project/README.md)
 - [Styling React Components](005-styling-react-components/README.md)
 - [Debugging React Apps](006-debugging-react-app/README.md)
+- [Working with Refs & Portals](007-refs-and-portals/README.md)
 
 ## References
 
