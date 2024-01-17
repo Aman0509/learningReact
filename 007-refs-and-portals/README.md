@@ -8,6 +8,7 @@
 | [Using Refs for more than "DOM Element Connections"](#using-refs-for-more-than-dom-element-connections)                 |
 | [Forwarding Refs to Custom Components](#forwarding-refs-to-custom-components)                                           |
 | [Exposing Component APIs via the `useImperativeHandle` hook](#exposing-component-apis-via-the-useimperativehandle-hook) |
+| [Introducing & Understanding Portals](#introducing--understanding-portals)                                              |
 
 &nbsp;
 
@@ -363,6 +364,63 @@ Readings:
 
 - [Understanding useImperativeHandle: A Powerful Hook for React Development](https://medium.com/@nadeem.ahmad.na/understanding-useimperativehandle-a-powerful-hook-for-react-development-46063e44e52a)
 - [React Hooks Explained: useImperativeHandle](https://dev.to/anikcreative/react-hooks-explained-useimperativehandle-5g44)
+
+## Introducing & Understanding Portals
+
+- Portals are a feature of React that allow you to render components outside the normal DOM hierarchy of the parent component.
+
+- This means you can place components anywhere in the DOM, regardless of their location in your JSX code.
+
+**Why use Portals?**
+
+- **Modals and Overlays:** Portals can be useful for rendering components that need to break out of the component’s container, such as modals, tooltips, or popups.
+
+- **Accessibility & Styling:** They are particularly useful for scenarios where rendering content in its original position might lead to styling or accessibility issues.
+
+**How to use Portals?**
+
+- To use portals, you need to import the [`createPortal`](https://react.dev/reference/react-dom/createPortal) function from `react-dom`. This function allows you to create a portal and specify the target element in the HTML where the content should be rendered.
+
+  ```javascript
+  import { createPortal } from "react-dom";
+  ```
+
+- Create the JSX code for the component's content.
+
+- Use `createPortal` to wrap the JSX code and specify the target element using `document.getElementById`.
+
+**Example:**
+
+Consider a scenario where a modal component is visually placed next to a section in the UI, but for better organization and accessibility, it would be more logical to render the modal at a higher level in the HTML structure, such as directly inside the `<body>` or a specific container `<div>`.
+
+```javascript
+import { createPortal } from "react-dom";
+
+const ResultModal = () => {
+  // JSX code for the modal content
+
+  return createPortal(
+    // JSX code to be teleported
+    <dialog>{/* Modal content */}</dialog>,
+    // Target element where the content should be rendered
+    document.getElementById("modal")
+  );
+};
+```
+
+In the example, a `<div>` with the ID of `modal` is added to serve as the target element.
+
+```HTML
+<!-- In the index.html file -->
+<div id="modal"></div>
+```
+
+Readings:
+
+- [A Guide to React Portals](https://semaphoreci.com/blog/react-portals)
+- [Learn React Portals by example](https://blog.logrocket.com/learn-react-portals-example/)
+- [Digging Deeper Into React Portals With Examples](https://betterprogramming.pub/digging-deeper-into-react-portals-with-examples-937f925edfa4)
+- [Portals in React: Creating Powerful UI Overlays and Modal Dialogs](https://medium.com/@greennolgaa/portals-in-react-creating-powerful-ui-overlays-and-modal-dialogs-d75b42606edd)
 
 ---
 
