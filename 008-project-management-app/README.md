@@ -1,3 +1,15 @@
 # Practice Project: Project Management App
 
-1. [Add Project (Boilerplate)]()
+1. [Add Project (Boilerplate)](https://github.com/Aman0509/learningReact/commit/d570cc83fa3d22c9ec8900cb67454fe9b39f5523)
+2. [Add "Project Sidebar" component with styles](https://github.com/Aman0509/learningReact/commit/37ed3339c0b3a966b1818e548c72af0fc0b443bf)
+3. [Add "New Project" & "Input" components with their styles](https://github.com/Aman0509/learningReact/commit/dbae0b058da0eb2085b381038399d903dc5c4d88)
+4. [Created & split components](https://github.com/Aman0509/learningReact/commit/9cec0e11b958b176f0869309239689e5883f6cd2)
+5. [Manage state to switch between components](https://github.com/Aman0509/learningReact/commit/abefcce573be930bdf85acf5ee1732c6b0af2baa)
+6. [Collecting user input with refs & forwarded refs](https://github.com/Aman0509/learningReact/commit/03b5485312b96d44219f2b061578576c6c2b983a)
+7. [Handle project creation & updating the UI](https://github.com/Aman0509/learningReact/commit/4338bb10656a6049b4a97c6cbf147258dd778bf8)
+8. [Validate user input & show an error modal](https://github.com/Aman0509/learningReact/commit/86fb025f7803840116778612bd220d73d8057aa5)
+9. [Make project selectable & view project details](https://github.com/Aman0509/learningReact/commit/c74987dfcb0d02eb4764d15e48007b9432e5fd90)
+10. [Handle project delete operation](https://github.com/Aman0509/learningReact/commit/c58ca433710f32a300d6f01da771fe2645b54ebd)
+11. [Add project tasks & tasks component](https://github.com/Aman0509/learningReact/commit/0704ed4e7c63081087ba2f21ade0458bdadded27)
+12. [Manage tasks & understand about prop drilling](https://github.com/Aman0509/learningReact/commit/a74a979e6ea16441b0da86146f434e23b0ce49f2)
+13. [Clear tasks & fix minor bugs](https://github.com/Aman0509/learningReact/commit/514023c25f860ebb96420edbf2d5ac2b9cf6aee3)
