@@ -14,6 +14,86 @@
 12. [Manage tasks & understand about prop drilling](https://github.com/Aman0509/learningReact/commit/a74a979e6ea16441b0da86146f434e23b0ce49f2)
 13. [Clear tasks & fix minor bugs](https://github.com/Aman0509/learningReact/commit/514023c25f860ebb96420edbf2d5ac2b9cf6aee3)
 
+## Prop Drilling
+
+Prop drilling is a term used in React to describe the process of passing data from a component to another component by threading it through all intermediate components in the component tree. In other words, it involves passing props down multiple levels of nested components just to deliver them to a deeply nested child component that needs access to the data.
+
+For example, imagine a parent component (Parent) that renders a child component (Child), which in turn renders another child component (Grandchild). If Grandchild needs access to some data that is originally provided by Parent, but Child doesn't directly use that data, you would need to pass the data through Child as props just to get it to Grandchild. This can result in unnecessary complexity and boilerplate code.
+
+Prop drilling can make the code harder to maintain and understand, especially as the application grows and the component tree becomes deeper and more complex. It can also lead to performance issues, as each component in the chain has to re-render when props change, even if they're not directly using those props.
+
+To mitigate prop drilling, you can use techniques like Context API, Redux, or custom hooks to manage and share state in a more centralized and efficient way, allowing components to access the necessary data without having to pass it down explicitly through props. These approaches help to avoid the need for excessive prop drilling and make the codebase cleaner and more maintainable.
+
+**Example:** Suppose we have three components: `Parent`, `Child`, and `Grandchild`.
+
+**_Parent.js_**
+
+```javascript
+// Parent.js
+import React, { useState } from "react";
+import Child from "./Child";
+
+const Parent = () => {
+  const [data, setData] = useState("Hello from Parent!");
+
+  return (
+    <div>
+      <h1>Parent Component</h1>
+      <Child data={data} />
+    </div>
+  );
+};
+
+export default Parent;
+```
+
+**_Child.js_**
+
+```javascript
+// Child.js
+import React from "react";
+import Grandchild from "./Grandchild";
+
+const Child = ({ data }) => {
+  return (
+    <div>
+      <h2>Child Component</h2>
+      <Grandchild data={data} />
+    </div>
+  );
+};
+
+export default Child;
+```
+
+**_Grandchild.js_**
+
+```javascript
+// Grandchild.js
+import React from "react";
+
+const Grandchild = ({ data }) => {
+  return (
+    <div>
+      <h3>Grandchild Component</h3>
+      <p>Data received: {data}</p>
+    </div>
+  );
+};
+
+export default Grandchild;
+```
+
+In this example, `Parent` holds some data (`data`) in its state and passes it down to `Child` as a prop. However, `Child` itself doesn't directly use `data`; it simply passes it down again to `Grandchild`. Finally, `Grandchild` receives `data` as a prop and displays it.
+
+This is a simple example of prop drilling: `data` is passed down through `Child` just to get it to `Grandchild`, even though `Child` doesn't actually need to use `data`.
+
+Readings:
+
+- [How to Avoid Prop Drilling in React](https://www.freecodecamp.org/news/avoid-prop-drilling-in-react/)
+- [What is prop drilling in React?](https://www.educative.io/answers/what-is-prop-drilling-in-react)
+- [Prop Drilling in React](https://www.scaler.com/topics/react/prop-drilling-in-react/)
+
 ---
 
 [<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Working with Refs & Portals](../007-refs-and-portals/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>]()
