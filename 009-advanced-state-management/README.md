@@ -1,11 +1,12 @@
 # React's Context API & `useReducer` - Advanced State Management
 
-| Contents                                                                                                 |
-| :------------------------------------------------------------------------------------------------------- |
-| [Prop Drilling: Component Composition as a Solution](#prop-drilling-component-composition-as-a-solution) |
-| [Introducing the context API](#introducing-the-context-api)                                              |
-| [Default Value vs `value` prop with `Provider`](#default-value-vs-value-prop-with-provider)              |
-| [What happens When Context Values Change?](#what-happens-when-context-values-change)                     |
+| Contents                                                                                                              |
+| :-------------------------------------------------------------------------------------------------------------------- |
+| [Prop Drilling: Component Composition as a Solution](#prop-drilling-component-composition-as-a-solution)              |
+| [Introducing the context API](#introducing-the-context-api)                                                           |
+| [Default Value vs `value` prop with `Provider`](#default-value-vs-value-prop-with-provider)                           |
+| [What happens When Context Values Change?](#what-happens-when-context-values-change)                                  |
+| [A Different Way of Consuming Context (Consumer Component)](#a-different-way-of-consuming-context-consumer-component) |
 
 &nbsp;
 
@@ -225,6 +226,93 @@ Here's what happens when a context value changes:
 4. **Optimizations:** React internally optimizes context updates to ensure that only the components affected by the context change are re-rendered. This helps improve performance by avoiding unnecessary re-renders of unrelated components.
 
 Overall, when context values change, React efficiently updates the UI of components that depend on that context, ensuring that the application remains in sync with the latest data provided by the context.
+
+## A Different Way of Consuming Context (Consumer Component)
+
+- **Introduction to Context Access:** Before diving deeper into extensive usage of context and solving prop drilling issues,let's see another method of accessing context.
+
+- **Using the `useContext` Hook:** The `useContext` hook connects a component function to the context, making the context value accessible within that function. This is the standard and recommended approach for accessing context in a component.
+
+- **Alternative Method - `Consumer` Component:** An alternative method involves using the `Consumer` component. This approach might be found in older React projects or codebase. Similar to the `Provider` component, the context object also offers a `Consumer` component.
+
+- **Consumer Component Usage:** When using the `Consumer` component, a function needs to be provided as its child between the opening and closing tags. This function automatically receives the context value as a parameter and should return the JSX code to be rendered by the component.
+
+- **Drawbacks of Consumer Component:** While the `Consumer` component approach works, it's more cumbersome and harder to read compared to using the `useContext` hook. Therefore, it's not the default approach recommended for accessing context values.
+
+- **Awareness of Consumer Component:** It's important to be aware of the `Consumer` component, as it might be encountered in other React projects.
+
+**Example:**
+
+1. Creating the Context:
+
+```javascript
+// shopping-cart-context.jsx
+import React, { createContext } from "react";
+
+const CartContext = createContext({
+  items: [],
+});
+
+export default CartContext;
+```
+
+2. Providing the Context (using `Provider`):
+
+```javascript
+// App.js
+import React from "react";
+import CartContext from "./shopping-cart-context";
+
+const App = () => {
+  const [cartItems, setCartItems] = useState([]);
+
+  const addItem = (item) => {
+    setCartItems([...cartItems, item]);
+  };
+
+  const value = {
+    items: cartItems,
+    addItem,
+  };
+
+  return (
+    <CartContext.Provider value={value}>
+      {/* Other components like Header and Shop */}
+    </CartContext.Provider>
+  );
+};
+
+export default App;
+```
+
+3. Consuming the Context (using `Consumer`):
+
+```javascript
+// Product.jsx
+import React, { useContext } from "react";
+import CartContext from "./shopping-cart-context";
+
+const Product = ({ product }) => {
+  return (
+    <CartContext.Consumer>
+      {({ items, addItem }) => (
+        <div>
+          {/* Product details */}
+          <button onClick={() => addItem(product)}>
+            Add to Cart (using Consumer)
+          </button>
+        </div>
+      )}
+    </CartContext.Consumer>
+  );
+};
+
+export default Product;
+```
+
+- We wrap the `Product` component with `CartContext.Consumer`.
+- Inside the `Consumer` component, we get a callback function that receives the current context value `({ items, addItem })` (automatically).
+- We access the `addItem` function provided by the context to add the product to the cart.
 
 ---
 
