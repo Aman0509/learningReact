@@ -67,8 +67,18 @@ function App() {
     });
   }
 
+  // Linking the state in context:
+  // Ensure that along with passing the state in context,
+  // one should also pass functions or code in the context which
+  // is responsible for updating state. Rather than, passing all
+  // via props. And this ensures the complete usage of context API
+  const ctxValue = {
+    items: shoppingCart.items,
+    addItemToCart: handleAddItemToCart,
+  };
+
   return (
-    <CartContext.Provider value={{ items: [] }}>
+    <CartContext.Provider value={ctxValue}>
       <Header
         cart={shoppingCart}
         onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
@@ -76,7 +86,7 @@ function App() {
       <Shop>
         {DUMMY_PRODUCTS.map((product) => (
           <li key={product.id}>
-            <Product {...product} onAddToCart={handleAddItemToCart} />
+            <Product {...product} />
           </li>
         ))}
       </Shop>

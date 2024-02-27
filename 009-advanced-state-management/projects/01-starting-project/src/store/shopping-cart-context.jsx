@@ -4,4 +4,5 @@ import { createContext } from "react";
 // It's not mandatory but good to use
 export const CartContext = createContext({
   items: [],
+  addItemToCart: () => {},
 });
