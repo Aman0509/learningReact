@@ -5,6 +5,7 @@
 | [Prop Drilling: Component Composition as a Solution](#prop-drilling-component-composition-as-a-solution) |
 | [Introducing the context API](#introducing-the-context-api)                                              |
 | [Default Value vs `value` prop with `Provider`](#default-value-vs-value-prop-with-provider)              |
+| [What happens When Context Values Change?](#what-happens-when-context-values-change)                     |
 
 &nbsp;
 
@@ -206,6 +207,24 @@ The default value provided during the creation of a context using `createContext
 - Every `Provider` must have a value prop to function correctly.
 
 In essence, while the default value acts as a safety net in specific situations, the `value` prop with `Provider` is the essential means of actively providing context data to components that need it.
+
+## What happens When Context Values Change?
+
+When context values change, React will automatically re-render any component that depends on that context. This means that any component consuming the context, either using the `useContext` hook or the `Consumer` component, will re-render whenever the context value changes.
+
+React achieves this by internally subscribing to the context using a mechanism similar to React's component state. When the context value changes (i.e., when the `value` prop of the `Provider` component changes), React will trigger a re-render of any component that depends on that context.
+
+Here's what happens when a context value changes:
+
+1. **Provider Updates Value:** When the value provided by the `Provider` component changes, React will mark the component and its descendants as needing to be re-rendered.
+
+2. **Re-rendering Components:** React will then re-render any component that consumes the context and is part of the component tree beneath the Provider `component`. This includes components that use the `useContext` hook or the `Consumer` component.
+
+3. **Propagating Changes:** The new context value is passed down to all the consuming components. These components will update their UI based on the new context value.
+
+4. **Optimizations:** React internally optimizes context updates to ensure that only the components affected by the context change are re-rendered. This helps improve performance by avoiding unnecessary re-renders of unrelated components.
+
+Overall, when context values change, React efficiently updates the UI of components that depend on that context, ensuring that the application remains in sync with the latest data provided by the context.
 
 ---
 
