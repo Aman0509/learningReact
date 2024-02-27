@@ -4,6 +4,7 @@
 | :------------------------------------------------------------------------------------------------------- |
 | [Prop Drilling: Component Composition as a Solution](#prop-drilling-component-composition-as-a-solution) |
 | [Introducing the context API](#introducing-the-context-api)                                              |
+| [Default Value vs `value` prop with `Provider`](#default-value-vs-value-prop-with-provider)              |
 
 &nbsp;
 
@@ -185,6 +186,26 @@ Here's a quick breakdown of the Context API:
    - We call `useContext`(`CartContext`) to retrieve the context value (the value object from `App.js`).
    - We access the provided data (`items`) and functions (`addItem`) from the context using the retrieved value.
    - We use the `addItem` function to add the product to the cart when the button is clicked.
+
+## Default Value vs `value` prop with `Provider`
+
+The default value provided during the creation of a context using `createContext` serves a different purpose than the value prop used with the `Provider` component. Here's the distinction:
+
+### Default Value
+
+- When you create a context using `createContext(defaultValue)`, the `defaultValue` is not used for providing the context value to components.
+- Other less important point of defining default values in `createContext(defaultValue)` is to get these values in your IDE auto-completion.
+- It acts as a fallback in two specific scenarios:
+  - **Testing components in isolation:** If you test a component that consumes the context without wrapping it with a `Provider`, the `defaultValue` will be used to avoid errors.
+  - **No matching Provider:** If a component is nested within the component tree but there's no `Provider` above it in the tree, the `defaultValue` will be used.
+
+### `value` Prop with `Provider`
+
+- The `value` prop passed to the `Provider` component is the actual value that will be made available to all descendants of the `Provider` in the component tree.
+- This is the primary mechanism for providing context data to consuming components.
+- Every `Provider` must have a value prop to function correctly.
+
+In essence, while the default value acts as a safety net in specific situations, the `value` prop with `Provider` is the essential means of actively providing context data to components that need it.
 
 ---
 
