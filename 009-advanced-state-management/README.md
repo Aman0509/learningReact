@@ -189,6 +189,10 @@ Here's a quick breakdown of the Context API:
    - We access the provided data (`items`) and functions (`addItem`) from the context using the retrieved value.
    - We use the `addItem` function to add the product to the cart when the button is clicked.
 
+In the Context API, when we wrap components with a `Provider`, we are essentially providing a context to all the components that are descendants of that `Provider` in the component tree. This means that any component within the subtree of the `Provider`, regardless of how deeply nested it is, can access the context provided by that `Provider`.
+
+So, even if a component is not directly wrapped with a `Provider`, as long as it is a descendant of a component that is wrapped with a `Provider`, it can still access the context provided by that `Provider`. This is because React's context system allows context to be "propagated" down the component tree, making it available to all components within that subtree.
+
 ## Default Value vs `value` prop with `Provider`
 
 The default value provided during the creation of a context using `createContext` serves a different purpose than the value prop used with the `Provider` component. Here's the distinction:
