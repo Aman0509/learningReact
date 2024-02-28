@@ -1,12 +1,13 @@
 # React's Context API & `useReducer` - Advanced State Management
 
-| Contents                                                                                                              |
-| :-------------------------------------------------------------------------------------------------------------------- |
-| [Prop Drilling: Component Composition as a Solution](#prop-drilling-component-composition-as-a-solution)              |
-| [Introducing the context API](#introducing-the-context-api)                                                           |
-| [Default Value vs `value` prop with `Provider`](#default-value-vs-value-prop-with-provider)                           |
-| [What happens When Context Values Change?](#what-happens-when-context-values-change)                                  |
-| [A Different Way of Consuming Context (Consumer Component)](#a-different-way-of-consuming-context-consumer-component) |
+| Contents                                                                                                                         |
+| :------------------------------------------------------------------------------------------------------------------------------- |
+| [Prop Drilling: Component Composition as a Solution](#prop-drilling-component-composition-as-a-solution)                         |
+| [Introducing the context API](#introducing-the-context-api)                                                                      |
+| [Default Value vs `value` prop with `Provider`](#default-value-vs-value-prop-with-provider)                                      |
+| [What happens When Context Values Change?](#what-happens-when-context-values-change)                                             |
+| [A Different Way of Consuming Context (Consumer Component)](#a-different-way-of-consuming-context-consumer-component)            |
+| [Outsourcing Context & State Into a Separate Provider Component](#outsourcing-context--state-into-a-separate-provider-component) |
 
 &nbsp;
 
@@ -317,6 +318,26 @@ export default Product;
 - We wrap the `Product` component with `CartContext.Consumer`.
 - Inside the `Consumer` component, we get a callback function that receives the current context value `({ items, addItem })` (automatically).
 - We access the `addItem` function provided by the context to add the product to the cart.
+
+## Outsourcing Context & State Into a Separate Provider Component
+
+"Outsourcing Context & State Into a Separate Provider Component" refers to a pattern in React where you extract the management of context and state from your main application component and place it into a separate provider component.
+
+In React applications, especially as they grow larger and more complex, managing context and state directly within the main application component (`App` component) can lead to a cluttered and hard-to-maintain codebase. This is particularly true when dealing with multiple contexts or complex state management requirements.
+
+By outsourcing the responsibility of managing context and state to a separate provider component, you can achieve better organization, modularity, and separation of concerns in your codebase.
+
+Here's how this pattern typically works:
+
+1. **Create a Separate Provider Component:** Define a new component whose sole responsibility is to manage the context and state relevant to a specific feature or domain within your application. This component serves as the provider for the context.
+
+2. **Move Context & State Logic:** Move the logic for managing context and state from your main application component (`App`) to the new provider component. This includes initializing context, defining context values, and managing state updates.
+
+3. **Wrap Relevant Components:** Wrap the parts of your application that need access to the context with the provider component. This ensures that the context is available to the components that need it, while keeping unrelated components free from context-related logic.
+
+4. **Refactor Main Application Component:** With the context and state management logic now moved to the separate provider component, refactor your main application component (`App`) to focus on higher-level concerns such as routing, layout, and composition of UI components.
+
+By following this pattern, you achieve better organization and maintainability in your codebase. Each provider component encapsulates the logic and state relevant to a specific feature or domain, making it easier to understand, test, and update. Additionally, it promotes reusability, as provider components can be composed together to build complex applications with clear separation of concerns.
 
 ---
 
