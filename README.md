@@ -10,6 +10,7 @@
 - [Debugging React Apps](006-debugging-react-app/README.md)
 - [Working with Refs & Portals](007-refs-and-portals/README.md)
 - [Practice Project: Project Management App](008-project-management-app/README.md)
+- [React's Context API & `useReducer` - Advanced State Management](009-advanced-state-management/README.md)
 
 ## References
 
