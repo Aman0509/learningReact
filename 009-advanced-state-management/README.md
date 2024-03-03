@@ -8,6 +8,7 @@
 | [What happens When Context Values Change?](#what-happens-when-context-values-change)                                             |
 | [A Different Way of Consuming Context (Consumer Component)](#a-different-way-of-consuming-context-consumer-component)            |
 | [Outsourcing Context & State Into a Separate Provider Component](#outsourcing-context--state-into-a-separate-provider-component) |
+| [Introducing the `useReducer` Hook](#introducing-the-usereducer-hook)                                                            |
 
 &nbsp;
 
@@ -338,6 +339,133 @@ Here's how this pattern typically works:
 4. **Refactor Main Application Component:** With the context and state management logic now moved to the separate provider component, refactor your main application component (`App`) to focus on higher-level concerns such as routing, layout, and composition of UI components.
 
 By following this pattern, you achieve better organization and maintainability in your codebase. Each provider component encapsulates the logic and state relevant to a specific feature or domain, making it easier to understand, test, and update. Additionally, it promotes reusability, as provider components can be composed together to build complex applications with clear separation of concerns.
+
+## Introducing the [`useReducer`](https://react.dev/reference/react/useReducer) Hook
+
+It is a React hook that allows for managing complex state logic in a more organized way compared to `useState`. It works by introducing a reducer function that handles state updates based on actions you dispatch. Here's a breakdown with a simple example:
+
+1. **Initial State:**
+
+- Define the initial state of your component as an object. This object holds the initial values for your state properties.
+
+  ```javascript
+  const initialState = { count: 0 };
+  ```
+
+2. **Reducer Function:**
+
+- Create a reducer function that takes two arguments:
+  - **Current State:** The current state of your component.
+  - **Action:** An object containing information about the state update. This object typically has two properties:
+    - **type**: A string specifying the type of action (e.g., "increment", "decrement").
+    - **payload** (Optional): Additional data needed for the update (e.g., amount to increment/decrement by).
+  - The reducer function uses a [`switch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) statement (or similar logic) to handle different action types and update the state accordingly. It should always return a new state object, never modifying the existing one directly.
+  ```javascript
+  function reducer(state, action) {
+    switch (action.type) {
+      case "increment":
+        return { count: state.count + 1 };
+      case "decrement":
+        return { count: state.count - 1 };
+      default:
+        return state;
+    }
+  }
+  ```
+
+3. **Using `useReducer`:**
+
+- Import `useReducer` from React.
+- Call `useReducer` with two arguments:
+
+  - The reducer function you defined.
+  - The initial state.
+
+  ```javascript
+  import React, { useReducer } from "react";
+
+  function Counter() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    // ... rest of your component logic
+  }
+  ```
+
+4. **Dispatching Actions:**
+
+- Define functions that dispatch actions to the reducer. These functions typically take any necessary data for the update as arguments.
+
+  ```javascript
+  function increment() {
+    dispatch({ type: "increment" });
+  }
+
+  function decrement() {
+    dispatch({ type: "decrement" });
+  }
+  ```
+
+5. **Rendering the State:**
+
+- Access the current state value using destructuring from the array returned by `useReducer`. Use this value to render your component's UI.
+
+  ```javascript
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+  ```
+
+This is a basic example of `useReducer`. It offers several advantages over `useState` for complex state management:
+
+- **Centralized State Logic:** The reducer function keeps your state update logic centralized and easier to reason about.
+- **Complex State Updates:** You can handle more complex state updates by combining multiple actions or using the previous state within the reducer.
+- **Multiple State Values:** `useReducer` can manage multiple state values within a single object, reducing the need for multiple `useState` calls.
+
+While `useState` remains suitable for simple state management, `useReducer` becomes powerful as your component's state logic grows more intricate.
+
+**Another example**
+
+```javascript
+import React, { useReducer } from "react";
+
+const initialState = { isLightOn: false };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "toggle":
+      return { isLightOn: !state.isLightOn };
+    default:
+      return state;
+  }
+}
+
+function LightSwitch() {
+  const [lightState, dispatch] = useReducer(reducer, initialState);
+
+  function toggleLight() {
+    dispatch({ type: "toggle" });
+  }
+
+  return (
+    <div>
+      <p>Light is {lightState.isLightOn ? "On" : "Off"}</p>
+      <button onClick={toggleLight}>Toggle Light</button>
+    </div>
+  );
+}
+
+export default LightSwitch;
+```
+
+Readings:
+
+- [React Hooks Tutorial – How to Use the useReducer Hook](https://www.freecodecamp.org/news/usereducer-hook-react/)
+- [How to Use React useReducer() Hook](https://dmitripavlutin.com/react-usereducer/)
+- [Examples of the useReducer Hook](https://daveceddia.com/usereducer-hook-examples/)
 
 ---
 
