@@ -11,6 +11,7 @@
 - [Working with Refs & Portals](007-refs-and-portals/README.md)
 - [Practice Project: Project Management App](008-project-management-app/README.md)
 - [React's Context API & `useReducer` - Advanced State Management](009-advanced-state-management/README.md)
+- [Handling Side Effects & Working with `useEffect()` Hook](010-handling-side-effects/README.md)
 
 ## References
 
