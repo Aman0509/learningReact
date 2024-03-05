@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import Places from "./components/Places.jsx";
 import { AVAILABLE_PLACES } from "./data.js";
@@ -16,15 +16,17 @@ function App() {
   // this is a side effect
   // unexpected behavior with this approach is infinite loop
   // use `useEffect()` hook to prevent this
-  navigator.geolocation.getCurrentPosition((position) => {
-    const sortedPlaces = sortPlacesByDistance(
-      AVAILABLE_PLACES,
-      position.coords.latitude,
-      position.coords.longitude
-    );
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const sortedPlaces = sortPlacesByDistance(
+        AVAILABLE_PLACES,
+        position.coords.latitude,
+        position.coords.longitude
+      );
 
-    setAvailablePlaces(sortedPlaces);
-  });
+      setAvailablePlaces(sortedPlaces);
+    });
+  }, []); // empty dependency array (runs only once after every component is executed)
 
   function handleStartRemovePlace(id) {
     modal.current.open();
@@ -79,6 +81,7 @@ function App() {
         <Places
           title="Available Places"
           places={availablePlaces}
+          fallbackText="Sorting places by distance..."
           onSelectPlace={handleSelectPlace}
         />
       </main>
