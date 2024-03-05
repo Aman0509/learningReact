@@ -1,8 +1,9 @@
 # Handling Side Effects & Working with `useEffect()` Hook
 
-| Contents                                      |
-| :-------------------------------------------- |
-| [What's a Side Effect?](#whats-a-side-effect) |
+| Contents                                                                      |
+| :---------------------------------------------------------------------------- |
+| [What's a Side Effect?](#whats-a-side-effect)                                 |
+| [Not all Side Effects need `useEffect`](#not-all-side-effects-need-useeffect) |
 
 ## What's a Side Effect?
 
@@ -77,6 +78,57 @@ Readings:
 - [The React useEffect Hook for Absolute Beginners](https://www.freecodecamp.org/news/react-useeffect-absolute-beginners/)
 - [What is side-effect in ReactJS and how to handle it?](https://dev.to/hellonehha/what-is-side-effect-in-reactjs-and-how-to-handle-it-39j8)
 - [How Do You Handle Side Effects of ReactJS?](https://positiwise.com/blog/how-do-you-handle-side-effects-of-reactjs)
+
+## Not all Side Effects need `useEffect`
+
+It's important to understand that not all side effects in your React components require the `useEffect` hook. While `useEffect` is crucial for managing side effects like data fetching, subscriptions, or manually changing the DOM, using it excessively or unnecessarily can lead to performance issues.
+
+Each time you use useEffect, you're essentially adding an extra execution cycle to your component. This means that after the component renders, useEffect will trigger its associated side effects.
+
+Therefore, it's essential to exercise caution and consider whether a side effect truly requires the use of `useEffect`. For simple operations or effects that don't depend on component state or props, such as logging to the console or setting up event listeners, you may not need `useEffect` at all.
+
+So,
+
+- `useEffect` runs after rendering your component, So if it makes any change to state, it'll cause additional renders
+- Anything that could be calculated from props or state, shouldn't be calculated inside a `useEffect`
+- You can use `useEffect` only if you want to do something external (Ex: API fetch) when component mounts (First render only)
+
+**Example:**
+
+**Code**
+
+```javascript
+import React, { useState } from "react";
+
+function LoadingIndicator() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 2000); // Simulate loading time
+
+  return (
+    <div className={isLoading ? "loading" : ""}>
+      {isLoading ? <p>Loading...</p> : <p>Content loaded!</p>}
+    </div>
+  );
+}
+```
+
+**Side Effect**
+
+Modifying the `isLoading` state is considered a side effect as it's an internal React mechanism that doesn't directly interact with external factors like APIs or the DOM.
+
+**Why `useEffect` Isn't Required ?**
+
+- While a timeout is used (which is often associated with side effects), it's triggered only once within the component body.
+- This timeout solely updates the internal state (`isLoading`) after a specific delay, mimicking a loading scenario.
+- React automatically re-renders the component when the state changes, ensuring the UI updates to reflect the new class and content based on the `isLoading` value.
+
+Readings:
+
+- [You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect)
+- [Don't use useEffect](https://dev.to/rem0nfawzi/dont-use-useeffect-3ca8)
 
 ---
 
