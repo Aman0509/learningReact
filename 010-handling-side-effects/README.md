@@ -5,6 +5,7 @@
 | [What's a Side Effect?](#whats-a-side-effect)                                                     |
 | [Not all Side Effects need `useEffect`](#not-all-side-effects-need-useeffect)                     |
 | [Using `useEffect` for Syncing with Browser APIs](#using-useeffect-for-syncing-with-browser-apis) |
+| [Understanding Effect Dependencies](#understanding-effect-dependencies)                           |
 
 ## What's a Side Effect?
 
@@ -177,6 +178,101 @@ If `useEffect` is not used and the logic `localStorage.setItem('count', count.to
 2. **Potential Infinite Loop:** If updating `localStorage` triggers a state change, it could create an infinite loop of updates. For example, if updating `localStorage` causes a re-render of the component, which then updates `localStorage` again, this cycle would continue indefinitely.
 
 3. **Violation of React Rules:** Directly modifying browser APIs or external resources outside of React component lifecycle methods can lead to unpredictable behavior and violate React's declarative programming principles. It's generally recommended to synchronize side effects with React's lifecycle using hooks like `useEffect`.
+
+## Understanding Effect Dependencies
+
+In React, the `useEffect` hook is used to perform side effects in function components. It allows you to synchronize side effects with React's component lifecycle. One important aspect of `useEffect` is specifying dependencies, which determines when the effect should be executed or re-executed.
+
+Dependencies in `useEffect` are specified as an array that contains values (typically variables or props) that the effect depends on. When any of these dependencies change, React will re-run the effect.
+
+Here's a breakdown of how dependencies work in `useEffect`:
+
+1. **Effect Execution:** When a component mounts (i.e., initially renders) or updates (i.e., re-renders due to changes in state or props), React checks if any dependencies in the `useEffect` array have changed since the last render.
+
+2. **Effect Dependency Comparison:** React compares the current values of the dependencies with their previous values. If any of the dependencies have changed, React considers the effect to be "stale" and proceeds to execute or re-run the effect.
+
+3. **Effect Cleanup:** Before re-running the effect, React may optionally perform a cleanup by executing a cleanup function from the previous render's effect (if present). This ensures that any resources or subscriptions created by the previous effect are properly cleaned up before running the new effect.
+
+4. **Effect Execution:** Finally, React executes the effect, which may involve performing side effects like data fetching, subscriptions, or updating the DOM.
+
+By specifying dependencies in `useEffect`, you ensure that the effect is executed only when the relevant data or props have changed. This helps optimize performance by avoiding unnecessary re-execution of effects.
+
+It's important to note the following considerations when working with dependencies in `useEffect`:
+
+- **Empty Dependency Array:** If the dependency array is empty (`[]`), the effect will only run once when the component mounts, and not again for subsequent re-renders. This is useful for effects that need to be run only once during the component's lifecycle, such as setting up event listeners or fetching data once.
+
+  _Example: the effect runs only once when the component mounts, as the dependency array is empty (`[]`)._
+
+  ```javascript
+  import React, { useEffect, useState } from "react";
+
+  const ComponentWithEmptyDependency = () => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      console.log("Component mounted");
+    }, []); // Empty dependency array
+
+    return (
+      <div>
+        <p>Count: {count}</p>
+        <button onClick={() => setCount(count + 1)}>Increment</button>
+      </div>
+    );
+  };
+
+  export default ComponentWithEmptyDependency;
+  ```
+
+- **Omitting Dependency Array:** If you omit the dependency array altogether, the effect will run after every render. This is akin to having all state and props as dependencies and can lead to potential performance issues or infinite loops if not used carefully.
+
+  _Example: the effect runs after every render because the dependency array is omitted. This is similar to having all state and props as dependencies._
+
+  ```javascript
+  import React, { useEffect, useState } from "react";
+
+  const ComponentWithoutDependency = () => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      console.log("Component rendered");
+    }); // No dependency array
+
+    return (
+      <div>
+        <p>Count: {count}</p>
+        <button onClick={() => setCount(count + 1)}>Increment</button>
+      </div>
+    );
+  };
+
+  export default ComponentWithoutDependency;
+  ```
+
+- **Careful Dependency Selection:** Choose dependencies carefully to ensure that the effect runs when the data it relies on has actually changed. Avoid including dependencies that do not affect the behavior of the effect.
+
+  _Example: the effect runs whenever the `count` state changes, as it is included as a dependency in the dependency array._
+
+  ```javascript
+  import React, { useEffect, useState } from "react";
+
+  const ComponentWithDependency = () => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      console.log("Count changed:", count);
+    }, [count]); // Dependency array includes 'count'
+
+    return (
+      <div>
+        <p>Count: {count}</p>
+        <button onClick={() => setCount(count + 1)}>Increment</button>
+      </div>
+    );
+  };
+
+  export default ComponentWithDependency;
+  ```
 
 ---
 
