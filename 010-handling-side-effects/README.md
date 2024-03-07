@@ -6,6 +6,7 @@
 | [Not all Side Effects need `useEffect`](#not-all-side-effects-need-useeffect)                     |
 | [Using `useEffect` for Syncing with Browser APIs](#using-useeffect-for-syncing-with-browser-apis) |
 | [Understanding Effect Dependencies](#understanding-effect-dependencies)                           |
+| [Introducing `useEffect`'s Cleanup Function](#introducing-useeffects-cleanup-function)            |
 
 ## What's a Side Effect?
 
@@ -273,6 +274,55 @@ It's important to note the following considerations when working with dependenci
 
   export default ComponentWithDependency;
   ```
+
+## Introducing `useEffect`'s Cleanup Function
+
+In React, when you use the `useEffect` hook to perform side effects in function components, you can optionally define a cleanup function which will be returned by `useEffect` hook. This cleanup function runs when the component unmounts or before re-running the effect due to a dependency change and ensures proper cleanup of resources used by the effect when the component unmounts or re-renders with a different effect configuration.
+
+### Why do we need a cleanup function?
+
+- **Preventing memory leaks:** Side effects often involve setting up subscriptions, timers, or event listeners. If these aren't cleaned up when the component is no longer needed, they can lead to memory leaks and performance issues.
+
+- **Maintaining consistency:** Proper cleanup ensures that resources are released and any ongoing operations are stopped when the component is no longer relevant, preventing unexpected behavior in other parts of your application.
+
+**Example**
+
+```javascript
+import React, { useState, useEffect } from "react";
+
+const TimerComponent = () => {
+  const [timer, setTimer] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => prevTimer + 1);
+    }, 1000);
+
+    // Cleanup function
+    return () => {
+      clearInterval(interval); // Cleanup interval to avoid memory leaks
+      console.log(
+        "Timer component unmounted or dependency changed, cleanup performed."
+      );
+    };
+  }, []); // Empty dependency array to run effect only once
+
+  return (
+    <div>
+      <p>Timer: {timer}</p>
+    </div>
+  );
+};
+
+export default TimerComponent;
+```
+
+In this example:
+
+- We use `useEffect` to set up an interval that increments the `timer` state every second.
+- We define a cleanup function by returning a function from the effect. This function will be called when the component unmounts or before re-running the effect.
+- Inside the cleanup function, we clear the interval using `clearInterval` to prevent memory leaks and perform any necessary cleanup tasks.
+- The empty dependency array (`[]`) ensures that the effect runs only once when the component mounts, and the cleanup function is executed when the component unmounts.
 
 ---
 
