@@ -7,6 +7,7 @@
 | [Using `useEffect` for Syncing with Browser APIs](#using-useeffect-for-syncing-with-browser-apis) |
 | [Understanding Effect Dependencies](#understanding-effect-dependencies)                           |
 | [Introducing `useEffect`'s Cleanup Function](#introducing-useeffects-cleanup-function)            |
+| [Passing Function as Dependency in `useEffect`](#passing-function-as-dependency-in-useeffect)     |
 
 ## What's a Side Effect?
 
@@ -323,6 +324,43 @@ In this example:
 - We define a cleanup function by returning a function from the effect. This function will be called when the component unmounts or before re-running the effect.
 - Inside the cleanup function, we clear the interval using `clearInterval` to prevent memory leaks and perform any necessary cleanup tasks.
 - The empty dependency array (`[]`) ensures that the effect runs only once when the component mounts, and the cleanup function is executed when the component unmounts.
+
+## Passing Function as Dependency in `useEffect`
+
+In React's `useEffect` hook, you can include functions as dependencies, but it's important to use caution and understand the potential pitfalls. Here's a breakdown of adding functions as dependencies:
+
+### Why Add Functions as Dependencies?
+
+**Dynamic Logic in Effects:** Occasionally, you might need an effect to utilize logic defined within a function. The function itself could encapsulate complex calculations, data transformations, or conditional logic that determines how the effect behaves. By including this function in the dependency array, you ensure the effect re-runs whenever the function might change, adapting the behavior based on any modifications.
+
+### The Problem
+
+**Re-runs on Every Render:** If you directly add a function as a dependency, it will cause the effect to re-run every time the component re-renders. This happens because React treats function references as new objects on each render, even if the function itself hasn't changed.
+
+**Example**
+
+```javascript
+import React, { useEffect, useState } from "react";
+
+function DataDisplay() {
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    const response = await fetch("https://api.example.com/data");
+    const data = await response.json();
+    setData(data);
+  };
+
+  // Incorrect usage (re-runs on every render)
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]); // Function reference changes on each render
+
+  return <div>{/* Display data */}</div>;
+}
+```
+
+In this example, adding `fetchData` directly to the dependency array will lead to the effect (fetching data) re-running on every render because `fetchData` is treated as a new reference each time.
 
 ---
 
