@@ -10,6 +10,10 @@
 | [Passing Function as Dependency in `useEffect`](#passing-function-as-dependency-in-useeffect)     |
 | [The `useCallback` hook](#the-usecallback-hook)                                                   |
 
+&nbsp;
+
+:notebook_with_decorative_cover: [Projects](projects/)
+
 ## What's a Side Effect?
 
 In React, side effects refer to any actions that interact with something outside the core React component functionality. This can include:
