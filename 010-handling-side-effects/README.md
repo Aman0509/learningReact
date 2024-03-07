@@ -8,6 +8,7 @@
 | [Understanding Effect Dependencies](#understanding-effect-dependencies)                           |
 | [Introducing `useEffect`'s Cleanup Function](#introducing-useeffects-cleanup-function)            |
 | [Passing Function as Dependency in `useEffect`](#passing-function-as-dependency-in-useeffect)     |
+| [The `useCallback` hook](#the-usecallback-hook)                                                   |
 
 ## What's a Side Effect?
 
@@ -361,6 +362,47 @@ function DataDisplay() {
 ```
 
 In this example, adding `fetchData` directly to the dependency array will lead to the effect (fetching data) re-running on every render because `fetchData` is treated as a new reference each time.
+
+## The [`useCallback`](https://react.dev/reference/react/useCallback) hook
+
+We discussed about the limitations of using function as a dependency in previous section. To solve it, here are 2 ways:
+
+- **Memoization using `useCallback` hook**
+- **Create dependency array early:** If the function relies on values from the component's state or props, create the dependency array outside of the component's render function. This ensures the function reference remains consistent throughout the component's lifecycle as long as the state or props haven't changed.
+
+Let's see how `useCallback` hook works,
+
+The `useCallback` hook in React is used to memoize functions, meaning it memoizes the function instance itself. This can be beneficial for performance optimization, especially in scenarios where you have a component that renders frequently and passes functions down to child components as props.
+
+Here's a breakdown of `useCallback`:
+
+- **Memoization:** `useCallback` memoizes a provided function, meaning it caches the function instance between renders. If the dependencies (specified in the dependency array) remain the same between renders, React will return the cached function instance instead of creating a new one. This can prevent unnecessary re-renders of child components that receive the function as a prop.
+
+- **Dependency Array:** Like other hooks in React, `useCallback` accepts a dependency array as its second argument. This array specifies the dependencies that should trigger the recreation of the memoized function when they change. If any of the dependencies change, React will create a new memoized function instance.
+
+- **Optimization:** `useCallback` is particularly useful when dealing with child components that rely on functions passed down from parent components as props. Without memoization, passing a new function reference to child components on every render can cause unnecessary re-renders in those child components. By memoizing the function using `useCallback`, you can optimize performance by ensuring that child components only re-render when their props (other than the memoized function) change.
+
+**Previous Example (Corrected)**
+
+```javascript
+import React, { useEffect, useState, useCallback } from "react";
+
+function DataDisplay() {
+  const [data, setData] = useState([]);
+
+  const memoizedFetchData = useCallback(async () => {
+    const response = await fetch("https://api.example.com/data");
+    const data = await response.json();
+    setData(data);
+  }, []); // Empty array, runs only on mount
+
+  useEffect(() => {
+    memoizedFetchData();
+  }, [memoizedFetchData]); // Now using the memoized reference
+
+  return <div>{/* Display data */}</div>;
+}
+```
 
 ---
 
