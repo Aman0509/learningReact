@@ -12,9 +12,10 @@
 - [Practice Project: Project Management App](008-project-management-app/README.md)
 - [React's Context API & `useReducer` - Advanced State Management](009-advanced-state-management/README.md)
 - [Handling Side Effects & Working with `useEffect()` Hook](010-handling-side-effects/README.md)
+- [Practice Project: Quiz App](011-quiz-app/README.md)
 
 ## References
 
 - [React - The Complete Guide (incl. React Router & Redux)](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
 - [ChatGPT](https://chat.openai.com/)
-- [Bard](https://bard.google.com/)
+- [Gemini](https://gemini.google.com/)
