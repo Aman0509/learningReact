@@ -10,6 +10,40 @@
 8. [Set Different Timers based on the Selected Answer](https://github.com/Aman0509/learningReact/pull/11/commits/c2105b262a2a61dba5127d01e9109c4f7e7ae790)
 9. [Output Quiz Results](https://github.com/Aman0509/learningReact/pull/11/commits/961e521a15d3d9d8e6582ebadaec2f83a0ea9a0d)
 
+## `key` and its significance in Listing in ReactJS
+
+In React, keys are unique identifiers that help React identify which items in a list have changed, added, or removed. Keys are used to improve the performance of React applications by helping React to efficiently update the DOM.
+
+Keys are passed to React elements as a prop. The key prop can be any valid string value, but it is recommended to use a string that uniquely identifies the element. For example, if you are rendering a list of users, you could use the user's ID as the key.
+
+Here is an example of how to use keys in React:
+
+```javascript
+const users = [
+  { id: 1, name: "Alice" },
+  { id: 2, name: "Bob" },
+  { id: 3, name: "Carol" },
+];
+
+const userList = users.map((user) => <li key={user.id}>{user.name}</li>);
+```
+
+In this example, the key prop is set to the user's ID. This helps React to identify which users have changed, added, or removed when the list is updated.
+
+Keys are especially important when rendering large lists. By using keys, React can efficiently update the DOM without having to re-render the entire list. This can lead to significant performance improvements.
+
+Here are some tips for using keys in React:
+
+- Use a unique string value for each key.
+- Avoid using indexes as keys. Indexes can change when items are added or removed from a list.
+- Use a stable identifier for each key. A stable identifier is an identifier that does not change over time. For example, a user's ID is a stable identifier, but a user's name is not.
+
+Readings:
+
+- [Rendering Lists](https://react.dev/learn/rendering-lists)
+- [What are keys and its significance in Listing in React JS ?](https://www.geeksforgeeks.org/what-are-keys-and-its-significance-in-listing-in-reactjs/)
+- [The Importance of Using the `key` Prop in a List of Elements in React.js](https://codedamn.com/news/reactjs/key-prop-list-of-elements)
+
 ---
 
 [<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Handling Side Effects & Working with `useEffect()` Hook](../010-handling-side-effects/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>]()
