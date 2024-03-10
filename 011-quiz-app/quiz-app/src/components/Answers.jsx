@@ -21,8 +21,8 @@ export default function Answers({
           cssClass = "selected";
         }
         if (
-          answerState === "correct" ||
-          (answerState === "wrong" && isSelected)
+          (answerState === "correct" || answerState === "wrong") &&
+          isSelected
         ) {
           cssClass = answerState;
         }
@@ -33,6 +33,7 @@ export default function Answers({
                 onSelect(answer);
               }}
               className={cssClass}
+              disabled={answerState !== ""}
             >
               {answer}
             </button>
