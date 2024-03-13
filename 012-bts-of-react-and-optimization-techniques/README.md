@@ -1,9 +1,10 @@
 # Behind the Scenes of React & Optimization Techniques
 
-| Contents                                                                                                  |
-| :-------------------------------------------------------------------------------------------------------- |
-| [How React Works Behind the Scenes](#how-react-works-behind-the-scenes)                                   |
-| [Avoiding Component Function Executions with `memo()`](#avoiding-component-function-executions-with-memo) |
+| Contents                                                                                                                          |
+| :-------------------------------------------------------------------------------------------------------------------------------- |
+| [How React Works Behind the Scenes](#how-react-works-behind-the-scenes)                                                           |
+| [Avoiding Component Function Executions with `memo()`](#avoiding-component-function-executions-with-memo)                         |
+| [Avoiding Component Function Executions with Clever Structuring](#avoiding-component-function-executions-with-clever-structuring) |
 
 &nbsp;
 
@@ -121,6 +122,10 @@ Readings:
 
 - [What is React memo and how to use it?](https://hygraph.com/blog/react-memo)
 - [Use React.memo() wisely](https://dmitripavlutin.com/use-react-memo-wisely/)
+
+## Avoiding Component Function Executions with Clever Structuring
+
+Another technique that is often even more powerful than `memo()` is a clever component composition in your application. Checkout [this]() from `starting-project` to understand more about it.
 
 ---
 
