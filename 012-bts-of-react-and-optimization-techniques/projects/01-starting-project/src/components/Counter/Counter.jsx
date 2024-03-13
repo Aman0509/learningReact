@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState, memo, useCallback } from "react";
 
 import IconButton from "../UI/IconButton.jsx";
 import MinusIcon from "../UI/Icons/MinusIcon.jsx";
@@ -33,13 +33,19 @@ const Counter = memo(function Counter({ initialCount }) {
 
   const [counter, setCounter] = useState(initialCount);
 
-  function handleDecrement() {
+  // wrapping these functions with `useCallback()` because these are
+  // passed as prop in `IconButton` component which uses memo to avoid unnecessary
+  // rendering, however, since these function will be recreated on every render of
+  // Counter component with different memory address. Now, memo() will take this as
+  // prop change and render `IconButton` component every time, failing the purpose to
+  // avoid unnecessary rendering
+  const handleDecrement = useCallback(function handleDecrement() {
     setCounter((prevCounter) => prevCounter - 1);
-  }
+  }, []);
 
-  function handleIncrement() {
+  const handleIncrement = useCallback(function handleIncrement() {
     setCounter((prevCounter) => prevCounter + 1);
-  }
+  }, []);
 
   return (
     <section className="counter">
