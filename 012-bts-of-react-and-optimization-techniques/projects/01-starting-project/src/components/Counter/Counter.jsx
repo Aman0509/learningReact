@@ -23,6 +23,10 @@ function isPrime(number) {
   return true;
 }
 
+// here, memo can be removed from this component because, after restructuring and creation of
+// ConfigureCounter component, parent component which is App will not re-render on state change
+// in ConfigureCounter component, so, this component will also not re-render. However, leaving it
+// as it is for reference
 const Counter = memo(function Counter({ initialCount }) {
   log("<Counter /> rendered", 1);
   const initialCountIsPrime = isPrime(initialCount);
