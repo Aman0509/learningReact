@@ -5,6 +5,7 @@
 | [How React Works Behind the Scenes](#how-react-works-behind-the-scenes)                                                           |
 | [Avoiding Component Function Executions with `memo()`](#avoiding-component-function-executions-with-memo)                         |
 | [Avoiding Component Function Executions with Clever Structuring](#avoiding-component-function-executions-with-clever-structuring) |
+| [Understanding the `useMemo` Hook](#understanding-the-usememo-hook)                                                               |
 
 &nbsp;
 
@@ -126,6 +127,71 @@ Readings:
 ## Avoiding Component Function Executions with Clever Structuring
 
 Another technique that is often even more powerful than `memo()` is a clever component composition in your application. Checkout [this]() from `starting-project` to understand more about it.
+
+## Understanding the [`useMemo`](https://react.dev/reference/react/useMemo) Hook
+
+The `useMemo()` hook in React is used to memoize the result of a function and prevent unnecessary re-executions, especially when dealing with complex and performance-intensive calculations inside functional components. It ensures that a function is only re-executed when its dependencies, specified in the dependencies array, change.
+
+_Just like `memo()` is used for React component functions to prevent unnecessary re-render, similarly, for normal functions, `useMemo()` hook is used._
+
+- When a component re-renders due to changes in its state or props, functions called within the component function may also re-execute, even if their inputs remain unchanged. This can be inefficient, especially for functions performing complex calculations.
+- `useMemo()` hook allows us to memoize the result of a function and recompute it only if its dependencies change. This helps optimize performance by preventing unnecessary re-executions of the function.
+- The `useMemo()` hook takes two arguments: a function that returns the value to memoize, and an array of dependencies. The function passed to `useMemo()` represents the computation we want to memoize. The dependencies array specifies the values that, when changed, will trigger a re-execution of the function.
+- Don't overuse `useMemo()` for functions that need to run on every re-render.
+- Use `useMemo()` judiciously to optimize performance when unnecessary re-calculations occur.
+
+**Example**
+
+```javascript
+import React, { useState, useMemo } from "react";
+
+const fibonacci = (n) => {
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+};
+
+const App = () => {
+  const [number, setNumber] = useState(20);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const result = useMemo(() => {
+    setIsCalculating(true);
+    const fibResult = fibonacci(number);
+    setIsCalculating(false);
+    return fibResult;
+  }, [number]);
+
+  const handleChange = (e) => {
+    setNumber(parseInt(e.target.value));
+  };
+
+  return (
+    <div>
+      <input type="number" value={number} onChange={handleChange} />
+      <div>
+        <button disabled={isCalculating}>Calculate Fibonacci</button>
+        {isCalculating ? <p>Calculating...</p> : <p>Fibonacci: {result}</p>}
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
+
+In this example:
+
+- We have a functional component `App` that renders an input field and a button.
+- The `fibonacci` function calculates the Fibonacci sequence recursively.
+- Inside the `App` component, we use `useState()` to manage the `number` state, representing the Fibonacci number to calculate, and `isCalculating` state to track whether the calculation is in progress.
+- We use the `useMemo()` hook to memoize the result of the Fibonacci calculation. The memoized value is recalculated only when the number state changes.
+- When the number state changes, the callback function provided to `useMemo()` is invoked to perform the Fibonacci calculation. The result is memoized, and subsequent re-renders will reuse the memoized value until the `number` state changes again.
+- The memoized value is displayed in the component's JSX, along with a message indicating whether the calculation is in progress.
+
+Readings:
+
+- [How to Work with useMemo in React – with Code Examples](https://www.freecodecamp.org/news/how-to-work-with-usememo-in-react/)
+- [React useMemo Hook Guide with Examples](https://refine.dev/blog/react-usememo/#using-react-usememo-with-dependencies)
 
 ---
 
