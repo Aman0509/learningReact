@@ -1,4 +1,4 @@
-import { useState, memo, useCallback } from "react";
+import { useState, memo, useCallback, useMemo } from "react";
 
 import IconButton from "../UI/IconButton.jsx";
 import MinusIcon from "../UI/Icons/MinusIcon.jsx";
@@ -29,7 +29,16 @@ function isPrime(number) {
 // as it is for reference
 const Counter = memo(function Counter({ initialCount }) {
   log("<Counter /> rendered", 1);
-  const initialCountIsPrime = isPrime(initialCount);
+
+  // `isPrime` is a normal function and here, we are simulating the case when inside a component
+  // function, if there is a normal function doing complex computation task which can affect the
+  // rendering time of component. However, if we handle the case, where if this function returns
+  // the same value due to no change in value passed to it, we can improve the performance. And,
+  // this can be done using `useMemo()`
+  const initialCountIsPrime = useMemo(
+    () => isPrime(initialCount),
+    [initialCount]
+  );
 
   const [counter, setCounter] = useState(initialCount);
 
