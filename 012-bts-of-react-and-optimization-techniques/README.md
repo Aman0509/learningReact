@@ -6,6 +6,7 @@
 | [Avoiding Component Function Executions with `memo()`](#avoiding-component-function-executions-with-memo)                         |
 | [Avoiding Component Function Executions with Clever Structuring](#avoiding-component-function-executions-with-clever-structuring) |
 | [Understanding the `useMemo` Hook](#understanding-the-usememo-hook)                                                               |
+| [React uses a Virtual DOM](#react-uses-a-virtual-dom)                                                                             |
 
 &nbsp;
 
@@ -192,6 +193,44 @@ Readings:
 
 - [How to Work with useMemo in React – with Code Examples](https://www.freecodecamp.org/news/how-to-work-with-usememo-in-react/)
 - [React useMemo Hook Guide with Examples](https://refine.dev/blog/react-usememo/#using-react-usememo-with-dependencies)
+
+## React uses a Virtual DOM
+
+The Virtual DOM (Document Object Model) is a core concept in React that helps improve the performance of web applications. Here's a breakdown of what it is and how it works:
+
+**Traditional DOM Manipulation:**
+
+- In traditional web development, you directly manipulate the real DOM (the browser's representation of the web page) using JavaScript.
+- This can be slow and inefficient, especially for complex UI updates or frequent re-renders.
+
+**Virtual DOM to the Rescue:**
+
+- React employs a Virtual DOM, which is a lightweight in-memory representation of the actual DOM.
+- It's essentially a JavaScript object tree that mirrors the structure of the real DOM elements and their attributes.
+
+**The Update Process:**
+
+1. **Component Execution:** When a component's state or props change, React triggers a re-render. During this re-render, React executes the component function to determine the new UI structure.
+2. **Virtual DOM Diffing:** React compares the new virtual DOM tree with the previous virtual DOM tree. This diffing process efficiently identifies the minimal changes required to update the real DOM.
+3. **Real DOM Updates:** Based on the differences identified, React efficiently updates only the necessary parts of the real DOM, minimizing unnecessary manipulations.
+
+**Benefits of Virtual DOM:**
+
+- **Performance Optimization:** By avoiding unnecessary DOM manipulations, the Virtual DOM significantly improves the performance of React applications. This is especially beneficial for complex UIs or frequent updates.
+- **Declarative Programming:** React allows you to declare the desired UI state, and the Virtual DOM diffing handles the efficient updates in the real DOM. This promotes a cleaner and more declarative coding style.
+- **Batching Updates:** React can batch multiple UI updates together and update the real DOM only once, further enhancing performance.
+
+**Virtual DOM vs. Real DOM:**
+
+- The Virtual DOM exists solely in memory and is not directly displayed in the browser.
+- The real DOM is the browser's representation of the web page structure and content.
+- The Virtual DOM acts as an intermediary, allowing React to efficiently update the real DOM.
+
+Readings:
+
+- [React: The Virtual DOM](https://www.codecademy.com/article/react-virtual-dom)
+- [Understanding Virtual DOM in React](https://refine.dev/blog/react-virtual-dom/#introduction)
+- [What is the virtual DOM in React?](https://blog.logrocket.com/virtual-dom-react/)
 
 ---
 
