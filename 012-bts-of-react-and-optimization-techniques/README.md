@@ -8,6 +8,7 @@
 | [Understanding the `useMemo` Hook](#understanding-the-usememo-hook)                                                               |
 | [React uses a Virtual DOM](#react-uses-a-virtual-dom)                                                                             |
 | [Why Keys matter when Managing State?](#why-keys-matter-when-managing-state)                                                      |
+| [Using Keys for Resetting Components](#using-keys-for-resetting-components)                                                       |
 
 &nbsp;
 
@@ -261,6 +262,58 @@ Readings:
 
 - [Why React needs a key prop](https://epicreact.dev/why-react-needs-a-key-prop/)
 - [Understanding the importance of the key prop in React](https://medium.com/swlh/understanding-the-importance-of-the-key-prop-in-react-f2b92ce65f45)
+
+## Using Keys for Resetting Components
+
+While keys are primarily used for efficient state management in React lists, they can also be used for a workaround to achieve a component reset effect. Here's how it works:
+
+**Traditional Resetting with `useState()`:**
+
+- Typically, you'd use the useState hook to manage a component's state.
+- To reset the state, you'd update the state variable with its initial value:
+
+      ```javascript
+      function MyComponent() {
+      const [count, setCount] = useState(0);
+      const handleReset = () => {
+      setCount(0); // Reset count to its initial value
+      };
+      // ... rest of your component
+      }
+      ```
+
+**Resetting with Keys:**
+
+- This approach leverages the fact that React re-renders a component entirely when its key changes.
+- You can dynamically change the key to essentially create a new instance of the component with its initial state.
+
+  ```javascript
+  function MyComponent() {
+    const [count, setCount] = useState(0);
+    const [key, setKey] = useState(0); // State to track key
+
+    const handleReset = () => {
+      setKey(key + 1); // Change key to trigger re-render
+    };
+
+    // ... rest of your component
+
+    return (
+      <div key={key}>
+        {" "}
+        {/* Assign the key prop */}
+        <p>Count: {count}</p>
+        <button onClick={handleIncrement}>Increment</button>
+        <button onClick={handleReset}>Reset</button>
+      </div>
+    );
+  }
+  ```
+
+  - An additional state variable (`key`) is introduced to track the key value.
+  - The component renders with a `div` element that has the `key` prop set to the current `key` state.
+  - The handleReset function increments the `key` value.
+  - When the `key` changes, React detects it as a different component and re-renders it entirely. Since the component hasn't explicitly reset its own state, all internal state variables will be reset to their initial values defined using `useState`.
 
 ---
 
