@@ -20,7 +20,8 @@ function App() {
       <main>
         {/* App component will not render on state change of `ConfigureCounter` component because it's a child component of App and re-rendering of child component does not trigger re-render of parents component  */}
         <ConfigureCounter onSet={handleSetCount} />
-        <Counter initialCount={chosenCount} />
+        {/* demonstrating the usage of keys for resetting components */}
+        <Counter key={chosenCount} initialCount={chosenCount} />
       </main>
     </>
   );
