@@ -7,6 +7,7 @@
 | [Avoiding Component Function Executions with Clever Structuring](#avoiding-component-function-executions-with-clever-structuring) |
 | [Understanding the `useMemo` Hook](#understanding-the-usememo-hook)                                                               |
 | [React uses a Virtual DOM](#react-uses-a-virtual-dom)                                                                             |
+| [Why Keys matter when Managing State?](#why-keys-matter-when-managing-state)                                                      |
 
 &nbsp;
 
@@ -231,6 +232,35 @@ Readings:
 - [React: The Virtual DOM](https://www.codecademy.com/article/react-virtual-dom)
 - [Understanding Virtual DOM in React](https://refine.dev/blog/react-virtual-dom/#introduction)
 - [What is the virtual DOM in React?](https://blog.logrocket.com/virtual-dom-react/)
+
+## Why Keys matter when Managing State?
+
+Keys play a crucial role in React when managing state, especially in scenarios involving dynamic lists or collections of elements. Here's why keys matter:
+
+1. **Efficient Reconciliation:** Keys help React identify individual elements within a list and efficiently update them during reconciliation. When React updates a list of elements, it uses keys to match elements from the previous render with elements in the current render. This process allows React to determine which elements have been added, removed, or reordered.
+
+2. **Stable Identity:** Keys provide a stable identity to elements in a list, even when the list order changes or elements are added or removed. By assigning unique keys to each element, React can accurately track their identities across re-renders and maintain component state correctly. Remember, the value of the key prop should be a unique identifier for each component instance within a list or a set of sibling components. This unique identifier helps React efficiently identify and track components, especially when they are dynamically added, removed, or rearranged. The key should ideally be a stable value associated with the component's data, such as an ID from a database, a unique attribute, or an index in the array if no other unique identifier is available. It should not rely on the component's position in the DOM or its index in the array, as these can lead to issues with component reordering and reconciliation. Using a stable and unique key ensures that React can correctly identify components and maintain their state across re-renders, facilitating optimal performance and preventing unexpected behavior.
+
+3. **Optimized Rendering:** When updating a list, React attempts to minimize DOM operations by reordering existing elements rather than recreating them. Keys enable React to efficiently identify elements that have moved within the list and update their positions in the DOM without unnecessary re-renders or manipulations.
+
+4. **Preventing Unwanted Side Effects:** Without keys, React may encounter issues such as incorrect reordering of elements or unintended component re-renders. By providing keys, developers can ensure predictable and correct behavior when managing state in dynamic lists, preventing potential bugs and side effects.
+
+5. **Enhanced Performance:** Properly utilizing keys can lead to improved performance by enabling React to optimize rendering and minimize unnecessary updates to the DOM. By assigning unique and stable keys, developers can help React efficiently manage state and maintain a responsive user interface.
+
+### Using Key to Track State by Position
+
+Each React component manages its own state in isolation from other components. When you use the same component function to create multiple instances, each instance maintains its own independent state. This is a fundamental aspect of React's component-based architecture.
+
+**_While state is scoped to a component, React also tracks the position of components where state is declared. This means that not only does each component instance have its own state, but React also considers the position of those instances in the component tree._**
+
+It's crucial to understand this behavior because it influences how components interact with their state and with each other. Developers need to be aware that state is not only isolated to individual components but also affected by the structure and position of those components in the component tree.
+
+Therefore, to handle scenarios where you want your feature to work correctly on positional change of React component, you can utilize the `key` prop.
+
+Readings:
+
+- [Why React needs a key prop](https://epicreact.dev/why-react-needs-a-key-prop/)
+- [Understanding the importance of the key prop in React](https://medium.com/swlh/understanding-the-importance-of-the-key-prop-in-react-f2b92ce65f45)
 
 ---
 
