@@ -10,6 +10,7 @@
 | [Why Keys matter when Managing State?](#why-keys-matter-when-managing-state)                                                      |
 | [Using Keys for Resetting Components](#using-keys-for-resetting-components)                                                       |
 | [State Scheduling and Batching](#state-scheduling-and-batching)                                                                   |
+| [Optimizing React with MillionJS](#optimizing-react-with-millionjs)                                                               |
 
 &nbsp;
 
@@ -369,6 +370,12 @@ To demonstrate this batching behavior, consider the following scenario:
 You'll notice that the console logs do not show each individual increment immediately after each click. Instead, React batches the state updates and logs the updated count value once the rendering cycle is complete.
 
 This batching mechanism ensures that React can optimize performance by minimizing unnecessary re-renders and efficiently updating the DOM only when necessary. It helps prevent performance bottlenecks and ensures a smoother user experience in React applications.
+
+## Optimizing React with MillionJS
+
+Million.js is an open-source JavaScript library designed to optimize the performance of React applications. It aims to achieve significant speed improvements, particularly for components that rely heavily on the virtual DOM (VDOM) for rendering.
+
+Learn more about it [here](https://million.dev/docs/introduction)
 
 ---
 
