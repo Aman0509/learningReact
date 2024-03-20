@@ -9,6 +9,7 @@
 | [React uses a Virtual DOM](#react-uses-a-virtual-dom)                                                                             |
 | [Why Keys matter when Managing State?](#why-keys-matter-when-managing-state)                                                      |
 | [Using Keys for Resetting Components](#using-keys-for-resetting-components)                                                       |
+| [State Scheduling and Batching](#state-scheduling-and-batching)                                                                   |
 
 &nbsp;
 
@@ -314,6 +315,60 @@ While keys are primarily used for efficient state management in React lists, the
   - The component renders with a `div` element that has the `key` prop set to the current `key` state.
   - The handleReset function increments the `key` value.
   - When the `key` changes, React detects it as a different component and re-renders it entirely. Since the component hasn't explicitly reset its own state, all internal state variables will be reset to their initial values defined using `useState`.
+
+## State Scheduling and Batching
+
+In React, state scheduling and batching refer to the process of efficiently managing updates to the component's state and performing them in batches rather than immediately. This batching mechanism helps improve performance by reducing unnecessary re-renders and optimizing the rendering process.
+
+**State Scheduling**
+
+- When you call `setState` within a React component, it doesn't immediately update the component on the screen.
+- Instead, React schedules a re-render for that component.
+- This scheduling allows React to optimize performance by batching multiple state updates together.
+
+**Batching**
+
+- Batching groups multiple state updates from the same component or event handler into a single re-render.
+- This prevents unnecessary re-renders that would occur if each state update triggered a separate re-render.
+
+Consider a simple React component that increments a counter:
+
+```javascript
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(count + 1);
+    console.log("Counter incremented:", count);
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+In this example, whenever the "Increment" button is clicked, the `increment` function is called, updating the state variable `count` by 1 using `setCount(count + 1)`.
+
+However, React does not immediately update the `count` state variable. Instead, it schedules the state update and performs it in batches. This means that multiple state updates triggered within the same cycle of event handling (such as a click event) are batched together for optimal performance.
+
+The `console.log` statement inside the `increment` function may not log the updated value of `count` immediately after calling `setCount`. This is because React schedules the state update and performs it asynchronously, outside the synchronous execution of the `increment` function.
+
+To demonstrate this batching behavior, consider the following scenario:
+
+- Click the "Increment" button multiple times in quick succession.
+- Observe the console output.
+
+You'll notice that the console logs do not show each individual increment immediately after each click. Instead, React batches the state updates and logs the updated count value once the rendering cycle is complete.
+
+This batching mechanism ensures that React can optimize performance by minimizing unnecessary re-renders and efficiently updating the DOM only when necessary. It helps prevent performance bottlenecks and ensures a smoother user experience in React applications.
 
 ---
 
