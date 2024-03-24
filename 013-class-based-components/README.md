@@ -5,6 +5,7 @@
 | [What are Class based Components & Why is it Required?](#what-are-class-based-components--why-is-it-required) |
 | [Working with State and Events](#working-with-state-and-events)                                               |
 | [Component Lifecycle in Class-Based Components](#component-lifecycle-in-class-based-components)               |
+| [Class Based Components and Context](#class-based-components-and-context)                                     |
 
 ## What are Class based Components & Why is it Required?
 
@@ -180,6 +181,114 @@ class Counter extends React.Component {
 - `shouldComponentUpdate(nextProps, nextState)`: This is an optional method that allows you to control whether a component should update based on changes in props or state.
 
 - `getDerivedStateFromProps(nextProps, prevState)`: This is another optional method that allows you to derive state based on changes in props before the component updates.
+
+## Class Based Components and Context
+
+While React Hooks offer a more straightforward approach to context with `useContext`, class-based components can also leverage context. Here's how it works:
+
+**Concepts:**
+
+- **Context API:** A mechanism for passing data (props) through the component tree without explicitly passing it down through every level.
+- **Provider:** A component that establishes a context by wrapping components that need to access the context data.
+- **Consumer:** A component that can access the context data provided by a higher-level provider component.
+
+**Explanation:**
+
+1. **Create the Context:**
+
+   Use `React.createContext(defaultValue)` to create a context object. This defines the type and default value of the context data.
+
+2. **Provider Component:**
+
+   - Create a class-based component that wraps the child components that need access to the context.
+   - In the constructor, set the context value using `this.context = MyContext.Provider`.
+   - In the render method, return the child components wrapped within the `MyContext.Provider` component, passing the context value as a prop (usually named `value`).
+
+3. **Consumer Component:**
+
+   There are two approaches:
+
+   - Static `contextType`:
+     - Define a static property `contextType` on the consumer component and set it to the created context object (e.g., `MyContext`).
+     - Access the context data using `this.context` within the component.
+     - A limitation of the `static contextType` approach is that a component can only connect to one context at a time. This means if you need a component to access data from two separate contexts, using `static contextType` won't work.
+     - However, if you still want to attach multiple context, you can use alternative which is, wrap the component in another component that acts as a provider for both contexts. However, this can add some nesting to your component tree.
+   - Consumer Component (deprecated):
+     - Use the `MyContext.Consumer` component.
+     - Render the child content within the `Consumer` component, passing a function that receives the context value as an argument.
+
+**Example**
+
+1. Create the Context
+
+   ```javascript
+   const ThemeContext = React.createContext("light"); // Default theme
+   ```
+
+2. Provider Component
+
+   ```javascript
+   class ThemeProvider extends React.Component {
+     constructor(props) {
+       super(props);
+       this.state = { theme: "light" };
+     }
+
+     toggleTheme = () => {
+       this.setState({
+         theme: this.state.theme === "light" ? "dark" : "light",
+       });
+     };
+
+     render() {
+       return (
+         <ThemeContext.Provider
+           value={{ theme: this.state.theme, toggleTheme: this.toggleTheme }}
+         >
+           {this.props.children}
+         </ThemeContext.Provider>
+       );
+     }
+   }
+   ```
+
+3. Consumer Component (Static `contextType`):
+
+   ```javascript
+   class MyComponent extends React.Component {
+     static contextType = ThemeContext;
+
+     render() {
+       const { theme, toggleTheme } = this.context;
+       return (
+         <div
+           style={{ backgroundColor: theme === "light" ? "white" : "black" }}
+         >
+           <p>Current theme: {theme}</p>
+           <button onClick={toggleTheme}>Toggle Theme</button>
+         </div>
+       );
+     }
+   }
+   ```
+
+**Usage:**
+
+Wrap your app with the `ThemeProvider` and place the `MyComponent` anywhere within the provider tree:
+
+```javascript
+<ThemeProvider>
+  <App>
+    <MyComponent />
+  </App>
+</ThemeProvider>
+```
+
+Key Points:
+
+- Class-based components access context using `this.context` (static contextType approach) or within `MyContext.Consumer`.
+- The provider component establishes the context by wrapping child components.
+- Context allows for efficient data sharing across a component tree without prop drilling.
 
 ---
 
