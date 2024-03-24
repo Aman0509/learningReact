@@ -11,6 +11,15 @@ class Users extends Component {
       more: "Test", // You need to define all state inside `this.state` object. `more` is just a sample state, mentioned here for demonstration purposes.
     };
   }
+
+  // this is added to simulate errors which we sometimes cannot handled error and
+  // it is not due to some bug introduced by us
+  componentDidUpdate() {
+    if (this.props.users.length === 0) {
+      throw new Error("No error provided!");
+    }
+  }
+
   toggleUsersHandler() {
     this.setState(
       // this.state.showUsers = false; // this is not the way of setting state
