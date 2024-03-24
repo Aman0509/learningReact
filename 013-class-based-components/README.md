@@ -6,6 +6,7 @@
 | [Working with State and Events](#working-with-state-and-events)                                               |
 | [Component Lifecycle in Class-Based Components](#component-lifecycle-in-class-based-components)               |
 | [Class Based Components and Context](#class-based-components-and-context)                                     |
+| [Introducing Error Boundaries](#introducing-error-boundaries)                                                 |
 
 ## What are Class based Components & Why is it Required?
 
@@ -289,6 +290,94 @@ Key Points:
 - Class-based components access context using `this.context` (static contextType approach) or within `MyContext.Consumer`.
 - The provider component establishes the context by wrapping child components.
 - Context allows for efficient data sharing across a component tree without prop drilling.
+
+## Introducing Error Boundaries
+
+Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of crashing the entire component tree.
+
+They allow developers to handle errors gracefully and provide a fallback UI when an error occurs.
+
+**Creating an Error Boundary Component:**
+
+- In class-based components, error boundaries are implemented using special lifecycle methods. The `componentDidCatch()` lifecycle method is used to catch errors within a component and its children.
+- This method is automatically invoked when an error is thrown in any of its descendant components.
+- The `componentDidCatch` method receives two parameters: `error` and `info`, providing information about the error that occurred.
+- Inside the `componentDidCatch` method, developers can handle the error and update the component's state accordingly.
+
+**Implementing the Error Boundary Component:**
+
+- The error boundary component typically sets its state to indicate that an error has occurred.
+- It can render a fallback UI to inform users about the error.
+- Optionally, the error boundary component can log the error for debugging purposes or send it to a server for analytics.
+
+**Wrapping Components with Error Boundaries:**
+
+- To utilize an error boundary, wrap the component(s) that might throw errors with the error boundary component.
+- This allows the error boundary to catch errors occurring within its child components.
+
+**Handling Errors in Production:**
+
+- In production, the error boundary's fallback UI is displayed to users when an error occurs, preventing them from seeing the raw error message.
+- This helps maintain a better user experience by gracefully handling errors without crashing the entire application.
+
+**Example:**
+
+```javascript
+import React, { Component } from "react";
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  componentDidCatch(error, info) {
+    // Log the error to a server for analytics
+    console.error("Error occurred:", error, info);
+    this.setState({ hasError: true });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // Render a fallback UI
+      return <div>Something went wrong. Please try again later.</div>;
+    }
+    return this.props.children;
+  }
+}
+
+class MyComponent extends Component {
+  render() {
+    // Simulate an error
+    if (this.props.shouldError) {
+      throw new Error("Error occurred in MyComponent");
+    }
+    return <div>{this.props.content}</div>;
+  }
+}
+
+class App extends Component {
+  render() {
+    return (
+      <ErrorBoundary>
+        <MyComponent content="Hello World!" shouldError={false} />
+        <MyComponent content="Goodbye World!" shouldError={true} />
+      </ErrorBoundary>
+    );
+  }
+}
+
+export default App;
+```
+
+In this example, `ErrorBoundary` is an error boundary component that catches errors thrown by its child components (`MyComponent`). If an error occurs in `MyComponent`, the error boundary displays a fallback UI instead of crashing the entire application. This ensures a smoother user experience by handling errors gracefully.
+
+**_Note: Error Boundaries are only created from class components because they implement the `componentDidCatch` lifecycle method. There is no way to implement `componentDidCatch` lifecycle method in functional components for now._**
+
+Readings:
+
+- [React error handling with react-error-boundary](https://blog.logrocket.com/react-error-handling-with-react-error-boundary/)
+- [Error Handling in React With Error Boundary: A Tutorial](https://builtin.com/software-engineering-perspectives/react-error-boundary)
 
 ---
 
