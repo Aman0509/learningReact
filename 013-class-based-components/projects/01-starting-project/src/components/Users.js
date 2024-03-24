@@ -1,37 +1,72 @@
-import { useState } from 'react';
-import User from './User';
+import { Component } from "react";
+import User from "./User";
 
-import classes from './Users.module.css';
+import classes from "./Users.module.css";
 
 const DUMMY_USERS = [
-  { id: 'u1', name: 'Max' },
-  { id: 'u2', name: 'Manuel' },
-  { id: 'u3', name: 'Julie' },
+  { id: "u1", name: "Max" },
+  { id: "u2", name: "Manuel" },
+  { id: "u3", name: "Julie" },
 ];
 
-const Users = () => {
-  const [showUsers, setShowUsers] = useState(true);
+class Users extends Component {
+  constructor() {
+    super();
+    this.state = {
+      showUsers: true,
+      more: "Test", // You need to define all state inside `this.state` object. `more` is just a sample state, mentioned here for demonstration purposes.
+    };
+  }
+  toggleUsersHandler() {
+    this.setState(
+      // this.state.showUsers = false; // this is not the way of setting state
+      (curState) => {
+        return { showUsers: !curState.showUsers };
+      }
+    );
+  }
+  render() {
+    const usersList = (
+      <ul>
+        {DUMMY_USERS.map((user) => (
+          <User key={user.id} name={user.name} />
+        ))}
+      </ul>
+    );
+    return (
+      <div className={classes.users}>
+        <button onClick={this.toggleUsersHandler.bind(this)}>
+          {this.state.showUsers ? "Hide" : "Show"} Users
+        </button>
+        {this.state.showUsers && usersList}
+      </div>
+    );
+  }
+}
 
-  const toggleUsersHandler = () => {
-    setShowUsers((curState) => !curState);
-  };
+// const Users = () => {
+//   const [showUsers, setShowUsers] = useState(true);
 
-  const usersList = (
-    <ul>
-      {DUMMY_USERS.map((user) => (
-        <User key={user.id} name={user.name} />
-      ))}
-    </ul>
-  );
+//   const toggleUsersHandler = () => {
+//     setShowUsers((curState) => !curState);
+//   };
 
-  return (
-    <div className={classes.users}>
-      <button onClick={toggleUsersHandler}>
-        {showUsers ? 'Hide' : 'Show'} Users
-      </button>
-      {showUsers && usersList}
-    </div>
-  );
-};
+//   const usersList = (
+//     <ul>
+//       {DUMMY_USERS.map((user) => (
+//         <User key={user.id} name={user.name} />
+//       ))}
+//     </ul>
+//   );
+
+//   return (
+//     <div className={classes.users}>
+//       <button onClick={toggleUsersHandler}>
+//         {showUsers ? "Hide" : "Show"} Users
+//       </button>
+//       {showUsers && usersList}
+//     </div>
+//   );
+// };
 
 export default Users;
