@@ -4,6 +4,7 @@
 | :------------------------------------------------------------------------------------------------------------ |
 | [What are Class based Components & Why is it Required?](#what-are-class-based-components--why-is-it-required) |
 | [Working with State and Events](#working-with-state-and-events)                                               |
+| [Component Lifecycle in Class-Based Components](#component-lifecycle-in-class-based-components)               |
 
 ## What are Class based Components & Why is it Required?
 
@@ -117,6 +118,64 @@ Another important point is that class components require extra care to ensure `t
 Readings:
 
 - [How To Manage State on React Class Components](https://www.digitalocean.com/community/tutorials/how-to-manage-state-on-react-class-components)
+
+## Component Lifecycle in Class-Based Components
+
+React components go through different stages in their existence, from creation to removal. Class-based components offer built-in lifecycle methods that allow you to hook into these stages and perform specific actions. Here's a breakdown with a basic example:
+
+**Lifecycle Methods:**
+
+- **constructor(props):** This is called when the component is first created and is a good place to initialize state using `this.state`.
+- **componentDidMount():** This is called after the component is mounted (inserted) into the DOM. It's a good time to fetch data from an API, set up subscriptions, or perform actions that rely on the DOM being available.
+- **componentDidUpdate(prevProps, prevState):** This is called after the component updates. It receives the previous props and state as arguments, allowing you to compare them and perform actions based on changes. You should typically avoid making state changes directly inside this method to prevent infinite loops.
+- **componentWillUnmount():** This is called before the component is removed from the DOM. It's a good place to clean up any resources, subscriptions, or timers to avoid memory leaks or unexpected behavior.
+
+<img src="https://drive.google.com/uc?export=view&id=1M55YwKlRYfUA_CRM2QnDHCkfgQMxu2lu" height="350" width="700" alt="academind slide">
+
+**Example:**
+
+```javascript
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+
+  componentDidMount() {
+    console.log("Component mounted!"); // Log when the component is inserted into the DOM
+  }
+
+  handleClick = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  render() {
+    return (
+      <div>
+        <p>You clicked {this.state.count} times</p>
+        <button onClick={this.handleClick}>Click me</button>
+      </div>
+    );
+  }
+}
+```
+
+- The `constructor` initializes the `count` state to 0.
+- `componentDidMount` logs a message to the console when the component is mounted.
+- `handleClick` increments the count state by 1 when the button is clicked.
+- The `render` method displays the current count and a button that triggers the `handleClick` function.
+
+**Key Points:**
+
+- Each lifecycle method serves a specific purpose.
+- Using these methods effectively helps manage component behavior throughout its lifecycle.
+- Be mindful of potential issues like infinite loops when using `componentDidUpdate`.
+
+**Additional Lifecycle Methods:**
+
+- `shouldComponentUpdate(nextProps, nextState)`: This is an optional method that allows you to control whether a component should update based on changes in props or state.
+
+- `getDerivedStateFromProps(nextProps, prevState)`: This is another optional method that allows you to derive state based on changes in props before the component updates.
 
 ---
 
