@@ -3,6 +3,7 @@
 | Contents                                                                                                      |
 | :------------------------------------------------------------------------------------------------------------ |
 | [What are Class based Components & Why is it Required?](#what-are-class-based-components--why-is-it-required) |
+| [Working with State and Events](#working-with-state-and-events)                                               |
 
 ## What are Class based Components & Why is it Required?
 
@@ -30,6 +31,92 @@ Readings:
 - [Understanding Functional Components and Class-Based Components](https://betterprogramming.pub/understanding-functional-components-895321b1af84)
 - [Functional Components vs Class Components in React](https://www.freecodecamp.org/news/functional-components-vs-class-components-in-react/)
 - [Introduction to Class Component in React](https://www.scaler.com/topics/react/class-component-in-react/)
+
+## Working with State and Events
+
+In a class-based approach, defining and managing state is slightly different from the functional-based approach. Here's how you do it:
+
+### Defining State
+
+- **Class-based components:**
+
+  - Use the `constructor` function to initialize state.
+  - Set `this.state` equal to an object containing your state properties (e.g., `this.state = { showUsers: true }`). Remember, it also has to be a property named `state`. This name is not up to you, so, it will always be `this.state`.
+  - _State is always an object in class components, even if it holds a single value._
+
+- **Functional components (using hooks):**
+  - Use the `useState` hook to define state (e.g., `const [showUsers, setShowUsers] = useState(true)`).
+  - State can be any data type (boolean, string, number, object, etc.).
+
+### Accessing and Setting State
+
+- **Class-based components:**
+
+  - Access state using `this.state.<property_name>` (e.g., `this.state.showUsers`).
+  - Update state using the `setState` method:
+    - Pass an object containing the new state values (e.g., `this.setState({ showUsers: false })`).
+    - `setState` merges the new object with the existing state, not overriding it completely.
+
+- **Functional components (using hooks):**
+  - Access state directly using the variable assigned by `useState` (e.g., `showUsers`).
+  - Update state directly using the setter function returned by `useState` (e.g., `setShowUsers(false)`).
+  - Setting state directly overrides the previous value.
+
+### Updating State Based on Previous Value
+
+- **Class-based components:**
+
+  - When updating state that depends on the previous value, pass a function to `setState`:
+    ```javascript
+    this.setState((prevState) => ({
+      showUsers: !prevState.showUsers,
+    }));
+    ```
+  - The function receives the current state as an argument (`prevState`) and should return a new object with the updated values.
+
+- **Functional components (using hooks):**
+  - No special handling needed. The setter function from useState already receives the previous state implicitly.
+
+**Example: Toggling a User List using Class-based component**
+
+```javascript
+class Users extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showUsers: true };
+  }
+
+  toggleUsersHandler = () => {
+    this.setState((prevState) => ({
+      showUsers: !prevState.showUsers,
+    }));
+  };
+
+  render() {
+    const usersList = [...]; // Your users list logic
+
+    return (
+      <div>
+        <button onClick={this.toggleUsersHandler.bind(this)}>
+          {this.state.showUsers ? 'Hide Users' : 'Show Users'}
+        </button>
+        {this.state.showUsers && usersList}
+      </div>
+    );
+  }
+}
+```
+
+- The constructor initializes the `showUsers` state to `true`.
+- The `toggleUsersHandler` function updates the `showUsers` state based on its previous value using `setState` with a function.
+- The `render` method displays a button that calls `toggleUsersHandler` and conditionally renders the user list based on `showUsers`.
+- Note the use of `bind(this)` to ensure `this` refers to the component instance within the event handler.
+
+Another important point is that class components require extra care to ensure `this` refers to the component within event handlers.
+
+Readings:
+
+- [How To Manage State on React Class Components](https://www.digitalocean.com/community/tutorials/how-to-manage-state-on-react-class-components)
 
 ---
 
