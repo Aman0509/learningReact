@@ -121,7 +121,11 @@ Readings:
 
 ## Component Lifecycle in Class-Based Components
 
-React components go through different stages in their existence, from creation to removal. Class-based components offer built-in lifecycle methods that allow you to hook into these stages and perform specific actions. Here's a breakdown with a basic example:
+Now that we understand the basics of constructing class-based components and managing state and event handling, what about handling side effects? As previously mentioned, React hooks cannot be utilized in class-based components, meaning `useEffect` is not an option. However, class-based components introduce the concept of the component lifecycle.
+
+Every component inherently undergoes a lifecycle, being rendered to and removed from the DOM. However, class-based components offer specific methods that allow you to execute code at various stages of this lifecycle. One of the most fundamental lifecycle methods available for class-based components is `componentDidMount()`. Similar to the `render()` method, `componentDidMount()` is a built-in method provided by React, which you can implement as soon as you extend the built-in Component class imported from React. React automatically invokes this method when the component has just been mounted.
+
+Additionally, other lifecycle methods that can be implemented include `componentDidUpdate()`, `componentWillUnmount()` and few more.
 
 **Lifecycle Methods:**
 
