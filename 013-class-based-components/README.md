@@ -23,6 +23,8 @@ With the introduction of hooks in React, functional components have become the p
 
 While hooks are recommended, React still fully supports class-based components. Existing codebase may still use them, and you might encounter them in learning materials or legacy projects.
 
+**_Note: While you can mix class-based and functional components within your React application (no errors will occur), it's generally recommended to choose one approach for consistency and maintainability. Functional components with hooks are the current best practice._**
+
 Readings:
 
 - [Understanding Functional Components and Class-Based Components](https://betterprogramming.pub/understanding-functional-components-895321b1af84)
