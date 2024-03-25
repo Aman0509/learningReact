@@ -8,6 +8,10 @@
 | [Class Based Components and Context](#class-based-components-and-context)                                     |
 | [Introducing Error Boundaries](#introducing-error-boundaries)                                                 |
 
+&nbsp;
+
+:notebook_with_decorative_cover: [Projects](projects/)
+
 ## What are Class based Components & Why is it Required?
 
 <img src="https://drive.google.com/uc?export=view&id=109Ml6GZGtFjtejoqCXeu45HBav3QVx16" height="350" width="700" alt="academind slide">
