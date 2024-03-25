@@ -14,6 +14,7 @@
 - [Handling Side Effects & Working with `useEffect()` Hook](010-handling-side-effects/README.md)
 - [Practice Project: Quiz App](011-quiz-app/README.md)
 - [Behind the Scenes of React & Optimization Techniques](012-bts-of-react-and-optimization-techniques/README.md)
+- [Class Based Components (An Alternate Way of Building Components)](013-class-based-components/README.md)
 
 ## References
 
