@@ -3,6 +3,7 @@
 | Contents                                                                  |
 | :------------------------------------------------------------------------ |
 | [Sending HTTP Request to Fetch Data](#sending-http-request-to-fetch-data) |
+| [Using Optimistic Updating](#using-optimistic-updating)                   |
 
 &nbsp;
 
@@ -65,6 +66,14 @@ function MyComponent() {
   return <div>{/* Render data */}</div>;
 }
 ```
+
+## Using Optimistic Updating
+
+"Optimistic updating" is a technique used in computer science, particularly in web development, to enhance user experience when dealing with data updates.
+
+In this approach, rather than waiting for confirmation from the server that a change has been successfully made before updating the user interface, the client assumes the update will be successful and immediately reflects the change in the UI. Then, if the server indicates that the update was unsuccessful, the UI is adjusted accordingly to reflect the actual state of the data.
+
+An example of optimistic updating can be seen in a web application where users can edit their profile information. When a user makes changes to their profile and clicks "Save," instead of waiting for the server to confirm the changes, the application immediately updates the UI to reflect the edited information. If the server encounters an issue, such as a network error or validation failure, it will respond with an error message, and the UI can revert to the original data or display an error notification to the user. This approach can make the application feel more responsive and reduce perceived latency for the user.
 
 ---
 
