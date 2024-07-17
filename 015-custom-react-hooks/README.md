@@ -12,6 +12,10 @@
 
 We have earlier learnt about below 2 hook rules:
 
+|                                                                                                                                         |                                                                                                                                         |
+| :-------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://drive.google.com/uc?export=view&id=1YMn9rlvd2QaisQKM_dH6RA9g_QQ6jgBP" height="350" width="700" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1oahuJqqESDZJnuaE47Uij5VPiBLq__dL" height="350" width="700" alt="academind slide"> |
+
 **1. Use Hooks Only Inside React Component Functions:** Hooks should only be used inside React component functions.
 
 **2. Do Not Nest Hooks:** Hooks must not be placed inside conditional statements, loops, or nested functions. This rule ensures that hooks are called in the same order on every render, which is crucial for React’s hooks mechanism to work correctly.
