@@ -5,6 +5,7 @@
 | [What are Forms and What's tricky about them ?](#what-are-forms-and-whats-tricky-about-them-)                           |
 | [Handling Form Submission](#handling-form-submission)                                                                   |
 | [Managing & Getting User Input via State & Generic Handlers](#managing--getting-user-input-via-state--generic-handlers) |
+| [Getting User Input via Refs](#getting-user-input-via-refs)                                                             |
 
 &nbsp;
 
@@ -159,6 +160,99 @@ export default LoginForm;
 ```
 
 This approach makes it easy to manage and retrieve user input in React applications, keeping the code clean and maintainable.
+
+## Getting User Input via Refs
+
+Refs are a mechanism in React that allows you to directly access DOM elements created by JSX components. Therefore, using refs to get user input involves creating a reference to an input element and accessing its value directly. This approach can be useful in certain situations but also comes with some drawbacks.
+
+### Using Refs to Get User Input
+
+1. **Set up the ref:** Use the `useRef` hook to create a reference to the input element.
+2. **Attach the ref to the input element:** Use the `ref` attribute to attach the created reference to the input element.
+3. **Access the ref value:** Use the reference to access the input value when needed, such as during form submission.
+
+**Example:**
+
+```jsx
+import { useRef } from "react";
+
+function LoginForm() {
+  // Step 1: Set up the ref
+  const usernameRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  // Step 3: Access the ref value during form submission
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const username = usernameRef.current.value;
+    const password = passwordRef.current.value;
+    console.log("Form submitted:", { username, password });
+    // You can send the input values to a backend or perform other actions here
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Step 2: Attach the ref to the input elements */}
+      <div>
+        <label htmlFor="username">Username:</label>
+        <input type="text" id="username" ref={usernameRef} />
+      </div>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <input type="password" id="password" ref={passwordRef} />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  );
+}
+
+export default LoginForm;
+```
+
+### Pros and Cons of Using Refs
+
+**Pros**
+
+- **Direct Access:** Provides direct access to the DOM element, which can be useful for tasks like focusing an input or interacting with third-party libraries.
+- **No State Management:** Avoids the need to manage input state, which can simplify the component in some cases.
+- **Simplicity:** In scenarios where you need to quickly grab a value without involving state, refs can be simpler.
+
+**Cons**
+
+- **Less React-ish:** Contrary to the React philosophy of declarative programming and state management, it essentially involves manual DOM manipulation, which increases the likelihood of errors.
+- **Re-renders:** Changes to the input value do not trigger component re-renders, making it harder to keep the UI in sync with the state.
+- **Limited Usefulness:** Not suitable for complex forms or cases where you need to react to input changes dynamically.
+- **Potential for Side Effects:** Updating the DOM directly using Refs can introduce side effects that might not be easily tracked or managed in a React component's lifecycle.
+
+### When to Use Refs
+
+- **Focus Management:** When you need to programmatically focus an input field (e.g., when a form loads).
+
+```jsx
+import React, { useRef, useEffect } from "react";
+
+function LoginForm() {
+  const usernameRef = useRef(null);
+
+  useEffect(() => {
+    usernameRef.current.focus();
+  }, []);
+
+  return (
+    <form>
+      <div>
+        <label htmlFor="username">Username:</label>
+        <input type="text" id="username" ref={usernameRef} />
+      </div>
+    </form>
+  );
+}
+
+export default LoginForm;
+```
+
+- **Interacting with Third-Party Libraries**: When a third-party library requires direct DOM access.
+- **Simple Forms:** When dealing with very simple forms where state management is unnecessary.
 
 ---
 
