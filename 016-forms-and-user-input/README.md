@@ -267,13 +267,13 @@ Let's consider sign up (`SignUp.jsx`) form example.
 
 2. **Form Submission Handling:**
 
-- Use an `onSubmit` event handler to handle form submission.
-- Prevent the default form submission behavior to manage the data within React.
+   - Use an `onSubmit` event handler to handle form submission.
+   - Prevent the default form submission behavior to manage the data within React.
 
 3. **Using `FormData` to Extract Values:**
 
-- Create a `FormData` object from the form element.
-- Use `FormData` methods to extract values.
+   - Create a `FormData` object from the form element.
+   - Use `FormData` methods to extract values.
 
 ```jsx
 // SignUp.jsx
