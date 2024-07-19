@@ -6,6 +6,7 @@
 | [Handling Form Submission](#handling-form-submission)                                                                   |
 | [Managing & Getting User Input via State & Generic Handlers](#managing--getting-user-input-via-state--generic-handlers) |
 | [Getting User Input via Refs](#getting-user-input-via-refs)                                                             |
+| [Getting Values via `FormData` & Native Browser APIs](#getting-values-via-formdata--native-browser-apis)                |
 
 &nbsp;
 
@@ -253,6 +254,90 @@ export default LoginForm;
 
 - **Interacting with Third-Party Libraries**: When a third-party library requires direct DOM access.
 - **Simple Forms:** When dealing with very simple forms where state management is unnecessary.
+
+## Getting Values via `FormData` & Native Browser APIs
+
+Using [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) and native browser APIs provides a convenient way to extract user input values, especially in complex forms. This method leverages the browser's built-in functionality to handle form data efficiently.
+
+### Example: Using `FormData` in a React Component
+
+Let's consider sign up (`SignUp.jsx`) form example.
+
+1. **Form Structure:** Ensure each input element defined in `form` element must have `name` attribute. This is crucial for `FormData` to extract values correctly.
+
+2. **Form Submission Handling:**
+
+- Use an `onSubmit` event handler to handle form submission.
+- Prevent the default form submission behavior to manage the data within React.
+
+3. **Using `FormData` to Extract Values:**
+
+- Create a `FormData` object from the form element.
+- Use `FormData` methods to extract values.
+
+```jsx
+// SignUp.jsx
+
+function SignUp() {
+  // Step 2: Handle form submission
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    const formData = new FormData(event.target); // Create a FormData object from the form
+
+    // Step 3: Extract values
+    const data = Object.fromEntries(formData.entries()); // Convert FormData entries to an object
+    // Check out other methods as well
+
+    // Handle multi-value input fields (e.g., checkboxes)
+    const acquisitionChannel = formData.getAll("acquisition");
+    data.acquisition = acquisitionChannel; // Add multi-value input to data object
+
+    console.log("Form submitted:", data);
+    // You can send the form data to a backend or perform other actions here
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Step 1: Form structure with name attributes */}
+      <div>
+        <label htmlFor="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required />
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required />
+      </div>
+      <div>
+        <label htmlFor="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <div>
+        <label>How did you find us?</label>
+        <div>
+          <label>
+            <input type="checkbox" name="acquisition" value="friends" /> Friends
+          </label>
+          <label>
+            <input type="checkbox" name="acquisition" value="search" /> Search
+            Engine
+          </label>
+          <label>
+            <input type="checkbox" name="acquisition" value="ads" />{" "}
+            Advertisements
+          </label>
+        </div>
+      </div>
+      <button type="submit">Sign up</button>
+    </form>
+  );
+}
+
+export default SignUp;
+```
 
 ---
 
