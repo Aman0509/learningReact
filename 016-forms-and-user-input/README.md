@@ -7,6 +7,7 @@
 | [Managing & Getting User Input via State & Generic Handlers](#managing--getting-user-input-via-state--generic-handlers) |
 | [Getting User Input via Refs](#getting-user-input-via-refs)                                                             |
 | [Getting Values via `FormData` & Native Browser APIs](#getting-values-via-formdata--native-browser-apis)                |
+| [Resetting Forms](#resetting-forms)                                                                                     |
 
 &nbsp;
 
@@ -338,6 +339,136 @@ function SignUp() {
 
 export default SignUp;
 ```
+
+## Resetting Forms
+
+Resetting a form is a common requirement in web applications, and there are several ways to achieve this in React. Let's explore the various methods, along with simple examples for each approach.
+
+### 1. Using the Reset Button with `type="reset"`
+
+The simplest way to reset a form is by using a button with the type attribute set to reset. This is a built-in HTML feature that automatically clears the form inputs when clicked.
+
+```jsx
+import React from "react";
+
+function SimpleResetForm() {
+  return (
+    <form>
+      <input type="text" name="username" />
+      <input type="password" name="password" />
+      <button type="reset">Reset</button>
+    </form>
+  );
+}
+
+export default SimpleResetForm;
+```
+
+### 2. Resetting Form State Programmatically
+
+When managing form inputs with state, you can reset the form by setting the state values back to their initial state. This method is suitable when you need more control over the form's data.
+
+```jsx
+import React, { useState } from "react";
+
+function StateResetForm() {
+  const initialState = { email: "", password: "" };
+  const [formData, setFormData] = useState(initialState);
+
+  const handleReset = () => {
+    setFormData(initialState);
+  };
+
+  return (
+    <form>
+      <input
+        type="email"
+        value={formData.email}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+      />
+      <input
+        type="password"
+        value={formData.password}
+        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+      />
+      <button type="button" onClick={handleReset}>
+        Reset
+      </button>
+    </form>
+  );
+}
+
+export default StateResetForm;
+```
+
+### 3. Resetting Inputs Using Refs
+
+When using refs to manage input values, you can reset the form by setting the input elements' `value` property to empty strings. However, this is less recommended because it involves manual DOM manipulation, which goes against React's declarative approach.
+
+```jsx
+import React, { useRef } from "react";
+
+function RefResetForm() {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const handleReset = () => {
+    emailRef.current.value = "";
+    passwordRef.current.value = "";
+  };
+
+  return (
+    <form>
+      <input type="email" ref={emailRef} />
+      <input type="password" ref={passwordRef} />
+      <button type="button" onClick={handleReset}>
+        Reset
+      </button>
+    </form>
+  );
+}
+
+export default RefResetForm;
+```
+
+### 4. Using the Form `reset` Method with `FormData`
+
+Another approach is to use the form's built-in `reset` method, which can be called programmatically. This method is often used in conjunction with event handling in React, providing a clean and less code-intensive way to reset the form.
+
+```jsx
+import React from "react";
+
+function FormDataResetForm() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    // Process formData here
+    form.reset(); // Reset the form
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="email" name="email" />
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </form>
+  );
+}
+
+export default FormDataResetForm;
+```
+
+### Summary
+
+- **Reset Button (`type="reset"`)**: Simplest method, automatically resets form inputs.
+- **State Management**: Resets form by resetting state values, provides more control.
+- **Refs**: Directly manipulates the DOM to reset inputs, less recommended.
+- **Form `reset` Method**: Clean and concise, leverages native browser APIs to reset the form.
+
+Each method has its use cases, and the choice of which to use depends on the specific requirements of your application and the level of control you need over the form's behavior.
 
 ---
 
