@@ -8,6 +8,7 @@
 | [Getting User Input via Refs](#getting-user-input-via-refs)                                                             |
 | [Getting Values via `FormData` & Native Browser APIs](#getting-values-via-formdata--native-browser-apis)                |
 | [Resetting Forms](#resetting-forms)                                                                                     |
+| [Validating Input on Every Keystroke via State](#validating-input-on-every-keystroke-via-state)                         |
 
 &nbsp;
 
@@ -469,6 +470,62 @@ export default FormDataResetForm;
 - **Form `reset` Method**: Clean and concise, leverages native browser APIs to reset the form.
 
 Each method has its use cases, and the choice of which to use depends on the specific requirements of your application and the level of control you need over the form's behavior.
+
+## Validating Input on Every Keystroke via State
+
+Validating form input on every keystroke ensures immediate feedback to the user, improving the user experience by indicating errors as they type. This is typically done using state to manage form input values and validation statuses. Here, we'll explore this approach with a practical example.
+
+### Implementation
+
+**Example Scenario**: We will create a login form with an email field that validates the input on every keystroke to check if it contains an '@' symbol.
+
+1. **Setting Up the Form with State Management**: First, we import React and the `useState` hook. We then define the initial state for the form inputs and create a handler function to update the state on every keystroke.
+
+2. **Adding Validation Logic**: Next, we add logic to validate the email input on each keystroke. We compute a validation status based on the current state and conditionally render an error message.
+
+```jsx
+import React, { useState } from "react";
+
+function LoginForm() {
+  const [formData, setFormData] = useState({ email: "" });
+
+  const handleInputChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  const emailIsInvalid = formData.email !== "" && !formData.email.includes("@");
+
+  return (
+    <form>
+      <div>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          placeholder="Enter your email"
+        />
+        {emailIsInvalid && (
+          <div className="control-error">
+            Please enter a valid email address.
+          </div>
+        )}
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default LoginForm;
+```
+
+Now, this approach in this scenario is not effective because:
+
+- One issue is that if we initially enter a valid email address and then erase it, no error message appears because we're only checking if the email field is an empty string, and in that case, we never set `emailIsInvalid` to true.
+
+- Another problem is that while we don't see an error message initially, it appears as soon as the user starts typing, which might not provide the best user experience.
+
+Let's work on it in next section.
 
 ---
 
