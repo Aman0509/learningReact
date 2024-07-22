@@ -9,6 +9,7 @@
 | [Getting Values via `FormData` & Native Browser APIs](#getting-values-via-formdata--native-browser-apis)                |
 | [Resetting Forms](#resetting-forms)                                                                                     |
 | [Validating Input on Every Keystroke via State](#validating-input-on-every-keystroke-via-state)                         |
+| [Validating Input upon Lost Focus (Blur)](#validating-input-upon-lost-focus-blur)                                       |
 
 &nbsp;
 
@@ -526,6 +527,65 @@ Now, this approach in this scenario is not effective because:
 - Another problem is that while we don't see an error message initially, it appears as soon as the user starts typing, which might not provide the best user experience.
 
 Let's work on it in next section.
+
+## Validating Input upon Lost Focus (Blur)
+
+To improve user experience in out previous example, we can implement validation upon lost focus. For that, we need to handle the input field's blur event, which occurs when the input loses focus.
+
+### Implementation
+
+- Add the `onBlur` prop to the input field to listen for the blur event.
+- Create an event handler function (e.g., `handleInputBlur`) that updates the state to indicate that the input field has been touched.
+- Use a piece of state to keep track of whether the input has been touched (lost focus). This state helps in deciding when to show validation errors.
+- Use the blur state in combination with the validation logic to ensure that errors are shown only after the user has interacted with the input field.
+- To improve user experience, we can further update the form to clear the error message when the user starts typing again.
+
+**Updated Example:**
+
+```jsx
+import React, { useState } from "react";
+
+function LoginForm() {
+  const [formData, setFormData] = useState({ email: "" });
+  const [didBlur, setDidBlur] = useState({ email: false });
+
+  const handleInputChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+    setDidBlur((prevState) => ({ ...prevState, [event.target.name]: false }));
+  };
+
+  const handleInputBlur = (identifier) => {
+    setDidBlur((prevState) => ({ ...prevState, [identifier]: true }));
+  };
+
+  const emailIsInvalid = didBlur.email && !formData.email.includes("@");
+
+  return (
+    <form>
+      <div>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          onBlur={() => handleInputBlur("email")}
+          placeholder="Enter your email"
+        />
+        {emailIsInvalid && (
+          <div className="control-error">
+            Please enter a valid email address.
+          </div>
+        )}
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default LoginForm;
+```
+
+By combining validation on every keystroke with validation on lost focus and resetting the focus state when typing resumes, we achieve a robust and user-friendly input validation mechanism.
 
 ---
 
