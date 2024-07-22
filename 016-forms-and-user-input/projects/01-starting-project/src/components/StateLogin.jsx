@@ -28,6 +28,12 @@ export default function Login() {
     event.preventDefault();
     console.log("Submitted!");
     console.log(enteredValues);
+
+    // resetting programmatically
+    //   setEnteredValues({
+    //     email: "",
+    //     password: "",
+    //   });
   }
 
   return (

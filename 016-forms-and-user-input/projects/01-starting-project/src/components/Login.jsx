@@ -8,6 +8,10 @@ export default function Login() {
     event.preventDefault();
     console.log("Submitted!");
     console.log(emailRef.current.value, passwordRef.current.value);
+
+    // resetting manually via refs - less recommended
+    // emailRef.current.value = '';
+    // passwordRef.current.value = '';
   }
 
   return (
