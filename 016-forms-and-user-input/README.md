@@ -10,6 +10,7 @@
 | [Resetting Forms](#resetting-forms)                                                                                     |
 | [Validating Input on Every Keystroke via State](#validating-input-on-every-keystroke-via-state)                         |
 | [Validating Input upon Lost Focus (Blur)](#validating-input-upon-lost-focus-blur)                                       |
+| [Validating Input upon Form Submission](#validating-input-upon-form-submission)                                         |
 
 &nbsp;
 
@@ -586,6 +587,68 @@ export default LoginForm;
 ```
 
 By combining validation on every keystroke with validation on lost focus and resetting the focus state when typing resumes, we achieve a robust and user-friendly input validation mechanism.
+
+## Validating Input upon Form Submission
+
+Validating input upon form submission is a method where you only check the validity of form data when the user attempts to submit the form (such as sending an HTTP request). This approach is straightforward and ensures that the form data meets the required criteria before processing it. This method is particularly useful when using refs instead of state to manage form inputs.
+
+**Example**:
+
+```jsx
+import { useState, useRef } from "react";
+
+const Login = () => {
+  const emailRef = useRef();
+  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const enteredEmail = emailRef.current.value;
+
+    // Perform validation
+    const emailIsValid = email.includes("@");
+    if (!emailIsValid) {
+      setEmailIsInvalid(true);
+      return; // Stop form submission if invalid
+    }
+
+    setEmailIsInvalid(false);
+
+    // Proceed with form submission (e.g., send data to server)
+    console.log("Sending HTTP Request...");
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Email:</label>
+        <input id="email" type="email" name="email" ref={emailRef} />
+        {emailIsInvalid && (
+          <div className="control-error">
+            Please enter a valid email address.
+          </div>
+        )}
+      </div>
+      <button type="submit">Log In</button>
+    </form>
+  );
+};
+
+export default Login;
+```
+
+### Benefits
+
+- Simplifies the form validation logic by performing checks only when the user submits the form.
+- Reduces the amount of code needed for validation compared to keystroke and focus-based validation.
+
+### Considerations
+
+- Users might not receive immediate feedback if their input is invalid, which can affect user experience.
+- It’s often a good practice to combine submission-based validation with other types of validation (e.g., on keystroke or blur) to provide better feedback and ensure data integrity.
+
+Validating input upon form submission is a popular approach that simplifies validation logic by performing checks only when the user submits the form. This method ensures that invalid data is caught before processing but might require additional validation strategies to improve user experience and feedback.
 
 ---
 
