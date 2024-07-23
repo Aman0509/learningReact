@@ -11,6 +11,7 @@
 | [Validating Input on Every Keystroke via State](#validating-input-on-every-keystroke-via-state)                         |
 | [Validating Input upon Lost Focus (Blur)](#validating-input-upon-lost-focus-blur)                                       |
 | [Validating Input upon Form Submission](#validating-input-upon-form-submission)                                         |
+| [Validating Input via Built-in Validation Props](#validating-input-via-built-in-validation-props)                       |
 
 &nbsp;
 
@@ -649,6 +650,65 @@ export default Login;
 - It’s often a good practice to combine submission-based validation with other types of validation (e.g., on keystroke or blur) to provide better feedback and ensure data integrity.
 
 Validating input upon form submission is a popular approach that simplifies validation logic by performing checks only when the user submits the form. This method ensures that invalid data is caught before processing but might require additional validation strategies to improve user experience and feedback.
+
+## Validating Input via Built-in Validation Props
+
+Using built-in validation attributes provided by the browser is an efficient way to validate form inputs without writing custom validation code. This method leverages HTML5 attributes to enforce validation rules directly on form elements.
+
+The browser offers several built-in attributes that can be added to input elements to perform validation. These include:
+
+- `required`: Ensures the input field is not left empty.
+- `minLength`: Sets a minimum length for the input value.
+- `maxLength`: Sets a maximum length for the input value.
+- `pattern`: Specifies a regular expression the input value must match.
+- `type`: Enforces input types like `email`, `url`, `number`, etc.
+
+Checkout more [here](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)
+
+**Example**
+
+```jsx
+const SignUp = () => {
+  return (
+    <form>
+      <div>
+        <label>Email:</label>
+        <input type="email" required />
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type="password" required minLength={6} />
+      </div>
+      <div>
+        <label>Confirm Password:</label>
+        <input type="password" required minLength={6} />
+      </div>
+      <div>
+        <label>Terms of Use:</label>
+        <input type="checkbox" required />
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+  );
+};
+
+export default SignUp;
+```
+
+- When the form is submitted, the browser automatically checks if the required fields are filled.
+- For the email field, the browser checks if the entered value is a valid email address.
+- For the password fields, the browser checks if the entered value meets the minimum length requirement.
+
+### Benefits
+
+- **Ease of Implementation**: Built-in validation attributes require minimal code to set up.
+- **Consistent Behavior**: The browser handles validation, ensuring consistent behavior across different browsers.
+- **Accessibility**: Built-in error messages are accessible and can improve the user experience.
+
+### Considerations
+
+- **Customization**: Built-in error messages are not customizable without additional JavaScript.
+- **Complex Validation**: For more complex validation rules, you may still need to write custom validation logic.
 
 ---
 
