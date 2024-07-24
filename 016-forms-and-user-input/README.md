@@ -13,6 +13,7 @@
 | [Validating Input upon Form Submission](#validating-input-upon-form-submission)                                         |
 | [Validating Input via Built-in Validation Props](#validating-input-via-built-in-validation-props)                       |
 | [Mixing Custom and Built-in Validation Logic](#mixing-custom-and-built-in-validation-logic)                             |
+| [Using Third-Party Form Libraries](#using-third-party-form-libraries)                                                   |
 
 &nbsp;
 
@@ -778,6 +779,10 @@ export default SignUp;
 ```
 
 By mixing built-in validation attributes with custom validation logic, you can create robust and user-friendly forms. Built-in attributes reduce the amount of code you need to write for common validation tasks, while custom logic enables you to handle more complex scenarios. This approach provides flexibility and ensures a better user experience by combining the best of both worlds.
+
+## Using Third-Party Form Libraries
+
+In this module, we learned how to handle forms in React, including capturing and validating input values using both custom logic and browser features. Additionally, we should be aware of third-party libraries like [React Hook Form](https://react-hook-form.com/) and [Formik](https://formik.org/) that simplify form handling and validation. Exploring these libraries can be beneficial for our development process, even though it's important to understand and be able to implement form handling and validation from scratch in React.
 
 ---
 
