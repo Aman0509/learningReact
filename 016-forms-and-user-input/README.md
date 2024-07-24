@@ -12,6 +12,7 @@
 | [Validating Input upon Lost Focus (Blur)](#validating-input-upon-lost-focus-blur)                                       |
 | [Validating Input upon Form Submission](#validating-input-upon-form-submission)                                         |
 | [Validating Input via Built-in Validation Props](#validating-input-via-built-in-validation-props)                       |
+| [Mixing Custom and Built-in Validation Logic](#mixing-custom-and-built-in-validation-logic)                             |
 
 &nbsp;
 
@@ -709,6 +710,74 @@ export default SignUp;
 
 - **Customization**: Built-in error messages are not customizable without additional JavaScript.
 - **Complex Validation**: For more complex validation rules, you may still need to write custom validation logic.
+
+## Mixing Custom and Built-in Validation Logic
+
+Combining built-in validation attributes with custom validation logic allows for a more comprehensive and user-friendly form validation. Built-in validation attributes handle common cases efficiently, while custom logic can address specific requirements that are not covered by built-in attributes.
+
+### Example: Custom Validation for Confirm Password
+
+In this example, we will enhance a sign up form by adding custom validation to ensure that the "Confirm Password" field matches the "Password" field, along with using built-in validation attributes.
+
+- We will use built-in attributes like `required`, `minLength`, and `type` to handle basic validation.
+- We will add custom logic to check if the password and confirm password fields match.
+- We'll manage additional state to display custom error messages.
+
+```jsx
+import React, { useState } from "react";
+
+const SignUp = () => {
+  // State to manage custom validation error
+  const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState(false);
+
+  // Handler for form submission
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirm-password");
+
+    // Custom validation check
+    if (password !== confirmPassword) {
+      setPasswordsAreNotEqual(true);
+      return; // Prevent form submission
+    }
+
+    // If passwords match, proceed with form submission logic
+    console.log("Form Submitted", Object.fromEntries(formData.entries()));
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Email:</label>
+        <input type="email" name="email" required />
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type="password" name="password" required minLength={6} />
+      </div>
+      <div>
+        <label>Confirm Password:</label>
+        <input type="password" name="confirm-password" required minLength={6} />
+        {passwordsAreNotEqual && (
+          <div className="control-error">Passwords must match</div>
+        )}
+      </div>
+      <div>
+        <label>Terms of Use:</label>
+        <input type="checkbox" name="terms" required />
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+  );
+};
+
+export default SignUp;
+```
+
+By mixing built-in validation attributes with custom validation logic, you can create robust and user-friendly forms. Built-in attributes reduce the amount of code you need to write for common validation tasks, while custom logic enables you to handle more complex scenarios. This approach provides flexibility and ensures a better user experience by combining the best of both worlds.
 
 ---
 
