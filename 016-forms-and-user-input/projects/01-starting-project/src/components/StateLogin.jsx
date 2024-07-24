@@ -1,6 +1,6 @@
-import { useState } from "react";
-import Input from "./Input";
-import { isEmail, isNotEmpty, hasMinLength } from "../util/validation";
+import { useInput } from "../hooks/useInput.js";
+import Input from "./Input.jsx";
+import { isEmail, isNotEmpty, hasMinLength } from "../util/validation.js";
 
 export default function Login() {
   // In below approach, we are tracking state for each form field, however, imagine if we have
@@ -14,38 +14,28 @@ export default function Login() {
   //   setEnteredPassword(event.target.value);
   // }
 
-  const [enteredValues, setEnteredValues] = useState({
-    email: "",
-    password: "",
-  });
+  const {
+    value: emailValue,
+    handleInputChange: handleEmailChange,
+    handleInputBlur: handleEmailBlur,
+    hasError: isInvalidEmail,
+  } = useInput("", (value) => isEmail(value) && isNotEmpty(value));
 
-  const [didEdit, setDidEdit] = useState({
-    email: false,
-    password: false,
-  });
-
-  function handleInputChange(identifier, value) {
-    setEnteredValues((prevValues) => ({
-      ...prevValues,
-      [identifier]: value,
-    }));
-    setDidEdit((prevValues) => ({
-      ...prevValues,
-      [identifier]: false,
-    }));
-  }
-
-  function handleInputBlur(identifier) {
-    setDidEdit((prevValues) => ({
-      ...prevValues,
-      [identifier]: true,
-    }));
-  }
+  const {
+    value: passwordValue,
+    handleInputChange: handlePasswordChange,
+    handleInputBlur: handlePasswordBlur,
+    hasError: isInvalidPassword,
+  } = useInput("", (value) => hasMinLength(value, 6));
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    if (isInvalidEmail || isInvalidPassword) {
+      return;
+    }
     console.log("Submitted!");
-    console.log(enteredValues);
+    console.log(emailValue, passwordValue);
 
     // resetting programmatically
     //   setEnteredValues({
@@ -53,13 +43,6 @@ export default function Login() {
     //     password: "",
     //   });
   }
-
-  const isInvalidEmail =
-    didEdit.email &&
-    !isEmail(enteredValues.email) &&
-    !isNotEmpty(enteredValues.email);
-  const isInvalidPassword =
-    didEdit.password && !hasMinLength(enteredValues.password, 6);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -72,11 +55,9 @@ export default function Login() {
           type="email"
           name="email"
           error={isInvalidEmail && "Please enter valid email address"}
-          value={enteredValues.email}
-          onBlur={() => handleInputBlur("email")}
-          onChange={(event) => {
-            handleInputChange("email", event.target.value);
-          }}
+          value={emailValue}
+          onBlur={handleEmailBlur}
+          onChange={handleEmailChange}
         />
 
         <Input
@@ -85,11 +66,9 @@ export default function Login() {
           type="password"
           name="password"
           error={isInvalidPassword && "Please enter a valid password"}
-          value={enteredValues.password}
-          onChange={(event) => {
-            handleInputChange("password", event.target.value);
-          }}
-          onBlur={(event) => handleInputBlur("password")}
+          value={passwordValue}
+          onChange={handlePasswordChange}
+          onBlur={handlePasswordBlur}
         />
       </div>
 
