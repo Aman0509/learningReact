@@ -17,6 +17,7 @@
 - [Class Based Components (An Alternate Way of Building Components)](013-class-based-components/README.md)
 - [Sending HTTP Requests](014-sending-http-requests/README.md)
 - [Building Custom React Hooks](015-custom-react-hooks/README.md)
+- [Working with Forms and User Input](016-forms-and-user-input/README.md)
 
 ## References
 

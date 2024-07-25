@@ -118,4 +118,4 @@ Readings:
 
 ---
 
-[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Sending HTTP Requests](../014-sending-http-requests/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>]()
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Sending HTTP Requests](../014-sending-http-requests/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Working with Forms & User Input <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../016-forms-and-user-input/README.md)
