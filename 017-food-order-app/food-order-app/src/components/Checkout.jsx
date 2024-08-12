@@ -23,6 +23,19 @@ export default function Checkout() {
     // Note: For validation, we just want all fields required which is already handled in `Input` component
     event.preventDefault();
     const customerData = Object.fromEntries(new FormData(event.target));
+
+    fetch("http://localhost:3000/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        order: {
+          items: cartCtx.items,
+          customer: customerData,
+        },
+      }),
+    });
   }
 
   return (
@@ -30,7 +43,7 @@ export default function Checkout() {
       <form onSubmit={handleSubmit}>
         <h2>Checkout</h2>
         <p>Total Amount: {currencyFormatter.format(totalPrice)}</p>
-        <Input id="full-name" type="text" label="Full Name" />
+        <Input id="name" type="text" label="Full Name" />
         <Input id="email" type="email" label="E-Mail Address" />
         <Input id="street" type="text" label="Street" />
         <div className="control-row">
