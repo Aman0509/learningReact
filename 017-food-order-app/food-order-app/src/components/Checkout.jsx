@@ -19,9 +19,15 @@ export default function Checkout() {
     userProgressCtx.hideCheckout();
   }
 
+  function handleSubmit(event) {
+    // Note: For validation, we just want all fields required which is already handled in `Input` component
+    event.preventDefault();
+    const customerData = Object.fromEntries(new FormData(event.target));
+  }
+
   return (
     <Modal open={userProgressCtx.progress === "checkout"}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h2>Checkout</h2>
         <p>Total Amount: {currencyFormatter.format(totalPrice)}</p>
         <Input id="full-name" type="text" label="Full Name" />
