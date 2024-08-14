@@ -19,6 +19,7 @@
 - [Building Custom React Hooks](015-custom-react-hooks/README.md)
 - [Working with Forms and User Input](016-forms-and-user-input/README.md)
 - [Practice Project: Food Order App](017-food-order-app/README.md)
+- [Diving into Redux (An Alternative to Context API)](018-diving-into-redux/README.md)
 
 ## References
 
