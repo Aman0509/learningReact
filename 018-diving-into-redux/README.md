@@ -4,6 +4,7 @@
 | :-------------------------------------------------------------------------- |
 | [Another Look at State in React Apps](#another-look-at-state-in-react-apps) |
 | [Redux vs React Context](#redux-vs-react-context)                           |
+| [How Redux Works](#how-redux-works)                                         |
 
 ## Another Look at State in React Apps
 
@@ -37,9 +38,9 @@ To simplify managing cross-component and app-wide state, we previously learned a
 
 - **React Context:** React Context can lead to a complex setup in large applications, especially when managing multiple contexts. This can result in deeply nested JSX code and multiple Context Providers, making the codebase harder to maintain. Alternatively, using a single, large Context Provider can also become difficult to manage due to its broad scope.
 
-|                                                                                                                                         |                                                                                                                                         |
-| :-------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
-| <img src="https://drive.google.com/uc?export=view&id=1Vbqu6z3mYL-DwhQ3JTooIvAjbL-M06WQ" height="350" width="700" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1O4sKMxdiuga0GksU-QisrDLp7GhR3q0s" height="350" width="700" alt="academind slide"> |
+  |                                                                                                                                         |                                                                                                                                         |
+  | :-------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
+  | <img src="https://drive.google.com/uc?export=view&id=1Vbqu6z3mYL-DwhQ3JTooIvAjbL-M06WQ" height="350" width="700" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1O4sKMxdiuga0GksU-QisrDLp7GhR3q0s" height="350" width="700" alt="academind slide"> |
 
 ### Performance
 
@@ -59,6 +60,42 @@ To simplify managing cross-component and app-wide state, we previously learned a
 - **React Context**: Suitable for small to medium-sized applications where the complexity of state management is lower, and the performance demands are not as high.
 
 While both Redux and React Context are powerful tools for managing state in React applications, they serve different purposes and are suited to different types of projects. Redux excels in larger applications with complex state needs and high-frequency updates, while React Context is more appropriate for simpler applications where these challenges are not as prominent. Depending on the specific needs of your project, you might use one or the other, or even both in conjunction.
+
+## How Redux Works
+
+Redux is a state management library that centralizes the state of an application into a single, central store. Here’s how it works:
+
+<img src="https://drive.google.com/uc?export=view&id=1yIGopbarGA-xAYIVz29wCDKHVSP7VV3L" height="350" width="700" alt="academind slide">
+
+1. **Central Data Store**
+
+   - **One Store**: Redux provides a single store where all the application state is kept. This store contains all the global state like authentication status, theme settings, user inputs, etc. This approach ensures that the state is consistent and easily manageable across the entire application.
+
+2. **Components Subscribing to the Store**
+
+   - **Data Access**: Components in the application subscribe to this central store to access the state they need. For example, if a component needs to know whether a user is authenticated, it can subscribe to the authentication state in the store.
+
+   - **Reacting to State Changes**: Whenever the state in the store changes, the components that subscribe to it are notified so they can update their UI accordingly.
+
+3. **Changing the State**
+
+   <img src="https://drive.google.com/uc?export=view&id=1QUrYFxiph-NmtmUPWAOnu-qgvWwRAkcH" height="350" width="700" alt="academind slide">
+
+   - **Reducers**: Components in the application do not directly modify the state in the store. Instead, they use reducers, which are special functions responsible for updating the state in the store.
+
+   - **What are Reducers?**: A reducer is a function that takes the current state and an action, and then returns a new state. The term "reducer" comes from the concept of reducing multiple inputs into a single output. In Redux, reducers take the current state and an action, and return a new state that will replace the old state in the store.
+
+4. **Dispatching Actions**
+
+   - **Actions**: When a component needs to trigger a state change (for example, in response to a user clicking a button), it dispatches an action. An action is a plain JavaScript object that describes the type of operation to be performed on the state.
+
+   - **Action Flow**: The action is sent to the reducer, which interprets the action and decides how to modify the state based on the action's description. The reducer then returns the new state, which replaces the old state in the store.
+
+5. **Updating the UI**
+
+   - **Notification to Components**: Once the state is updated in the store, any components that are subscribed to that part of the state are automatically notified. They can then retrieve the updated state and re-render the UI as needed.
+
+This is the basic flow of how Redux works: a single store holds the state, components subscribe to the store to access state, and actions are dispatched to reducers to update the state, which then updates the subscribing components.
 
 ---
 
