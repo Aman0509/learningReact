@@ -5,6 +5,11 @@
 | [Another Look at State in React Apps](#another-look-at-state-in-react-apps) |
 | [Redux vs React Context](#redux-vs-react-context)                           |
 | [How Redux Works](#how-redux-works)                                         |
+| [Exploring the Core Redux Concepts](#exploring-the-core-redux-concepts)     |
+
+&nbsp;
+
+:notebook_with_decorative_cover: [Projects](projects/)
 
 ## Another Look at State in React Apps
 
@@ -96,6 +101,51 @@ Redux is a state management library that centralizes the state of an application
    - **Notification to Components**: Once the state is updated in the store, any components that are subscribed to that part of the state are automatically notified. They can then retrieve the updated state and re-render the UI as needed.
 
 This is the basic flow of how Redux works: a single store holds the state, components subscribe to the store to access state, and actions are dispatched to reducers to update the state, which then updates the subscribing components.
+
+## Exploring the Core Redux Concepts
+
+To begin exploring the basics of Redux, setup a brand-new project. Please note it's not a React project rather we will use node and work with Redux library.
+
+1.  For that, create an empty folder and inside it, create a new JavaScript file, and feel free to name it anything you like, let's say, `redux-demo.js`. We will run this file using Node.js since it allows us to execute JavaScript outside of a browser environment.
+
+2.  At this folder level, open a terminal or command prompt and initialize the project by running `npm init`. To skip the prompts, you can use `npm init -y`, which automatically answers all questions with the default settings. This creates a `package.json` file, although not particularly interesting for now, it’s necessary for installing third-party packages.
+
+3.  Next, we install Redux by running `npm install redux`. Now, we’re ready to start using Redux.
+
+4.  In the `redux-demo.js` file, we need to import Redux. Since we’ll run the file with Node.js, the import syntax will look a little different than what you might be used to. We import Redux like this:
+
+    ```js
+    const redux = require("redux");
+    ```
+
+5.  With Redux imported, we need to do a few things:
+
+    - Create a reducer function — responsible for changing the store’s state.
+    - Create the store — the central piece of Redux.
+    - Set up a subscription to the store.
+    - Dispatching actions
+
+      ```js
+      const redux = require("redux");
+      const initialState = { counter: 0 };
+
+      const counterReducer = (state = initialState, action) => {
+        switch (action.type) {
+          case "INCREMENT":
+            return { ...state, counter: state.counter + 1 };
+          default:
+            return state;
+        }
+      };
+
+      const store = createStore(counterReducer);
+
+      store.subscribe(() => console.log(store.getState()));
+
+      store.dispatch({ type: "INCREMENT" });
+      ```
+
+      [Here's another example for reference](projects/redux-basics/redux-demo.js)
 
 ---
 
