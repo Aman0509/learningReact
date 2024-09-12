@@ -6,6 +6,7 @@
 | [Redux vs React Context](#redux-vs-react-context)                           |
 | [How Redux Works](#how-redux-works)                                         |
 | [Exploring the Core Redux Concepts](#exploring-the-core-redux-concepts)     |
+| [Implement Redux with React App](#implement-redux-with-react-app)           |
 
 &nbsp;
 
@@ -146,6 +147,134 @@ To begin exploring the basics of Redux, setup a brand-new project. Please note i
       ```
 
       [Here's another example for reference](projects/redux-basics/redux-demo.js)
+
+## Implement Redux with React App
+
+Let's break down Redux in a simple React application using an easy example where we implement a basic counter.
+
+### Steps to Implement Redux
+
+**1. Setting Up Redux Store:**
+
+- First, we create a folder named store (a common convention, but not required) in our React app.
+- Inside this folder, we create an `index.js` file to manage Redux logic.
+
+**2. Creating the Redux Store:**
+
+- We use Redux's [`createStore`](https://redux.js.org/api/createstore) function to create the store.
+- The store requires a reducer, which is a function that manages state updates.
+- The reducer takes two parameters: `state` (the current state) and `action` (an object to describe changes).
+
+**Example:**
+
+```js
+// src/store/index.js
+import { createStore } from "redux";
+
+const initialState = { counter: 0 };
+
+const counterReducer = (state = initialState, action) => {
+  if (action.type === "increment") {
+    return {
+      counter: state.counter + 1,
+    };
+  }
+  if (action.type === "decrement") {
+    return {
+      counter: state.counter - 1,
+    };
+  }
+  return state; // default case returns the current state if no actions are matched
+};
+
+const store = createStore(counterReducer);
+
+export default store;
+```
+
+### Connect Store to React Application
+
+Now, to connect the Redux store to the React app, we use the [`Provider`](https://redux.js.org/tutorials/fundamentals/part-5-ui-react#passing-the-store-with-provider) component from the `react-redux` library. This allows any React component to access the Redux store.
+
+```js
+// src/index.js
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { Provider } from "react-redux";
+import store from "./store/index"; // import your Redux store
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
+```
+
+### Access Redux State in Components
+
+To use the store in a React component, we import the [`useSelector`](https://react-redux.js.org/api/hooks#useselector) hook (from `react-redux`) to access the state and the [`useDispatch`](https://react-redux.js.org/api/hooks#usedispatch) hook to send actions to the store.
+
+```js
+// src/components/Counter.js
+import { useSelector, useDispatch } from "react-redux";
+
+const Counter = () => {
+  const counter = useSelector((state) => state.counter); // access Redux state
+  const dispatch = useDispatch(); // function to send actions
+
+  const incrementHandler = () => {
+    dispatch({ type: "increment" }); // dispatch an action
+  };
+
+  const decrementHandler = () => {
+    dispatch({ type: "decrement" }); // dispatch another action
+  };
+
+  return (
+    <div>
+      <h1>Counter: {counter}</h1>
+      <button onClick={incrementHandler}>Increment</button>
+      <button onClick={decrementHandler}>Decrement</button>
+    </div>
+  );
+};
+
+export default Counter;
+```
+
+**Store**: The `store` contains the state (`counter: 0`) and handles updates through the reducer (`counterReducer`).
+
+**Dispatch**:
+
+- `useDispatch()` gives us access to a dispatch function.
+- When a button is clicked, it dispatches an action (like `{ type: 'increment' }`) to the store.
+
+**Reducer**:
+
+- The `counterReducer` looks at the `action.type` (e.g., `'increment'` or `'decrement'`) and updates the state accordingly.
+- For `'increment'`, the state is updated by increasing the `counter` by 1.
+
+**useSelector**:
+
+- `useSelector` allows the `Counter` component to read the `counter` value from the Redux store.
+- Whenever the `store` is updated, `useSelector` ensures the component gets the latest state.
+
+On the side note, we can also utilize [`useStore`](https://react-redux.js.org/api/hooks#usestore) here, however, [`useSelector`](https://react-redux.js.org/api/hooks#useselector) is recommended because of the following differences:
+
+**`useSelector`**
+
+- Allows you to extract a specific part of the Redux state by passing a selector function.
+- Automatically subscribes to the store, meaning the component will re-render when the selected part of the state changes.
+- More efficient for large applications because it only re-renders when the selected state changes.
+
+**`useStore`**
+
+- Provides direct access to the entire Redux store object.
+- It does not set up a subscription, meaning the component will not automatically re-render when the store updates.
+- Useful when you need access to the store's methods, like [`getState()`](https://redux.js.org/api/store#getstate) or [`dispatch()`](https://redux.js.org/api/store#dispatchaction) directly.
 
 ---
 
