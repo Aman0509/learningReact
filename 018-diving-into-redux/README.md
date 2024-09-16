@@ -7,6 +7,7 @@
 | [How Redux Works](#how-redux-works)                                         |
 | [Exploring the Core Redux Concepts](#exploring-the-core-redux-concepts)     |
 | [Implement Redux with React App](#implement-redux-with-react-app)           |
+| [Redux with Class-based Components](#redux-with-class-based-components)     |
 
 &nbsp;
 
@@ -216,6 +217,7 @@ ReactDOM.render(
 ### Access Redux State in Components
 
 To use the store in a React component, we import the [`useSelector`](https://react-redux.js.org/api/hooks#useselector) hook (from `react-redux`) to access the state and the [`useDispatch`](https://react-redux.js.org/api/hooks#usedispatch) hook to send actions to the store.
+Please note that when using `useSelector`, react-redux will set up a subscription for your component and manage it for you. Same applies for [`connect`](https://react-redux.js.org/api/connect)
 
 ```js
 // src/components/Counter.js
@@ -275,6 +277,93 @@ On the side note, we can also utilize [`useStore`](https://react-redux.js.org/ap
 - Provides direct access to the entire Redux store object.
 - It does not set up a subscription, meaning the component will not automatically re-render when the store updates.
 - Useful when you need access to the store's methods, like [`getState()`](https://redux.js.org/api/store#getstate) or [`dispatch()`](https://redux.js.org/api/store#dispatchaction) directly.
+
+## Redux with Class-based Components
+
+Class-based components use the `connect` function from the `react-redux` library to interact with the Redux store. [`connect`](https://react-redux.js.org/api/connect) is a higher-order component (HOC) that connects class-based components to Redux.
+
+### Steps for Connecting Redux to Class Components:
+
+- **Import the connect Function**: Instead of using hooks like useSelector or useDispatch, you import connect from react-redux.
+
+  ```jsx
+  import { connect } from "react-redux";
+  ```
+
+- **Use the connect Function to Map Redux State and Dispatch to Props**: The connect function is used to map Redux state and dispatch actions to props that the class component can access.
+
+  - **mapStateToProps**: This function takes the Redux state and maps parts of it to the component’s props, making the state accessible inside the component.
+
+    ```jsx
+    const mapStateToProps = (state) => {
+      return {
+        counter: state.counter,
+      };
+    };
+    ```
+
+    This allows the component to access the counter value as `this.props.counter`.
+
+  - **mapDispatchToProps**: This function maps dispatch actions to props. It allows the component to dispatch actions (e.g., increment or decrement).
+    ```jsx
+    const mapDispatchToProps = (dispatch) => {
+      return {
+        increment: () => dispatch({ type: "increment" }),
+        decrement: () => dispatch({ type: "decrement" }),
+      };
+    };
+    ```
+
+- **Connect the Component to Redux:** When exporting the class-based component, instead of directly exporting the component, you wrap it using the `connect` function, passing the `mapStateToProps` and `mapDispatchToProps` as arguments:
+
+  ```jsx
+  export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+  ```
+
+  This sets up a connection between the Redux store and the class-based component. The connect function returns a new function that, when called, passes the component as an argument to establish this connection.
+
+**Complete Example**:
+
+```jsx
+import React, { Component } from "react";
+import { connect } from "react-redux";
+
+class Counter extends Component {
+  incrementHandler = () => {
+    this.props.increment();
+  };
+
+  decrementHandler = () => {
+    this.props.decrement();
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>{this.props.counter}</h1>
+        <button onClick={this.incrementHandler.bind(this)}>Increment</button>
+        <button onClick={this.decrementHandler.bind(this)}>Decrement</button>
+      </div>
+    );
+  }
+}
+
+// Mapping Redux state to component props
+const mapStateToProps = (state) => {
+  return { counter: state.counter };
+};
+
+// Mapping dispatch functions to component props
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increment: () => dispatch({ type: "increment" }),
+    decrement: () => dispatch({ type: "decrement" }),
+  };
+};
+
+// Connecting the component with Redux
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+```
 
 ---
 
