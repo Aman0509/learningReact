@@ -9,6 +9,7 @@
 | [Implement Redux with React App](#implement-redux-with-react-app)                             |
 | [Redux with Class-based Components](#redux-with-class-based-components)                       |
 | [Attaching Payloads to Actions in React-Redux](#attaching-payloads-to-actions-in-react-redux) |
+| [Working with Multiple State Properties](#working-with-multiple-state-properties)             |
 
 &nbsp;
 
@@ -453,6 +454,140 @@ const increaseHandler = (amount) => {
 ```
 
 This function could then be called with any number passed as the amount, making the action highly flexible.
+
+## Working with Multiple State Properties
+
+In React, when you need to manage multiple state properties, you often use Redux to centralize and manage the state across your application. In this example below, we’ll cover how to work with multiple state properties, specifically handling both a counter and a "showCounter" flag to control the visibility of the counter.
+
+### Example Breakdown
+
+We’re assuming you have a button to toggle the visibility of a counter and another button to increase the counter value. Both the counter and the visibility of the counter (`showCounter`) are managed in Redux as global state. Here's how to work with both these state properties:
+
+1. **Initial State Setup**: First, we define an initial state for our Redux store that includes both `counter` and `showCounter`. The `counter` is initialized to 0, and `showCounter` is initialized to `true`:
+
+   ```jsx
+   const initialState = {
+     counter: 0,
+     showCounter: true,
+   };
+   ```
+
+2. **Reducer Setup**: In Redux, the reducer is responsible for updating the state. We update the reducer to handle multiple action types. Here’s how we handle actions for incrementing the counter, decrementing it, and toggling its visibility:
+
+   ```jsx
+   const counterReducer = (state = initialState, action) => {
+     if (action.type === "INCREMENT") {
+       return {
+         counter: state.counter + 1,
+         showCounter: state.showCounter, // preserve showCounter state
+       };
+     }
+     if (action.type === "DECREMENT") {
+       return {
+         counter: state.counter - 1,
+         showCounter: state.showCounter,
+       };
+     }
+     if (action.type === "TOGGLE") {
+       return {
+         counter: state.counter, // preserve counter state
+         showCounter: !state.showCounter, // toggle the showCounter value
+       };
+     }
+     return state;
+   };
+   ```
+
+   - For each action, we are careful to preserve the other state property that we aren’t updating. For example, when incrementing the `counter`, we maintain the current value of `showCounter` by setting it to `state.showCounter`.
+
+3. **Dispatching Actions**: In the React component, we use Redux's `useDispatch` to send actions to the store. When the toggle button is clicked, we dispatch the `TOGGLE` action:
+
+   ```jsx
+   const toggleCounterHandler = () => {
+     dispatch({ type: "TOGGLE" });
+   };
+   ```
+
+4. **Retrieving State with `useSelector`**: In the component, we use `useSelector` to access multiple pieces of state from Redux. We can use `useSelector` multiple times to select different parts of the state:
+
+   ```jsx
+   const counter = useSelector((state) => state.counter);
+   const show = useSelector((state) => state.showCounter);
+   ```
+
+5. **Rendering Conditionally**: We use the `showCounter` value to conditionally render the counter. If `show` is `true`, we render the div containing the counter. If it’s `false`, the counter is hidden:
+
+   ```jsx
+   return (
+     <div>
+       {show && <div>Counter: {counter}</div>}
+       <button onClick={toggleCounterHandler}>Toggle Counter</button>
+       <button onClick={() => dispatch({ type: "INCREMENT" })}>
+         Increment
+       </button>
+     </div>
+   );
+   ```
+
+**Key Points:**
+
+- **Redux doesn’t merge state**: Unlike React’s `useState`, Redux doesn’t merge your state updates with the existing state. This means you need to return the entire state object whenever you update any part of the state. This is why we always return both `counter` and `showCounter` in our reducer, even when only one of them is changing.
+
+- **Managing Multiple States**: Even though `counter` and `showCounter` are two distinct pieces of state, they are managed together in the same Redux slice. This makes it easy to maintain and dispatch changes while keeping related state properties together.
+
+- **Conditional Rendering**: We use the `showCounter` flag to determine whether to render the counter or not, allowing us to toggle its visibility dynamically while keeping the counter’s value intact.
+
+**Full Code**
+
+```jsx
+// Redux initial state
+const initialState = {
+  counter: 0,
+  showCounter: true,
+};
+
+// Redux reducer
+const counterReducer = (state = initialState, action) => {
+  if (action.type === "INCREMENT") {
+    return {
+      counter: state.counter + 1,
+      showCounter: state.showCounter,
+    };
+  }
+  if (action.type === "DECREMENT") {
+    return {
+      counter: state.counter - 1,
+      showCounter: state.showCounter,
+    };
+  }
+  if (action.type === "TOGGLE") {
+    return {
+      counter: state.counter,
+      showCounter: !state.showCounter,
+    };
+  }
+  return state;
+};
+
+// React component
+const Counter = () => {
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => state.counter);
+  const show = useSelector((state) => state.showCounter);
+
+  const toggleCounterHandler = () => {
+    dispatch({ type: "TOGGLE" });
+  };
+
+  return (
+    <div>
+      {show && <div>Counter: {counter}</div>}
+      <button onClick={toggleCounterHandler}>Toggle Counter</button>
+      <button onClick={() => dispatch({ type: "INCREMENT" })}>Increment</button>
+    </div>
+  );
+};
+```
 
 ---
 
