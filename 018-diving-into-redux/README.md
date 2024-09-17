@@ -1,16 +1,17 @@
 # Diving into Redux (An Alternative to Context API)
 
-| Contents                                                                                      |
-| :-------------------------------------------------------------------------------------------- |
-| [Another Look at State in React Apps](#another-look-at-state-in-react-apps)                   |
-| [Redux vs React Context](#redux-vs-react-context)                                             |
-| [How Redux Works](#how-redux-works)                                                           |
-| [Exploring the Core Redux Concepts](#exploring-the-core-redux-concepts)                       |
-| [Implement Redux with React App](#implement-redux-with-react-app)                             |
-| [Redux with Class-based Components](#redux-with-class-based-components)                       |
-| [Attaching Payloads to Actions in React-Redux](#attaching-payloads-to-actions-in-react-redux) |
-| [Working with Multiple State Properties](#working-with-multiple-state-properties)             |
-| [How to Work with Redux State Correctly?](#how-to-work-with-redux-state-correctly)            |
+| Contents                                                                                          |
+| :------------------------------------------------------------------------------------------------ |
+| [Another Look at State in React Apps](#another-look-at-state-in-react-apps)                       |
+| [Redux vs React Context](#redux-vs-react-context)                                                 |
+| [How Redux Works](#how-redux-works)                                                               |
+| [Exploring the Core Redux Concepts](#exploring-the-core-redux-concepts)                           |
+| [Implement Redux with React App](#implement-redux-with-react-app)                                 |
+| [Redux with Class-based Components](#redux-with-class-based-components)                           |
+| [Attaching Payloads to Actions in React-Redux](#attaching-payloads-to-actions-in-react-redux)     |
+| [Working with Multiple State Properties](#working-with-multiple-state-properties)                 |
+| [How to Work with Redux State Correctly?](#how-to-work-with-redux-state-correctly)                |
+| [Redux Challenges and Introducing Redux Toolkit](#redux-challenges-and-introducing-redux-toolkit) |
 
 &nbsp;
 
@@ -720,6 +721,65 @@ When working with Redux state, it's critical to follow certain principles to avo
    ```
 
    Immer lets you work with a draft state that you can "mutate" safely, and it will automatically return a new state object without mutating the original.
+
+Readings:
+
+- [Reference vs Primitive Values](https://academind.com/tutorials/reference-vs-primitive-values/)
+
+## Redux Challenges and Introducing Redux Toolkit
+
+As your application grows, managing state with Redux can become increasingly complex. Below are some of the key challenges you may face when scaling your application:
+
+1. **Action Types and Typos**:
+
+   - In Redux, action types are typically represented as strings, which makes them prone to typos. If an action type is mistyped in a dispatch call, the action won’t be recognized by the reducer, potentially leading to unexpected behavior. While this may not be an issue in small applications, it can become a significant problem in large-scale applications with many action types.
+
+   - Clashing Action Types: As more developers work on the same project, the chance of creating clashing or duplicate action type names increases, making it difficult to manage the state effectively.
+
+2. **State Management and Copying**:
+
+   - The more state you manage in Redux, the more complex your state objects become. For example, when updating a single piece of state, you still need to preserve and copy all other parts of the state. In large applications, this process can become cumbersome and error-prone, especially when the state has deeply nested objects or arrays.
+
+3. **Reducer Size**:
+
+   - With increasing state and functionality, reducer functions tend to grow significantly. If all state management logic is kept in a single reducer, the file becomes bloated, making it harder to maintain, test, and debug. This challenge is similar to the problem with React Context, where large provider files become difficult to manage as the application grows.
+
+4. **Immutability**:
+
+   - One of the core principles of Redux is immutability: you must always return a brand-new state object without mutating the existing state. However, manually ensuring that state updates are immutable (especially with nested objects or arrays) can be difficult and easy to mess up, which could lead to subtle bugs and performance issues.
+
+### Solutions for These Challenges
+
+There are some manual solutions for these challenges, such as:
+
+- **Action Type Constants**: To avoid typos and clashing action types, we can create constants for each action type and reuse them across the application. For example:
+
+  ```jsx
+  // actionTypes.js
+  export const INCREMENT = "INCREMENT";
+
+  // reducer.js
+  import { INCREMENT } from "./actionTypes";
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case INCREMENT:
+        return { ...state, counter: state.counter + 1 };
+      default:
+        return state;
+    }
+  };
+  ```
+
+  By using constants, you can ensure that action types are consistent and avoid typos.
+
+- **Splitting Reducers**: You can split a large reducer into multiple smaller reducers, each responsible for a specific part of the state. This technique is called reducer composition and helps reduce the complexity of managing a single large reducer file.
+
+- **Immutability Helpers**: There are libraries (like Immer) that help you update state immutably, especially with nested objects. Immer allows you to write code as if you are mutating the state, but under the hood, it handles immutability for you.
+
+However, you don’t need to implement these solutions manually anymore, thanks to [**Redux Toolkit**](https://redux-toolkit.js.org/introduction/getting-started).
+
+To address the challenges of managing Redux in large applications, the Redux Toolkit (RTK) was developed. Redux Toolkit is an official, opinionated tool set that simplifies common Redux development tasks. It is created by the same team behind Redux and is designed to make using Redux more convenient and less error-prone.
 
 ---
 
