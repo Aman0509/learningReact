@@ -10,6 +10,7 @@
 | [Redux with Class-based Components](#redux-with-class-based-components)                       |
 | [Attaching Payloads to Actions in React-Redux](#attaching-payloads-to-actions-in-react-redux) |
 | [Working with Multiple State Properties](#working-with-multiple-state-properties)             |
+| [How to Work with Redux State Correctly?](#how-to-work-with-redux-state-correctly)            |
 
 &nbsp;
 
@@ -498,7 +499,7 @@ We’re assuming you have a button to toggle the visibility of a counter and ano
    };
    ```
 
-   - For each action, we are careful to preserve the other state property that we aren’t updating. For example, when incrementing the `counter`, we maintain the current value of `showCounter` by setting it to `state.showCounter`.
+   For each action, we are careful to preserve the other state property that we aren’t updating. For example, when incrementing the `counter`, we maintain the current value of `showCounter` by setting it to `state.showCounter`.
 
 3. **Dispatching Actions**: In the React component, we use Redux's `useDispatch` to send actions to the store. When the toggle button is clicked, we dispatch the `TOGGLE` action:
 
@@ -588,6 +589,137 @@ const Counter = () => {
   );
 };
 ```
+
+## How to Work with Redux State Correctly?
+
+When working with Redux state, it's critical to follow certain principles to avoid bugs and ensure the application behaves predictably. One of the most important principles in Redux is immutability — the idea that we should never directly modify the current state. Instead, we always return a new copy of the state, leaving the old state unchanged.
+
+### Key Points on Working with Redux State Correctly
+
+1. **Always Return a New State Object**: In Redux, whenever the state needs to be updated, you must return a new state object from your reducer. Redux doesn't merge your new state with the existing one; instead, it completely replaces it. If you only update one part of the state and don’t include the other parts, they will be lost.
+
+   ```jsx
+   const initialState = {
+     counter: 0,
+     showCounter: true,
+   };
+
+   const counterReducer = (state = initialState, action) => {
+     if (action.type === "INCREMENT") {
+       return {
+         ...state, // Spread the previous state
+         counter: state.counter + 1,
+       };
+     }
+     return state;
+   };
+   ```
+
+   In this example, we use the spread operator (...state) to copy the existing state properties and only update the counter. This ensures that the showCounter property remains unchanged.
+
+2. **Do Not Mutate the Existing State**: It's tempting to modify the existing state directly (for example, by incrementing the counter on the current state object). However, this is a mistake because Redux expects a new object. Directly mutating the state can lead to subtle bugs and unpredictable behavior.
+
+   **Incorrect Approach (Mutating State)**:
+
+   ```jsx
+   const counterReducer = (state = initialState, action) => {
+     if (action.type === "INCREMENT") {
+       state.counter++; // Mutating the existing state
+       return state;
+     }
+     return state;
+   };
+   ```
+
+   Why It's Bad:
+
+   - Directly modifying the existing state means you're breaking immutability.
+   - Redux relies on immutability to correctly detect changes in the state and trigger re-renders in your UI. If you mutate the state, Redux might not detect the changes, leading to stale or inconsistent UI updates.
+
+3. **Why Immutability Matters:**
+
+- **Predictability**: When you return a new object every time you make changes, it's easier to predict how the state will evolve. It also makes it easier to reason about your code since every state transition is clear.
+
+- **Time-travel debugging**: Redux's developer tools allow you to "travel back in time" by inspecting the history of state changes. This only works properly when each state change results in a new state object.
+
+- **Performance optimizations**: React can efficiently re-render components because it can quickly compare previous and next states. If you mutate the state, React can't efficiently check for differences, which can lead to performance issues.
+
+4. **How to Safely Update State**: To avoid mutating the state, always create a copy of the existing state and modify the properties you need to change. This is particularly important when dealing with nested objects or arrays.
+
+   _Example: Correct Way to Update State_
+
+   ```jsx
+   const counterReducer = (state = initialState, action) => {
+     if (action.type === "INCREMENT") {
+       return {
+         ...state, // Spread the existing state
+         counter: state.counter + 1, // Update the counter value
+       };
+     }
+     if (action.type === "TOGGLE") {
+       return {
+         ...state, // Spread the existing state
+         showCounter: !state.showCounter, // Toggle the visibility of the counter
+       };
+     }
+     return state;
+   };
+   ```
+
+   In this example, both the `counter` and `showCounter` properties are preserved. Only the specific property that needs to be updated is modified, and the rest of the state remains unchanged.
+
+5. **Handling Nested State**: When dealing with nested objects or arrays, it's easy to accidentally mutate the state. Be cautious to always return a new object or array when updating deeply nested state.
+
+   _Example: Updating Nested State_
+
+   ```jsx
+   const initialState = {
+     user: {
+       name: "John",
+       address: {
+         city: "New York",
+         zip: "10001",
+       },
+     },
+   };
+
+   const userReducer = (state = initialState, action) => {
+     if (action.type === "UPDATE_CITY") {
+       return {
+         ...state,
+         user: {
+           ...state.user,
+           address: {
+             ...state.user.address,
+             city: action.city, // Only update the city
+           },
+         },
+       };
+     }
+     return state;
+   };
+   ```
+
+   In this example, we create new objects for both `user` and `address` while preserving the existing state. This ensures that we don’t accidentally mutate the original state.
+
+6. **Immutability Helpers**: For more complex updates, libraries like [**Immer**](https://immerjs.github.io/immer/) can help manage immutability. Immer allows you to write "mutating" code while ensuring that the underlying state remains immutable.
+
+   _Example with Immer_
+
+   ```jsx
+   import produce from "immer";
+
+   const userReducer = (state = initialState, action) => {
+     if (action.type === "UPDATE_CITY") {
+       return produce(state, (draft) => {
+         draft.user.address.city = action.city; // Looks like a mutation, but it's not
+       });
+     }
+     return state;
+   };
+   ```
+
+   Immer lets you work with a draft state that you can "mutate" safely, and it will automatically return a new state object without mutating the original.
 
 ---
 
