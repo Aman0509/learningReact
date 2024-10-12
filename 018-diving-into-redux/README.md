@@ -12,6 +12,7 @@
 | [Working with Multiple State Properties](#working-with-multiple-state-properties)                 |
 | [How to Work with Redux State Correctly?](#how-to-work-with-redux-state-correctly)                |
 | [Redux Challenges and Introducing Redux Toolkit](#redux-challenges-and-introducing-redux-toolkit) |
+| [Adding State Slice](#adding-state-slice)                                                         |
 
 &nbsp;
 
@@ -780,6 +781,95 @@ There are some manual solutions for these challenges, such as:
 However, you don’t need to implement these solutions manually anymore, thanks to [**Redux Toolkit**](https://redux-toolkit.js.org/introduction/getting-started).
 
 To address the challenges of managing Redux in large applications, the Redux Toolkit (RTK) was developed. Redux Toolkit is an official, opinionated tool set that simplifies common Redux development tasks. It is created by the same team behind Redux and is designed to make using Redux more convenient and less error-prone.
+
+## Adding State Slice
+
+In Redux, adding state slices refers to the idea of managing distinct parts of the global state in a modular and maintainable way. Each slice represents a portion of the global state and is defined using [`createSlice`](https://redux-toolkit.js.org/api/createSlice) from Redux Toolkit. Let's break down the process of adding state slices using the provided content.
+
+### Setting up Redux Toolkit
+
+First, you need to install Redux Toolkit using:
+
+```bash
+npm install @reduxjs/toolkit
+```
+
+Once this is installed, you can uninstall the older redux package, as Redux Toolkit already includes it.
+
+### Creating a Slice
+
+To create a slice, you import `createSlice` from `@reduxjs/toolkit`. A slice represents a part of your state and contains the state, reducers (functions to modify the state), and actions (which are automatically generated).
+
+```bash
+import { createSlice } from '@reduxjs/toolkit';
+```
+
+**Structure of a Slice**
+
+A slice contains:
+
+- **name**: A unique name for the slice.
+- **initialState**: The starting values of this piece of the global state.
+- **reducers**: Functions that modify the state when certain actions are dispatched.
+
+Here’s an example where we create a slice for managing a counter feature:
+
+```jsx
+const initialState = { counter: 0, showCounter: true };
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState,
+  reducers: {
+    increment(state) {
+      state.counter++;
+    },
+    decrement(state) {
+      state.counter--;
+    },
+    increase(state, action) {
+      state.counter += action.payload;
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter;
+    },
+  },
+});
+```
+
+### Explanation of Key Points
+
+**Initial State**
+
+The `initialState` defines the default state for this slice. In the example, the state includes:
+
+- `counter`: Initialized to 0.
+- `showCounter`: A boolean that controls visibility.
+
+**Reducers**
+
+Reducers are functions that modify the state. Redux Toolkit allows you to write code that looks like you're mutating the state directly, but internally it handles immutability using the Immer library.
+
+For example:
+
+- **increment**: Directly increments the `counter` (`state.counter++`).
+- **decrement**: Directly decrements the `counter` (`state.counter--`).
+- **increase**: Increases the `counter` by a value passed as `action.payload`.
+- **toggleCounter**: Toggles the visibility of the counter.
+
+**Handling Payloads**
+
+When extra data (like a number to increase the counter) is needed, you can access the `action` parameter. In the `increase` reducer, the value passed from the dispatched action (`action.payload`) is added to the `counter`.
+
+```jsx
+increase(state, action) {
+  state.counter += action.payload;
+}
+```
+
+### Immutability with Redux Toolkit
+
+One important feature of Redux Toolkit is that it allows you to write code that looks like it’s mutating the state directly (like state.counter++), but it's not. Internally, it uses the Immer library, which creates an immutable state under the hood. This simplifies your code by eliminating the need to manually clone and update the state.
 
 ---
 
