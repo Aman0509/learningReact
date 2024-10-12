@@ -13,6 +13,7 @@
 | [How to Work with Redux State Correctly?](#how-to-work-with-redux-state-correctly)                |
 | [Redux Challenges and Introducing Redux Toolkit](#redux-challenges-and-introducing-redux-toolkit) |
 | [Adding State Slice](#adding-state-slice)                                                         |
+| [Connecting Redux Toolkit State](#connecting-redux-toolkit-state)                                 |
 
 &nbsp;
 
@@ -870,6 +871,54 @@ increase(state, action) {
 ### Immutability with Redux Toolkit
 
 One important feature of Redux Toolkit is that it allows you to write code that looks like it’s mutating the state directly (like state.counter++), but it's not. Internally, it uses the Immer library, which creates an immutable state under the hood. This simplifies your code by eliminating the need to manually clone and update the state.
+
+## Connecting Redux Toolkit State
+
+After defining the slice, the next step is to connect it to the store. In Redux, the store holds the global state. In a larger application, there may be multiple slices managing different pieces of the state.
+
+### Using [`configureStore`](https://redux-toolkit.js.org/api/configureStore)
+
+Redux Toolkit provides `configureStore`, which simplifies the process of combining multiple slices into one store.
+
+```jsx
+import { configureStore } from "@reduxjs/toolkit";
+
+const store = configureStore({
+  reducer: {
+    counter: counterSlice.reducer, // Registering the counter slice reducer
+  },
+});
+```
+
+Here’s what’s happening:
+
+- `configureStore`: This function replaces the traditional `createStore` method, making it easier to configure a store with multiple slices.
+
+- `reducer` object: This allows you to map multiple slice reducers into one global reducer function. Even if you have just one slice like `counterSlice`, you map it with a key (`counter` in this case), which will represent the part of the state managed by this slice.
+
+### Multiple Slices Example
+
+If you had multiple slices, say one for **authentication** and one for **counter**, you can easily combine them like this:
+
+```jsx
+const store = configureStore({
+  reducer: {
+    counter: counterSlice.reducer, // Managing counter state
+    auth: authSlice.reducer, // Managing authentication state
+  },
+});
+```
+
+In this example, the global state would look like:
+
+```json
+{
+  "counter": { "counter": 0 },
+  "auth": { "isAuthenticated": false }
+}
+```
+
+The `configureStore` automatically merges these reducers into a single global reducer, simplifying the process of combining different slices.
 
 ---
 
