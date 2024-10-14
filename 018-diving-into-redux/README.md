@@ -965,7 +965,7 @@ Here, Redux Toolkit has generated the following action creators:
 
 When you call these action creators, they automatically generate action objects with:
 
-- A **type** property that corresponds to the reducer method’s name (like `"counter/increment", "counter/decrement"`).
+- A **type** property that corresponds to the reducer method’s name (like `"counter/increment", "counter/decrement"`). Basically, value of `type` property will be automatically generated unique identifier.
 - A **payload** if applicable, containing any additional data needed for the action.
 
 For example
