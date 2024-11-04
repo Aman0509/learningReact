@@ -16,6 +16,7 @@
 | [Connecting Redux Toolkit State](#connecting-redux-toolkit-state)                                 |
 | [Migrating Everything to Redux Toolkit](#migrating-everything-to-redux-toolkit)                   |
 | [Working with Multiple Slices](#working-with-multiple-slices)                                     |
+| [Splitting the Code](#splitting-the-code)                                                         |
 
 &nbsp;
 
@@ -1298,6 +1299,32 @@ export default App;
 ```
 
 Here, we show the `Auth` component if the user is not logged in and `UserProfile` if they are logged in, based on the `isAuthenticated` value from the `authSlice`.
+
+## Splitting the Code
+
+As an application grows and requires multiple slices of state (like `counter` and `auth`), the central Redux file can become long and difficult to manage. Splitting reducers and actions into separate files by state slice simplifies management by:
+
+- **Enhancing Readability**: Each file focuses on a specific piece of state, making it easier to locate and modify code.
+- **Improving Reusability**: Actions and reducers can be easily reused and imported wherever needed.
+- **Encouraging Scalability**: New slices can be added without cluttering the main store file.
+
+### Modularize Redux Actions and Reducers
+
+In our current example, below steps can be followed to make it more modularized:
+
+1. **Create Separate Files for Each Slice**: Place each slice's state and reducer logic in its own file within a store folder, such as `counter.js` and `auth.js`. This involves moving the slice creation code out of the main store file.
+
+2. **Export Actions and Reducers from Each Slice File:**
+
+   - **Actions**: Export each slice’s actions as named exports from their respective files.
+   - **Reducers**: Export only the reducer part of each slice as a default export.
+
+3. **Combine Reducers in the Store File:**
+
+   - In the main `index.js` file (or main store file), import only the reducers from each slice file.
+   - Combine these imported reducers in the `configureStore` function using a reducer map.
+
+By following these steps, the Redux store setup becomes much cleaner, with focused slice files handling specific parts of state and a lean main store file dedicated only to configuring and combining these slices. This setup keeps Redux code organized and manageable as the application grows.
 
 ---
 
