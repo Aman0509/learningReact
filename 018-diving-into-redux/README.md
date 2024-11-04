@@ -15,6 +15,7 @@
 | [Adding State Slice](#adding-state-slice)                                                         |
 | [Connecting Redux Toolkit State](#connecting-redux-toolkit-state)                                 |
 | [Migrating Everything to Redux Toolkit](#migrating-everything-to-redux-toolkit)                   |
+| [Working with Multiple Slices](#working-with-multiple-slices)                                     |
 
 &nbsp;
 
@@ -1072,6 +1073,231 @@ const store = configureStore({
 export const counterActions = counterSlice.actions;
 export default store;
 ```
+
+## Working with Multiple Slices
+
+When building a complex React application with Redux, you will often need to manage different pieces of state that are logically unrelated. For example, you might need to manage both authentication state and UI state (like a counter). Redux Toolkit allows you to handle multiple slices of state in a modular way, each responsible for different parts of your application's state.
+
+### Creating Multiple Slices
+
+Each slice in Redux Toolkit is responsible for a specific part of the application's state. For instance, we could have one slice for handling counter logic and another slice for handling authentication logic.
+
+Let’s break down the steps with an example:
+
+**Counter Slice (Existing Slice):**
+
+```jsx
+import { createSlice } from "@reduxjs/toolkit";
+
+// Initial state for the counter slice
+const initialCounterState = { counter: 0, showCounter: true };
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: initialCounterState,
+  reducers: {
+    increment(state) {
+      state.counter++;
+    },
+    increase(state, action) {
+      state.counter += action.payload;
+    },
+    decrease(state) {
+      state.counter--;
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter;
+    },
+  },
+});
+
+export const counterActions = counterSlice.actions;
+export default counterSlice.reducer;
+```
+
+**Auth Slice (New Slice):**
+We now want to add a slice to manage the authentication state, keeping it separate from the counter logic.
+
+```jsx
+import { createSlice } from "@reduxjs/toolkit";
+
+// Initial state for the authentication slice
+const initialAuthState = { isAuthenticated: false };
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState: initialAuthState,
+  reducers: {
+    login(state) {
+      state.isAuthenticated = true;
+    },
+    logout(state) {
+      state.isAuthenticated = false;
+    },
+  },
+});
+
+export const authActions = authSlice.actions;
+export default authSlice.reducer;
+```
+
+### Combining Multiple Slices in the Store
+
+Even though we have multiple slices, Redux still uses only one store. To combine multiple slices into one store, we use the `configureStore` function from Redux Toolkit. You need to provide a map of slice reducers to combine them into a single root reducer.
+
+```jsx
+// store/index.js
+import { createSlice, configureStore } from "@reduxjs/toolkit";
+
+const initialCounterState = {
+  counter: 0,
+  showTrue: true,
+};
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: initialCounterState,
+  reducers: {
+    increment(state) {
+      state.counter++;
+    },
+    decrease(state) {
+      state.counter--;
+    },
+    increase(state, action) {
+      state.counter += action.payload;
+    },
+    toggleCounter(state) {
+      state.showTrue = !state.showTrue;
+    },
+  },
+});
+
+// Initial state for the authentication slice
+const initialAuthState = { isAuthenticated: false };
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState: initialAuthState,
+  reducers: {
+    login(state) {
+      state.isAuthenticated = true;
+    },
+    logout(state) {
+      state.isAuthenticated = false;
+    },
+  },
+});
+
+const store = configureStore({
+  reducer: {
+    counter: counterSlice.reducer,
+    auth: authSlice.reducer,
+  },
+});
+
+export const counterActions = counterSlice.actions;
+export const authActions = authSlice.actions;
+export default store;
+```
+
+### Accessing State in Components
+
+With multiple slices, the structure of the state becomes more complex. You’ll need to access state slices using the keys defined in the store (`counter` and `auth` in this case).
+
+**Example: Accessing Counter State**
+
+In a component like `Counter.js`, you can access the state managed by the `counterSlice`:
+
+```jsx
+// Counter.js
+import { useSelector, useDispatch } from "react-redux";
+import { counterActions } from "./counterSlice";
+
+const Counter = () => {
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => state.counter.counter); // here `state.counter` is referring to `counter` key in `reducer` object
+  const showCounter = useSelector((state) => state.counter.showCounter);
+
+  return (
+    <div>
+      {showCounter && <div>Counter: {counter}</div>}
+      <button onClick={() => dispatch(counterActions.increment())}>
+        Increment
+      </button>
+      <button onClick={() => dispatch(counterActions.decrement())}>
+        Decrement
+      </button>
+      <button onClick={() => dispatch(counterActions.toggleCounter())}>
+        Toggle Counter
+      </button>
+    </div>
+  );
+};
+
+export default Counter;
+```
+
+In this example, `state.counter.counter` refers to the `counter` property from the `counterSlice` state, and `state.counter.showCounter` refers to the `showCounter` property.
+
+**Example: Accessing Auth State**
+
+Similarly, you can access the `authSlice` state in another component, such as `Header.js`:
+
+```jsx
+// Header.js
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from "./authSlice";
+
+const Header = () => {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  return (
+    <header>
+      {!isAuthenticated && (
+        <button onClick={() => dispatch(authActions.login())}>Login</button>
+      )}
+      {isAuthenticated && (
+        <button onClick={() => dispatch(authActions.logout())}>Logout</button>
+      )}
+    </header>
+  );
+};
+
+export default Header;
+```
+
+In this example, `state.auth.isAuthenticated` refers to the authentication status from the `authSlice`.
+
+### Conditional Rendering Based on State
+
+You can conditionally render components based on the state values from different slices. For example, in `App.js`:
+
+```jsx
+// App.js
+import Counter from "./Counter";
+import Header from "./Header";
+import { useSelector } from "react-redux";
+import Auth from "./Auth";
+import UserProfile from "./UserProfile";
+
+function App() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  return (
+    <div>
+      <Header />
+      {!isAuthenticated ? <Auth /> : <UserProfile />}
+      <Counter />
+    </div>
+  );
+}
+
+export default App;
+```
+
+Here, we show the `Auth` component if the user is not logged in and `UserProfile` if they are logged in, based on the `isAuthenticated` value from the `authSlice`.
 
 ---
 
