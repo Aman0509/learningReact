@@ -3,6 +3,7 @@
 | Contents                                                                                        |
 | :---------------------------------------------------------------------------------------------- |
 | [Redux and Side Effects (and Asynchronous Code)](#redux-and-side-effects-and-asynchronous-code) |
+| [Where to put out Logic?](#where-to-put-out-logic)                                              |
 
 ## Redux and Side Effects (and Asynchronous Code)
 
@@ -12,14 +13,40 @@ In Redux, handling side effects and asynchronous code like API calls requires sp
 
 Since reducers can’t handle side effects, Redux offers two main ways to handle async code and side effects in your application.
 
-1. **Handling Side Effects in Components**
+1.  **Handling Side Effects in Components**
 
-One option is to handle side effects directly in the component using hooks like `useEffect`. The process is as follows:
+    One option is to handle side effects directly in the component using hooks like `useEffect`. The process is as follows:
 
-    1. Place async code in a `useEffect` hook or similar function within the component.
-    2. When the side effect (e.g., fetching data) completes, dispatch an action with the results to update the Redux store.
+        	1. Place async code in a `useEffect` hook or similar function within the component.
+        	2. When the side effect (e.g., fetching data) completes, dispatch an action with the results to update the Redux store.
 
-2. Use async action creators
+2.  Use async action creators
+
+## Where to put out Logic?
+
+To decide "where to put our logic" when managing state updates in a React-Redux application, it’s essential to understand the purpose and ideal function of reducers, components, and action creators. Here’s a breakdown of the main points:
+
+1.  **Understanding the Problem Context**
+
+    In this [scenario](./projects/01-starting-project/), we have a backend that doesn't handle all the necessary tasks, which means we must manage some data manipulation and asynchronous actions on the frontend.
+
+2.  **Logic in Components**
+
+    If the asynchronous `add to cart` logic is placed in the component (`productItem`), which manipulates data, prepares it, and then dispatches it to update the Redux store, then, this approach has significant drawbacks:
+
+    - **Code Duplication**: If this code is needed in multiple components, it will either need to be duplicated or factored into a helper function, increasing complexity.
+
+    - **Suboptimal Use of Redux**: Redux encourages data transformation within reducers for synchronous, side-effect-free tasks. By placing this logic in the component, we’re not fully leveraging Redux's structure and purpose.
+
+3.  **Preferred Pattern: Fat Reducers, Components, or Actions**
+
+    <img src="https://drive.google.com/uc?export=view&id=1Bc48au26MyswRSEvqPHHG_3fS7oBV9oJ" height="350" width="700" alt="academind slide">
+
+    When deciding where to place logic, consider:
+
+    - **Synchronous, Side-Effect Free Code**: Best placed in reducers. Reducers are designed to handle pure data transformations, making them ideal for straightforward, synchronous tasks.
+
+    - **Asynchronous Code or Side-Effects**: These are better handled in action creators or components. Action creators allow for more controlled handling of async logic without compromising the purity of reducers.
 
 ---
 
