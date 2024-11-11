@@ -20,8 +20,8 @@ Since reducers can’t handle side effects, Redux offers two main ways to handle
 
     One option is to handle side effects directly in the component using hooks like `useEffect`. The process is as follows:
 
-        	1. Place async code in a `useEffect` hook or similar function within the component.
-        	2. When the side effect (e.g., fetching data) completes, dispatch an action with the results to update the Redux store.
+    1. Place async code in a `useEffect` hook or similar function within the component.
+    2. When the side effect (e.g., fetching data) completes, dispatch an action with the results to update the Redux store.
 
 2.  Use async action creators
 
