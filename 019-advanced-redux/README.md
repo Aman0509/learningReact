@@ -6,6 +6,7 @@
 | [Where to put out Logic?](#where-to-put-out-logic)                                              |
 | [Using `useEffect` with Redux](#using-useeffect-with-redux)                                     |
 | [Using an Action Creater Thunk](#using-an-action-creater-thunk)                                 |
+| [Redux DevTools](#redux-devtools)                                                               |
 
 ## Redux and Side Effects (and Asynchronous Code)
 
@@ -271,6 +272,34 @@ export default App;
 2. **Side Effect Handling**: Within the thunk, we execute the sendRequest function, which performs the HTTP request to update the cart.
 3. **Dispatch Notification Actions**: We use the dispatch function inside the thunk to trigger various UI notifications based on the request’s outcome (e.g., sending, success, or error).
 4. **Component Simplicity**: In the component, the component remains lean, only dispatching sendCartData without handling complex asynchronous logic.
+
+## [Redux DevTools](https://github.com/reduxjs/redux-devtools)
+
+- Redux DevTools is an essential tool for debugging Redux state and actions.
+
+- It provides visibility into Redux actions, dispatched events, and state changes—all crucial for complex applications where many slices and actions can make it hard to track issues.
+
+**Installation:**
+
+- **Browser Extension**: Available as an extension for Chrome, Firefox, and other browsers.
+- **Standalone Application**: Optionally, it can be used as a standalone desktop app.
+- **Redux Toolkit Compatibility**: No additional setup is needed for Redux Toolkit; it works with DevTools out of the box.
+
+### Key Features
+
+- **View Dispatched Actions**: Shows a list of actions in the order they were dispatched, such as "add item to cart," "show notification," etc.
+
+- **Inspect Action Payloads**: You can click on an action to view its payload and other data, including unique identifiers like slice and method names.
+
+- **State History**: Allows inspection of how state changes after each action, enabling a step-by-step breakdown of application state transitions.
+
+- **State Diffing**: DevTools allows you to see how state values are updated by each action. You can view the new state after each action and the difference (diff) between the previous and current states. For example, it might show how totalQuantity or items were updated in the cart slice after a specific action.
+
+- **Time Travel Debugging**: You can revert the app to any previous state by selecting an action and "jumping" to that state. This helps in rewinding and replaying the app state for debugging or testing specific sequences, such as undoing an addition to the cart or reviewing previous error states.
+
+- **Automatic Initial State**: DevTools tracks the initial action (e.g., `INIT`) and other starting actions automatically dispatched by Redux, helping to initialize the state and understand how the store's base state was set up
+
+- **Unique Identifiers**: Redux Toolkit assigns a unique identifier for each action based on the slice name and reducer method name. This provides an organized view of which actions relate to each part of the Redux state.
 
 ---
 
