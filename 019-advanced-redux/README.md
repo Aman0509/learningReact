@@ -5,6 +5,7 @@
 | [Redux and Side Effects (and Asynchronous Code)](#redux-and-side-effects-and-asynchronous-code) |
 | [Where to put out Logic?](#where-to-put-out-logic)                                              |
 | [Using `useEffect` with Redux](#using-useeffect-with-redux)                                     |
+| [Using an Action Creater Thunk](#using-an-action-creater-thunk)                                 |
 
 ## Redux and Side Effects (and Asynchronous Code)
 
@@ -142,6 +143,134 @@ Imagine an app where a user adds items to a shopping cart. We manage the cart it
 4. **Dependency Array (`[cart]`)**: By adding cart as a dependency, the effect runs whenever `cart` changes, ensuring real-time sync with the server.
 
 Whenever the cart state in Redux updates (e.g., items are added), the `useEffect` hook will detect the change and send an HTTP request to update Firebase. This approach keeps our data transformation within Redux reducers while allowing `useEffect` in the component to handle side effects, such as server communication.
+
+## Using an Action Creater Thunk
+
+In React, using a [thunk](https://redux.js.org/usage/writing-logic-thunks) in Redux lets us manage side effects outside of our component logic, which can keep components simpler and make the logic reusable. Let's walk through how to create an action creator thunk in Redux Toolkit for handling asynchronous operations, specifically to send data to a server.
+
+<img src="https://drive.google.com/uc?export=view&id=1Rms2JGrXz8B4Qa5J_reNueiPKiCCuJOZ" height="350" width="700" alt="academind slide">
+
+### Why Use an Action Creator Thunk?
+
+When we need to perform a side effect, like making an HTTP request, we usually do it inside our component's `useEffect` or similar. However, there’s another approach: moving this logic to an action creator thunk. A thunk allows us to delay an action until certain conditions are met (e.g., data is loaded) by returning another function instead of the action object directly.
+
+### How to Create an Action Creator Thunk
+
+To create a thunk in Redux, we define an action creator that returns a function. This function is often asynchronous (using `async/await`) and receives the dispatch function as an argument, enabling it to trigger other actions after performing some side effects.
+
+- Redux typically expects action objects with a type property to identify the action.
+- When Redux detects that an action creator is returning a function (not an object), it executes that function instead of handling it like a standard action object.
+- This approach is especially useful for managing complex asynchronous logic or side effects.
+- Redux automatically provides the dispatch function as an argument to thunks.
+- This allows the thunk function to dispatch other actions within it, enabling a sequence of actions.
+
+**Example: Sending Cart Data with a Thunk**
+
+Here's a step-by-step example of creating a thunk action creator called `sendCartData` to handle sending cart data to a server.
+
+**Step 1: Create the Thunk Action in the Slice File**
+
+In cart slice (say, maintained in `cartSlice.js` file), outside of the main `cartSlice` object, create a function that returns another function (the thunk). This function will be asynchronous and accept `dispatch` as an argument, enabling you to dispatch actions conditionally or after side-effects:
+
+```jsx
+// cartSlice.js
+import { createSlice } from "@reduxjs/toolkit";
+import { uiActions } from "./uiSlice"; // Import UI actions for notifications
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState: { items: [], totalAmount: 0 },
+  reducers: {
+    addItemToCart(state, action) {
+      // Reducer logic here
+    },
+    // Other reducers
+  },
+});
+
+// Thunk action creator to send cart data
+export const sendCartData = (cart) => {
+  return async (dispatch) => {
+    // dispatch will be received in arguments
+    // Dispatch initial notification action
+    dispatch(
+      uiActions.showNotification({
+        status: "pending",
+        title: "Sending...",
+        message: "Sending cart data!",
+      })
+    );
+
+    // Function to handle the asynchronous request
+    const sendRequest = async () => {
+      const response = await fetch("https://your-api.com/cart", {
+        method: "PUT",
+        body: JSON.stringify(cart),
+      });
+
+      if (!response.ok) {
+        throw new Error("Sending cart data failed.");
+      }
+    };
+
+    try {
+      await sendRequest();
+      // Dispatch success notification action
+      dispatch(
+        uiActions.showNotification({
+          status: "success",
+          title: "Success!",
+          message: "Sent cart data successfully!",
+        })
+      );
+    } catch (error) {
+      // Dispatch error notification action
+      dispatch(
+        uiActions.showNotification({
+          status: "error",
+          title: "Error!",
+          message: "Sending cart data failed!",
+        })
+      );
+    }
+  };
+};
+
+export default cartSlice.reducer;
+```
+
+**Step 2: Dispatch the Thunk from a Component**
+
+In your main component file, you can now import and dispatch this `sendCartData` thunk. Unlike a regular action creator that immediately returns an action object, this thunk returns a function that will only execute when it’s dispatched.
+
+```jsx
+// App.js
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendCartData } from "./store/cartSlice";
+
+function App() {
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
+  }, [cart, dispatch]);
+
+  return <div>{/* Render cart items */}</div>;
+}
+
+export default App;
+```
+
+### How it Works?
+
+1. **Action Creation**: The sendCartData function returns a function (the thunk) instead of an action object.
+2. **Side Effect Handling**: Within the thunk, we execute the sendRequest function, which performs the HTTP request to update the cart.
+3. **Dispatch Notification Actions**: We use the dispatch function inside the thunk to trigger various UI notifications based on the request’s outcome (e.g., sending, success, or error).
+4. **Component Simplicity**: In the component, the component remains lean, only dispatching sendCartData without handling complex asynchronous logic.
 
 ---
 
