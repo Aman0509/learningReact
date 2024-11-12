@@ -8,6 +8,10 @@
 | [Using an Action Creator Thunk](#using-an-action-creater-thunk)                                 |
 | [Redux DevTools](#redux-devtools)                                                               |
 
+&nbsp;
+
+:notebook_with_decorative_cover: [Projects](projects/)
+
 ## Redux and Side Effects (and Asynchronous Code)
 
 In Redux, handling side effects and asynchronous code like API calls requires special consideration because **reducers must remain pure and synchronous**. Reducers in Redux cannot handle side effects (like API requests) because they should take an input (state and action) and always produce the same output without any asynchronous operations or unexpected behaviors. Another reason is **predictability**. By keeping reducers pure, we make our state management more predictable and easier to test. Introducing asynchronous code into reducers can break this predictability.
