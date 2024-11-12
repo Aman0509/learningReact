@@ -5,7 +5,7 @@
 | [Redux and Side Effects (and Asynchronous Code)](#redux-and-side-effects-and-asynchronous-code) |
 | [Where to put out Logic?](#where-to-put-out-logic)                                              |
 | [Using `useEffect` with Redux](#using-useeffect-with-redux)                                     |
-| [Using an Action Creater Thunk](#using-an-action-creater-thunk)                                 |
+| [Using an Action Creator Thunk](#using-an-action-creater-thunk)                                 |
 | [Redux DevTools](#redux-devtools)                                                               |
 
 ## Redux and Side Effects (and Asynchronous Code)
@@ -145,7 +145,7 @@ Imagine an app where a user adds items to a shopping cart. We manage the cart it
 
 Whenever the cart state in Redux updates (e.g., items are added), the `useEffect` hook will detect the change and send an HTTP request to update Firebase. This approach keeps our data transformation within Redux reducers while allowing `useEffect` in the component to handle side effects, such as server communication.
 
-## Using an Action Creater Thunk
+## Using an Action Creator Thunk
 
 In React, using a [thunk](https://redux.js.org/usage/writing-logic-thunks) in Redux lets us manage side effects outside of our component logic, which can keep components simpler and make the logic reusable. Let's walk through how to create an action creator thunk in Redux Toolkit for handling asynchronous operations, specifically to send data to a server.
 

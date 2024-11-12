@@ -36,3 +36,14 @@
    - **Benefits of a Robust Backend**:
      - The frontend could simply send raw data (e.g., product info) to the backend.
      - The backend would transform this data and send back a structured response for the frontend to store, simplifying frontend code.
+
+### Commit Links
+
+- [Add Project (Boilerplate)](https://github.com/Aman0509/learningReact/pull/19/commits/3f3c6870eef098fbf3e6bc2d2d960fa675e86e3a)
+- [Implement Redux (Phase 1)](https://github.com/Aman0509/learningReact/pull/19/commits/dc95f578bbb18adffe83c0b186116878806afb61)
+- [Implement Redux (Phase 2)](https://github.com/Aman0509/learningReact/pull/19/commits/46ced97ed5a1008e6ad8db2559469ad08149cf0d)
+- [Using `useEffect` with Redux](https://github.com/Aman0509/learningReact/pull/19/commits/c664ba6c1ac2f3c61c5f1cc8bb5254e0a634d346)
+- [Handle HTTP states & Feedback with Redux](https://github.com/Aman0509/learningReact/pull/19/commits/429bd61fb7e86a8ff77798aa386b584c3266a255)
+- [Using an Action Creator Thunk](https://github.com/Aman0509/learningReact/pull/19/commits/6023a0b41a1be0d8e5178e4db7c79f23b63b4e69)
+- [Getting Started with Fetching Data](https://github.com/Aman0509/learningReact/pull/19/commits/b997bf7ae97f44d6e219d68ee6d6d2408355ee3e)
+- [Finalize Fetch Logic](https://github.com/Aman0509/learningReact/pull/19/commits/87a21f704dfe4974a4c3ff53b09932b5a82eb22a)
