@@ -1,8 +1,9 @@
 # Building a Multi-Page SPA with React Router
 
-| Contents                                                                        |
-| :------------------------------------------------------------------------------ |
-| [Different Types of React Applications](#different-types-of-react-applications) |
+| Contents                                                                                                   |
+| :--------------------------------------------------------------------------------------------------------- |
+| [Different Types of React Applications](#different-types-of-react-applications)                            |
+| [Routing: Multiple Pages in Single-Page Applications](#routing-multiple-pages-in-single-page-applications) |
 
 &nbsp;
 
@@ -64,6 +65,24 @@ React offers flexibility for building various types of web applications, dependi
    - **How it Works**: React Native uses native components rather than HTML, giving it better performance on mobile. React code can be shared across web and mobile versions using libraries like Expo.
    - **Benefits**: Native app performance and access to mobile device features, along with code reuse for both web and mobile platforms.
    - **Challenges**: Requires familiarity with mobile development and some platform-specific adaptations.
+
+## Routing: Multiple Pages in Single-Page Applications
+
+Routing in single-page applications (SPAs) refers to the ability to navigate between different "pages" or views within a SPA without requiring a full page reload. In a traditional multi-page application, each page is a separate HTML file that is loaded by the browser when the URL changes. In contrast, a SPA loads a single HTML file initially, and then uses JavaScript to dynamically update the content on the page as the user navigates.
+
+|                                                                                                                                         |                                                                                                                                         |
+| :-------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: |
+| <img src="https://drive.google.com/uc?export=view&id=10JTI0k5ol0uZjuyIyFF6StHcMvLpCD3F" height="350" width="700" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1RSXLq_k4yrqGCKOVF4Ao1ZeBGG7bdXOZ" height="350" width="700" alt="academind slide"> |
+
+The key points about routing in SPAs are:
+
+- **URL Changes**: In a SPA, the URL can change (e.g., the URL path changes) without causing a full page reload. This gives the illusion of navigating between different pages, even though the underlying HTML content is being updated dynamically.
+
+- **Client-side Routing**: Routing in a SPA is handled on the client-side by JavaScript code, rather than by the server. When the URL changes, the client-side JavaScript code detects the change and updates the content accordingly, without triggering a full page reload.
+
+- **Improved User Experience**: By avoiding full page reloads, client-side routing in SPAs can provide a more seamless and responsive user experience, as the user doesn't have to wait for a new page to load.
+
+- **Single Initial Load**: In a SPA, the entire application is loaded initially, including the JavaScript code responsible for routing. Subsequent "page" changes only require updating the content, not loading new HTML files.
 
 ---
 
