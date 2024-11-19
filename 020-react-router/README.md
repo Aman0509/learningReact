@@ -4,6 +4,7 @@
 | :--------------------------------------------------------------------------------------------------------- |
 | [Different Types of React Applications](#different-types-of-react-applications)                            |
 | [Routing: Multiple Pages in Single-Page Applications](#routing-multiple-pages-in-single-page-applications) |
+| [Defining Routes](#defining-routes)                                                                        |
 
 &nbsp;
 
@@ -83,6 +84,69 @@ The key points about routing in SPAs are:
 - **Improved User Experience**: By avoiding full page reloads, client-side routing in SPAs can provide a more seamless and responsive user experience, as the user doesn't have to wait for a new page to load.
 
 - **Single Initial Load**: In a SPA, the entire application is loaded initially, including the JavaScript code responsible for routing. Subsequent "page" changes only require updating the content, not loading new HTML files.
+
+## Defining Routes
+
+Defining routes means setting up specific paths for your react application and deciding which components should be displayed for each path.
+
+To add routing to an application, follow these steps:
+
+- **Define Routes**: Specify the URLs (paths) to support and map them to the components to load for each path.
+- **Activate the Router**: Enable routing and load the defined routes into the application.
+- **Ensure Navigation**: Provide the required components and implement navigation mechanisms to allow users to move seamlessly between pages.
+
+This is done using the [react-router-dom](https://reactrouter.com/en/main) library.
+
+- Make sure `react-router-dom` is installed:
+
+  ```bash
+  npm install react-router-dom
+  ```
+
+- Create components for each page in your app. For example:
+
+  **Home.js**
+
+  ```jsx
+  const Home = () => <h1>Welcome to the Home Page</h1>;
+  export default Home;
+  ```
+
+  **Product.js**
+
+  ```jsx
+  const Products = () => <h1>Products Page</h1>;
+  export default Products;
+  ```
+
+- Use the [`createBrowserRouter`](https://reactrouter.com/en/main/routers/create-browser-router) function to define paths and associate them with components:
+
+  ```jsx
+  import { createBrowserRouter } from "react-router-dom";
+  import Home from "./pages/Home";
+  import Products from "./pages/Products";
+
+  const router = createBrowserRouter([
+    { path: "/", element: <Home /> }, // Root path loads Home component
+    { path: "/products", element: <Products /> }, // '/products' loads Products component
+  ]);
+  ```
+
+- Use the [`RouterProvider`](https://reactrouter.com/en/main/routers/router-provider) to activate and render the router:
+
+  ```jsx
+  import { RouterProvider } from "react-router-dom";
+  import router from "./router";
+
+  function App() {
+    return <RouterProvider router={router} />;
+  }
+
+  export default App;
+  ```
+
+- Visiting `/` (e.g., `http://localhost:3000/`) displays the Home page.
+- Visiting `/products` (e.g., `http://localhost:3000/products`) displays the Products page.
 
 ---
 
