@@ -5,6 +5,7 @@
 | [Different Types of React Applications](#different-types-of-react-applications)                            |
 | [Routing: Multiple Pages in Single-Page Applications](#routing-multiple-pages-in-single-page-applications) |
 | [Defining Routes](#defining-routes)                                                                        |
+| [Exploring an Alternative Way of Defining Routes](#exploring-an-alternative-way-of-defining-routes)        |
 
 &nbsp;
 
@@ -147,6 +148,76 @@ This is done using the [react-router-dom](https://reactrouter.com/en/main) libra
 
 - Visiting `/` (e.g., `http://localhost:3000/`) displays the Home page.
 - Visiting `/products` (e.g., `http://localhost:3000/products`) displays the Products page.
+
+## Exploring an Alternative Way of Defining Routes
+
+In React Router, there’s an alternative way to define routes using JSX code instead of an array of objects. This approach might feel familiar if you’ve worked with older versions of React Router.
+
+Instead of defining routes as an array of objects, you can use the [`createRoutesFromElements`](https://reactrouter.com/en/main/utils/create-routes-from-elements) function along with the [`<Route>`](https://reactrouter.com/en/main/route/route) component. This allows you to write routes directly in JSX.
+
+### Example
+
+- **Create Pages**: Create your page components:
+
+  **Home.js**
+
+  ```jsx
+  const Home = () => <h1>Welcome to the Home Page</h1>;
+  export default Home;
+  ```
+
+  **Product.js**
+
+  ```jsx
+  const Products = () => <h1>Products Page</h1>;
+  export default Products;
+  ```
+
+- **Define Routes Using JSX**: Use `createRoutesFromElements` to define routes with `<Route>` components:
+
+  ```jsx
+  import {
+    createBrowserRouter,
+    createRoutesFromElements,
+    Route,
+  } from "react-router-dom";
+  import Home from "./pages/Home";
+  import Products from "./pages/Products";
+
+  const routes = createRoutesFromElements(
+    <>
+      <Route path="/" element={<Home />} />
+      <Route path="/products" element={<Products />} />
+    </>
+  );
+
+  const router = createBrowserRouter(routes);
+  ```
+
+  - The `<Route>` component defines each route with two props:
+  - path: The URL path (e.g., `/` or `/products`).
+  - element: The React component to render for that path.
+  - Routes are grouped using `<>` (React fragments) for cleaner JSX structure.
+  - `createRoutesFromElements` converts the JSX into route definitions compatible with the router.
+
+- **Activate the Router**: Use the `RouterProvider` to activate and render the router:
+
+  ```jsx
+  import { RouterProvider } from "react-router-dom";
+
+  function App() {
+    return <RouterProvider router={router} />;
+  }
+
+  export default App;
+  ```
+
+### Comparison with Object-Based Approach:
+
+- **Object-Based**: Routes are defined as an array of objects, which might feel more structured.
+- **JSX-Based**: Routes are defined using JSX, which may feel more natural if you prefer a component-like syntax.
+
+Both approaches work identically in React Router, so you can choose the one that suits your coding style!
 
 ---
 
