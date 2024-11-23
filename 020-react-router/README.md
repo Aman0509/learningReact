@@ -9,6 +9,7 @@
 | [Navigating Between Pages with `Link`](#navigating-between-pages-with-link)                                |
 | [Layouts & Nested Routes in React Router](#layouts--nested-routes-in-react-router)                         |
 | [Showing Error Pages with `errorElement`](#showing-error-pages-with-errorelement)                          |
+| [Working with Navigation Links (`NavLink`)](#working-with-navigation-links-navlink)                        |
 
 &nbsp;
 
@@ -546,6 +547,155 @@ const router = createBrowserRouter([
 - **Enhanced User Experience**: Avoids showing default error messages.
 - **Consistency**: Includes shared components (e.g., navigation bar).
 - **Flexibility**: Customize error handling for specific routes or globally.
+
+## Working with Navigation Links ([`NavLink`](https://api.reactrouter.com/v7/functions/react_router.NavLink.html))
+
+In React Router, the `NavLink` component is a specialized version of the Link component that provides additional features for styling active links. It allows you to create visually distinct navigation links, making it easier for users to understand the current page and navigate through your application.
+
+**Key Features of `NavLink`**:
+
+- **Active Class**: The `NavLink` component automatically adds a specified CSS class to the active link.
+- **Custom Styling**: You can customize the appearance of active and inactive links using CSS.
+- **Conditional Rendering**: The `NavLink` component provides a mechanism to conditionally render content based on the active state.
+
+### Example
+
+**1. Create the navigation styles**
+
+```css
+/* MainNavigation.module.css */
+.header {
+  /* Your header styles */
+}
+
+.list {
+  /* Your list styles */
+}
+
+/* Styles for both hover and active states */
+.list a:hover,
+.list a.active {
+  color: var(--color-primary-800);
+  text-decoration: underline;
+}
+```
+
+**2. Create the `MainNavigation` component using `NavLink`**
+
+```jsx
+// components/MainNavigation.js
+import { NavLink } from "react-router-dom";
+import classes from "./MainNavigation.module.css";
+
+function MainNavigation() {
+  return (
+    <header className={classes.header}>
+      <nav>
+        <ul className={classes.list}>
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+              end // Important for root path
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/products"
+              className={({ isActive }) =>
+                isActive ? classes.active : undefined
+              }
+            >
+              Products
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
+
+export default MainNavigation;
+```
+
+In `NavLink` (from React Router), the `className` prop behaves differently compared to regular HTML elements or React components. Here's how it works:
+
+- **Regular `className` in HTML and React**
+
+  Normally, the `className` prop expects a string that specifies one or more CSS classes to apply to an element. For example:
+
+  ```HTML
+  <a className="active">Home</a>
+  ```
+
+- **Special `className` Behavior in `NavLink`**
+
+  In `NavLink`, the `className` prop accepts a function instead of a string. This function determines which CSS class should be applied to the link based on whether it is active.
+
+  - **Input**: React Router automatically provides an object to this function.
+  - **Key Property**: The object includes a property called `isActive`, which is a boolean:
+    - `true`: The link is currently active (i.e., matches the current route).
+    - `false`: The link is not active.
+  - **Output**: The function returns a class name string based on the `isActive` value.
+
+**3. Prevent Incorrect Active States**
+
+The `end` prop in `NavLink` is used to control how React Router determines whether a link is active. By default, `NavLink` considers a link active if the current route starts with the path specified in the `to` prop. This behavior works well for nested routes but can cause issues with simple root-level routes. Here's a clean explanation:
+
+- **Default Behavior of `NavLink`**
+
+  Without the `end` prop, `NavLink` checks if the current route starts with the `to` path. For example:
+
+  ```jsx
+  <NavLink to="/">Home</NavLink>
+  <NavLink to="/products">Products</NavLink>
+  ```
+
+  **Scenarios**:
+
+  - If the current route is `/products`, both links are considered active:
+    - `/` is part of `/products` (the path starts with `/`), so **_Home is active_**.
+    - `/products` exactly matches the second link, so **_Products is active_**.
+
+  This default behavior is helpful for routes with child pages but problematic for the root `/` because all routes start with `/`.
+
+- **What the `end` Prop does?**
+
+  The `end` prop ensures that a link is considered active only if the current route exactly matches the `to` path.
+
+  ```jsx
+  <NavLink to="/" end>Home</NavLink>
+  <NavLink to="/products">Products</NavLink>
+  ```
+
+  With `end`:
+
+  - The Home link is active only when the route is exactly `/`.
+  - When the route is `/products`, the Products link is active, but Home is not.
+
+**4. Inline Styles (Optional)**
+
+You can also apply styles inline instead of using classes.
+
+```jsx
+<NavLink
+  to="/"
+  style={({ isActive }) =>
+    isActive
+      ? { color: "#ff9800", textDecoration: "underline" }
+      : { color: "white" }
+  }
+  end
+>
+  Home
+</NavLink>
+```
+
+Therefore, by effectively using the NavLink component and CSS styling, you can create intuitive and visually appealing navigation experiences in your React Router applications.
 
 ---
 
