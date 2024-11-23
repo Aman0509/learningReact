@@ -8,6 +8,7 @@
 | [Exploring an Alternative Way of Defining Routes](#exploring-an-alternative-way-of-defining-routes)        |
 | [Navigating Between Pages with `Link`](#navigating-between-pages-with-link)                                |
 | [Layouts & Nested Routes in React Router](#layouts--nested-routes-in-react-router)                         |
+| [Showing Error Pages with `errorElement`](#showing-error-pages-with-errorelement)                          |
 
 &nbsp;
 
@@ -465,6 +466,86 @@ export default ProductsPage;
 - **Reusability**: Common components like navigation are defined once and reused across all pages.
 - **Scalability**: Easily extendable to include more pages or different layouts (e.g., an admin layout).
 - **Maintainability**: Centralized styling and layout logic.
+
+## Showing Error Pages with [`errorElement`](https://api.reactrouter.com/v7/interfaces/react_router.NonIndexRouteObject.html#errorElement)
+
+In React Router, the `errorElement` prop allows you to specify a component that should be rendered when an error occurs within a particular route or its child routes. This is useful for providing custom error pages that offer a better user experience than the default error messages.
+
+### Example
+
+**1. Display a custom error page when users access a non-existent or unsupported route**
+
+```jsx
+// pages/Error.js
+import MainNavigation from "../components/MainNavigation";
+
+function ErrorPage() {
+  return (
+    <>
+      <MainNavigation />
+      <main>
+        <h1>An error occurred!</h1>
+        <p>Could not find this page!</p>
+      </main>
+    </>
+  );
+}
+
+export default ErrorPage;
+```
+
+**2. Add `errorElement` to Routes**
+
+Use the `errorElement` property to associate the custom error page with specific routes or a parent route.
+
+```jsx
+// App.js
+import { createBrowserRouter } from "react-router-dom";
+import RootLayout from "./pages/Root";
+import ErrorPage from "./pages/Error";
+import HomePage from "./pages/Home";
+import ProductsPage from "./pages/Products";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <ErrorPage />, // Root level error handling
+    children: [
+      { path: "", element: <HomePage /> },
+      {
+        path: "products",
+        element: <ProductsPage />,
+        // errorElement: <ProductErrorPage />  // In this way, route-specific error can be handled
+      },
+    ],
+  },
+]);
+```
+
+### How It Works
+
+1. **Error Handling for Routes**:
+
+   React Router automatically triggers the errorElement when:
+
+   - Users access an undefined route (e.g., `/nonexistent`).
+   - A route component throws an error (in advanced cases, e.g., fetching data failure).
+
+2. **Default Behavior**:
+
+   - If no `errorElement` is specified, React Router displays its default error message.
+   - By adding `errorElement`, you provide a customized fallback for errors.
+
+3. **Nested Error Handling**:
+
+   - If a child route causes an error, the error bubbles up to the nearest parent with an `errorElement`.
+
+### Advantages of Using `errorElement`
+
+- **Enhanced User Experience**: Avoids showing default error messages.
+- **Consistency**: Includes shared components (e.g., navigation bar).
+- **Flexibility**: Customize error handling for specific routes or globally.
 
 ---
 
