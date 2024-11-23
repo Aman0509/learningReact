@@ -7,6 +7,7 @@
 | [Defining Routes](#defining-routes)                                                                        |
 | [Exploring an Alternative Way of Defining Routes](#exploring-an-alternative-way-of-defining-routes)        |
 | [Navigating Between Pages with `Link`](#navigating-between-pages-with-link)                                |
+| [Layouts & Nested Routes in React Router](#layouts--nested-routes-in-react-router)                         |
 
 &nbsp;
 
@@ -323,6 +324,147 @@ export default ProductsPage;
 - **Seamless Navigation**: Provides a smooth user experience typical of SPAs.
 
 This approach ensures your React app is efficient and follows modern best practices for navigation.
+
+## Layouts & Nested Routes in React Router
+
+In React Router, layouts are essentially wrapper components that provide a consistent structure to multiple pages. They can contain elements like headers, footers, navigation bars, and sidebars that are common across different pages.
+
+Nested routes allow you to create hierarchical relationships between routes, where one route can have child routes. This is crucial for implementing layouts, as the layout component becomes the parent route, and the individual page components become its child routes.
+
+### Example
+
+**1. Add a main navigation bar visible on all pages**
+
+This component provides navigation links for all pages.
+
+```jsx
+// src/components/MainNavigation.js
+import { Link } from "react-router-dom";
+import classes from "./MainNavigation.module.css";
+
+function MainNavigation() {
+  return (
+    <header className={classes.header}>
+      <nav>
+        <ul className={classes.list}>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/products">Products</Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
+
+export default MainNavigation;
+```
+
+**2. Create a root layout to avoid repeating common components across pages**
+
+The root layout acts as a wrapper for all pages, ensuring shared components (like the navigation bar) are displayed across all routes.
+
+```jsx
+// src/pages/Root.js
+import { Outlet } from "react-router-dom";
+import MainNavigation from "../components/MainNavigation";
+import classes from "./Root.module.css";
+
+function RootLayout() {
+  return (
+    <>
+      <MainNavigation />
+      <main className={classes.content}>
+        <Outlet />
+      </main>
+    </>
+  );
+}
+
+export default RootLayout;
+```
+
+**[`Outlet`](https://api.reactrouter.com/v7/functions/react_router.Outlet.html) Component**: Marks the location where child route components (e.g., `HomePage`, `ProductsPage`) will render.
+
+**3. Use nested routes to structure the app efficiently**
+
+The `RootLayout` wraps child routes, ensuring shared components and layouts apply consistently.
+
+```jsx
+// App.js
+import { createBrowserRouter } from "react-router-dom";
+import RootLayout from "./pages/Root";
+import HomePage from "./pages/Home";
+import ProductsPage from "./pages/Products";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      { path: "", element: <HomePage /> },
+      { path: "products", element: <ProductsPage /> },
+    ],
+  },
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+export default App;
+```
+
+**Parent Route (`RootLayout`)**:
+
+- Acts as a wrapper for all child routes (`HomePage` and `ProductsPage`).
+- Provides a consistent layout, including the navigation bar.
+
+**Child Routes**:
+
+- Defined inside the `children` property of the parent route.
+- Rendered dynamically within the `Outlet` component of `RootLayout`.
+
+**4. `HomePage` and `ProductsPage` Components**
+
+```jsx
+// src/pages/HomePage.js
+function HomePage() {
+	return <h1>Welcome to the Home Page</h1>;
+}
+
+export default HomePage;
+
+// src/pages/ProductsPage.js
+function ProductsPage() {
+	return <h1>Explore Our Products</h1>;
+}
+
+export default ProductsPage;
+```
+
+### How It Works
+
+1. **Root Layout as Wrapper**:
+
+   - `RootLayout` ensures common components (like MainNavigation) are displayed across all pages.
+   - The `Outlet` component dynamically loads the content of the child routes.
+
+2. **Dynamic Navigation**:
+
+   - The navigation links (`<Link> `components) in `MainNavigation` allow users to switch between pages without refreshing the browser.
+
+3. **Nested Routes**:
+
+   - Child routes (`HomePage` and `ProductsPage`) are defined within the parent route (`RootLayout`).
+
+### Advantages
+
+- **Reusability**: Common components like navigation are defined once and reused across all pages.
+- **Scalability**: Easily extendable to include more pages or different layouts (e.g., an admin layout).
+- **Maintainability**: Centralized styling and layout logic.
 
 ---
 
