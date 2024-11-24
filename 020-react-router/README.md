@@ -10,6 +10,7 @@
 | [Layouts & Nested Routes in React Router](#layouts--nested-routes-in-react-router)                         |
 | [Showing Error Pages with `errorElement`](#showing-error-pages-with-errorelement)                          |
 | [Working with Navigation Links (`NavLink`)](#working-with-navigation-links-navlink)                        |
+| [Navigate Programmatically](#navigate-programmatically)                                                    |
 
 &nbsp;
 
@@ -696,6 +697,68 @@ You can also apply styles inline instead of using classes.
 ```
 
 Therefore, by effectively using the NavLink component and CSS styling, you can create intuitive and visually appealing navigation experiences in your React Router applications.
+
+## Navigate Programmatically
+
+While the standard way to navigate in React Router is through declarative links (`<Link />`), there are times when you might want to trigger navigation programmatically from within your component's logic. This is where the [`useNavigate`](https://api.reactrouter.com/v7/functions/react_router.useNavigate.html) hook comes in handy.
+
+### Steps to Implement
+
+- **import `useNavigate`**
+
+  ```jsx
+  import { useNavigate } from "react-router-dom";
+  ```
+
+- **Get the `navigate` Function**
+
+  ```jsx
+  const navigate = useNavigate();
+  ```
+
+- **Define a Handler Function**
+
+  Use the navigate function inside a custom handler to programmatically move to another route
+
+  ```jsx
+  const navigateHandler = () => {
+    navigate("/products"); // Navigate to the "/products" route
+  };
+  ```
+
+- **Trigger Navigation**
+
+  ```html
+  <button onClick="{navigateHandler}">Go to Products</button>
+  ```
+
+  **_Note: Here, `button` is only shown for example purposes to showcase trigger navigation (programmatically), however, in reality, use case of this kind of navigation are, 'trigger action after form submission', 'redirecting after a timer or event', 'conditional navigation based on application logic', etc._**
+
+### Practical Use Case
+
+Suppose you have a login form. After successful login, you want to redirect the user to a dashboard:
+
+```jsx
+const LoginPage = () => {
+  const navigate = useNavigate();
+
+  const loginHandler = (event) => {
+    event.preventDefault();
+    // Assume login logic here
+    navigate("/dashboard");
+  };
+
+  return (
+    <form onSubmit={loginHandler}>
+      <input type="text" placeholder="Username" />
+      <input type="password" placeholder="Password" />
+      <button type="submit">Login</button>
+    </form>
+  );
+};
+```
+
+Programmatic navigation with `useNavigate` is a powerful tool for scenarios where user actions or application logic trigger route changes.
 
 ---
 
