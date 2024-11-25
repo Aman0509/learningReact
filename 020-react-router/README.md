@@ -11,6 +11,7 @@
 | [Showing Error Pages with `errorElement`](#showing-error-pages-with-errorelement)                          |
 | [Working with Navigation Links (`NavLink`)](#working-with-navigation-links-navlink)                        |
 | [Navigate Programmatically](#navigate-programmatically)                                                    |
+| [Defining & Using Dynamic Routes](#defining--using-dynamic-routes)                                         |
 
 &nbsp;
 
@@ -514,9 +515,9 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />, // Root level error handling
     children: [
-      { path: "", element: <HomePage /> },
+      { path: "/", element: <HomePage /> },
       {
-        path: "products",
+        path: "/products",
         element: <ProductsPage />,
         // errorElement: <ProductErrorPage />  // In this way, route-specific error can be handled
       },
@@ -759,6 +760,61 @@ const LoginPage = () => {
 ```
 
 Programmatic navigation with `useNavigate` is a powerful tool for scenarios where user actions or application logic trigger route changes.
+
+## Defining & Using Dynamic Routes
+
+In React Router, dynamic routes allow you to create flexible URL patterns that can handle different values within a specific segment of the URL. This is particularly useful for scenarios where you want to display different content based on the dynamic part of the URL, such as product details pages, user profiles, or blog posts.
+
+1. **Defining a Dynamic Route**: A route can include a placeholder for dynamic segments, written with a `:` followed by an identifier (e.g., `:productId`). This makes the segment dynamic.
+
+   ```jsx
+   // App.js
+   import { createBrowserRouter } from "react-router-dom";
+   import RootLayout from "./pages/Root";
+   import ErrorPage from "./pages/Error";
+   import HomePage from "./pages/Home";
+   import ProductsPage from "./pages/Products";
+   import ProductDetailPage from "./pages/ProductDetailPage";
+
+   const router = createBrowserRouter([
+   	{
+   		path: "/",
+   		element: <RootLayout />,
+   		errorElement: <ErrorPage />,
+   		children: [
+   			{ path: "", element: <HomePage /> },
+   			{
+   				path: "/products",
+   				element: <ProductsPage />,
+   			},
+   			{
+   				path: "/products/:productId", element: <ProductDetailPage>
+   			}
+   		],
+   	},
+   ]);
+   ```
+
+   The `:productId` is a dynamic segment. It means the route will match `/products/anything`, and "anything" becomes the `productId` parameter.
+
+2. **Accessing Dynamic Route Parameters**: Create the `ProductDetailPage` component to display details based on the `productId`.
+
+   ```jsx
+   import { useParams } from "react-router-dom";
+
+   function ProductDetailPage() {
+     const { productId } = useParams();
+
+     return (
+       <div>
+         <h1>Product Details</h1>
+         <p>Current Product ID: {productId}</p>
+       </div>
+     );
+   }
+   ```
+
+   The [`useParams`](https://api.reactrouter.com/v7/functions/react_router.useParams.html) hook allows you to access the values of dynamic segments within the current route. In this case, `productId` will contain the value of the `:productId` segment from the URL.
 
 ---
 
