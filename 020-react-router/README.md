@@ -12,6 +12,7 @@
 | [Working with Navigation Links (`NavLink`)](#working-with-navigation-links-navlink)                        |
 | [Navigate Programmatically](#navigate-programmatically)                                                    |
 | [Defining & Using Dynamic Routes](#defining--using-dynamic-routes)                                         |
+| [Adding Links for Dynamic Routes](#adding-links-for-dynamic-routes)                                        |
 
 &nbsp;
 
@@ -815,6 +816,46 @@ In React Router, dynamic routes allow you to create flexible URL patterns that c
    ```
 
    The [`useParams`](https://api.reactrouter.com/v7/functions/react_router.useParams.html) hook allows you to access the values of dynamic segments within the current route. In this case, `productId` will contain the value of the `:productId` segment from the URL.
+
+## Adding Links for Dynamic Routes
+
+Adding links for dynamic routes in React Router allows users to navigate to specific pages based on the dynamic parameter value. This is crucial for functionalities like product details, user profiles, or any content that requires a unique identifier in the URL.
+
+Here's a breakdown using the provided content:
+
+1. **Regular `Link` Component**: We use the `Link` component from react-router-dom (not `NavLink`) because we don't want to highlight these links as active when clicked.
+
+2. **Dynamic `to` Prop**: The `to` prop in the `Link` component defines the target route. To create links for dynamic routes, we use template literals (backticks) to inject the dynamic value into the path.
+
+**Example**
+
+```jsx
+// Product.js
+import { Link } from 'react-router-dom';
+
+const PRODUCTS = [
+  { id: "p1", title: "Product One" },
+  { id: "p2", title: "Product Two" },
+  { id: "p3", title: "Product Three" },
+];
+
+function Products() {
+  return (
+    <>
+      <h1>Products Page</h1>
+      <ul>
+        {PRODUCTS.map((prod) => (
+          <li key={prod.id}>
+            <Link to={`/products/${prod.id}`}>{prod.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+export default Products;
+```
 
 ---
 
