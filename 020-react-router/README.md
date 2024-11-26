@@ -13,6 +13,7 @@
 | [Navigate Programmatically](#navigate-programmatically)                                                    |
 | [Defining & Using Dynamic Routes](#defining--using-dynamic-routes)                                         |
 | [Adding Links for Dynamic Routes](#adding-links-for-dynamic-routes)                                        |
+| [Understanding Absolute and Related Paths](#understanding-absolute-and-related-paths)                      |
 
 &nbsp;
 
@@ -831,7 +832,7 @@ Here's a breakdown using the provided content:
 
 ```jsx
 // Product.js
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const PRODUCTS = [
   { id: "p1", title: "Product One" },
@@ -856,6 +857,155 @@ function Products() {
 
 export default Products;
 ```
+
+## Understanding Absolute and Related Paths
+
+In React Router, understanding absolute paths and relative paths is key to building a robust routing structure, especially for nested routes and navigation links.
+
+**Absolute Paths**
+
+- An absolute path starts with a forward slash (`/`). It specifies a route that's directly accessible from the root domain.
+- Do not depend on the current active route or any parent route.
+- Example: `/products`, `/about`, `/contact`
+
+**Relative Paths**
+
+- A relative path doesn't start with a forward slash. It's defined relative to the parent route's path.
+- Adjust based on the routing context, making them flexible and reusable.
+- Example: `products`, `about`, `contact`
+
+### Example
+
+Imagine an e-commerce application with the following structure:
+
+- `/` (Home page)
+- `/shop` (Shop page with product listings)
+- `/shop/cart` (Shopping Cart)
+- `/shop/products/:id` (Product Details page)
+
+```jsx
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Link,
+  Outlet,
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/", // Absolute path
+    element: <Home />,
+  },
+  {
+    path: "shop", // Relative path
+    element: <ShopLayout />,
+    children: [
+      { path: "cart", element: <Cart /> }, // Relative path
+      { path: "products/:id", element: <ProductDetails /> }, // Relative path
+    ],
+  },
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+// Home Page
+function Home() {
+  return (
+    <div>
+      <h1>Home Page</h1>
+      <nav>
+        {/* Absolute Path */}
+        <Link to="/shop">Go to Shop</Link>
+      </nav>
+    </div>
+  );
+}
+
+// Shop Layout with Nested Routes
+function ShopLayout() {
+  return (
+    <div>
+      <h1>Shop</h1>
+      <nav>
+        {/* Relative Paths */}
+        <Link to="cart">Go to Cart</Link>
+        <Link to="products/1">View Product 1</Link>
+      </nav>
+      <Outlet /> {/* Renders child routes */}
+    </div>
+  );
+}
+
+// Cart Page
+function Cart() {
+  return (
+    <div>
+      <h2>Shopping Cart</h2>
+      <Link to="/">Back to Home</Link> {/* Absolute Path */}
+    </div>
+  );
+}
+
+// Product Details Page
+function ProductDetails() {
+  return (
+    <div>
+      <h3>Product Details</h3>
+      <Link to=".." relative="path">
+        Back to Shop
+      </Link> {/* Relative Path */}
+      <Link to="/shop/cart">Go to Cart</Link> {/* Absolute Path */}
+    </div>
+  );
+}
+```
+
+**Explanation**
+
+**_Absolute Paths_**
+
+- **Definition**: Start with `/` and are resolved from the root of the domain.
+- **Use Case**: For links that are independent of the current route.
+- **Examples in the Code**:
+  1.  `<Link to="/shop">Go to Shop</Link>`: Always navigates to `/shop`, no matter where the user currently is.
+  2.  `<Link to="/">Back to Home</Link>`: Always navigates to `/`.
+
+**_Relative Paths_**
+
+- **Definition**: Do not start with / and are resolved relative to the current route or the parent route.
+- **Use Case**: For nested routes or context-sensitive links.
+- **Examples in the Code:**
+  1.  `<Link to="cart">Go to Cart</Link>`: Navigates to `/shop/cart` because it appends cart to the parent route (`/shop`).
+  2.  `<Link to="products/1">View Product 1</Link>`: Navigates to `/shop/products/1`.
+
+### Understanding the `relative` Prop
+
+In the Product Details Page:
+
+```jsx
+<Link to=".." relative="path">
+  Back
+</Link>
+```
+
+The `relative` prop in the `<Link>` component controls how relative paths are resolved. It takes two possible values:
+
+1. `relative="path"`:
+   - Resolves the path based on the _current URL path_.
+   - Example:
+     - If the current URL is `/shop/products/1`, `..` removes the last segment (`1`) and navigates to `/shop/products`.
+2. `relative="route"` (default):
+   - Resolves the path based on the _route hierarchy_.
+   - Example:
+     - Given the route hierarchy:
+       ```bash
+       /shop (parent)
+       ├── /cart
+       ├── /products/:id
+       ```
+     - `..` navigates to `/shop`, as it moves up one level in the route hierarchy.
 
 ---
 
