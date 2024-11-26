@@ -14,6 +14,7 @@
 | [Defining & Using Dynamic Routes](#defining--using-dynamic-routes)                                         |
 | [Adding Links for Dynamic Routes](#adding-links-for-dynamic-routes)                                        |
 | [Understanding Absolute and Related Paths](#understanding-absolute-and-related-paths)                      |
+| [Working with Index Routes](#working-with-index-routes)                                                    |
 
 &nbsp;
 
@@ -1006,6 +1007,77 @@ The `relative` prop in the `<Link>` component controls how relative paths are re
        ├── /products/:id
        ```
      - `..` navigates to `/shop`, as it moves up one level in the route hierarchy.
+
+## Working with Index Routes
+
+In React Router, an index route is used to define a default route that renders when a parent route is active but no specific child route is matched. Index routes provide an elegant solution for cases where the parent route itself doesn't render content but acts as a container for its child routes.
+
+**Key Points**
+
+- **Purpose**: An index route defines the default content to display for a parent route's path.
+- **Behavior**: It is rendered only when the parent route's path is matched, and no other child route is matched.
+- **Syntax**: Instead of using an empty `path`, you set the `index` property to `true`.
+
+### Example
+
+```jsx
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/shop",
+    element: <ShopLayout />,
+    children: [
+      { index: true, element: <Welcome /> }, // Index Route
+      { path: "products", element: <ProductList /> },
+      { path: "cart", element: <Cart /> },
+    ],
+  },
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+// Shop Layout (Parent Route)
+function ShopLayout() {
+  return (
+    <div>
+      <h1>Shop</h1>
+      <Outlet /> {/* Renders child routes */}
+    </div>
+  );
+}
+
+// Index Route Component
+function Welcome() {
+  return <p>Welcome to our Shop! Explore products or check your cart.</p>;
+}
+
+// Other Child Routes
+function ProductList() {
+  return <p>Here is a list of products.</p>;
+}
+
+function Cart() {
+  return <p>Your cart is empty.</p>;
+}
+```
+
+### Why Use Index Routes?
+
+**Alternative: Empty `path`**
+
+You could achieve similar functionality by using an empty `path`:
+
+```jsx
+{ path: "", element: <Welcome /> }
+```
+
+However:
+
+- Using `index: true` explicitly communicates that this route is the default.
+- It improves readability and clarity in larger route configurations.
 
 ---
 
