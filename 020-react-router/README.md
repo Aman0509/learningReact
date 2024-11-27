@@ -1152,6 +1152,8 @@ export default App;
 
 The data returned by the `loader()` can be accessed using the [`useLoaderData`](https://api.reactrouter.com/v7/functions/react_router.useLoaderData.html) hook in the corresponding component.
 
+**_Note: When you use a `loader` function, React Router automatically handles promises for you. If the `loader` function returns a promise (which is typical when fetching data), React Router waits for the promise to resolve before rendering the route component. The resolved data is then passed to the component via the `useLoaderData` hook._**
+
 ```jsx
 import { useLoaderData } from "react-router-dom";
 
