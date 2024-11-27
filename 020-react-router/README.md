@@ -16,6 +16,7 @@
 | [Understanding Absolute and Related Paths](#understanding-absolute-and-related-paths)                      |
 | [Working with Index Routes](#working-with-index-routes)                                                    |
 | [Data Fetching with a `loader()`](#data-fetching-with-a-loader)                                            |
+| [More `loader()` Data Usage](#more-loader-data-usage)                                                      |
 
 &nbsp;
 
@@ -1174,6 +1175,127 @@ function EventsPage() {
 
 export default EventsPage;
 ```
+
+## More `loader()` Data Usage
+
+The `useLoaderData` hook, paired with `loader()` in React Router, offers flexibility for fetching and using data. While the most common use case is accessing loader data in the route component (e.g., a page component), it can also be utilized in nested or lower-level components. However, there are some important considerations and limitations to keep in mind.
+
+### Key Points on Using `useLoaderData`
+
+1. **In Page Components**:
+
+   - This is the standard use case where the useLoaderData hook is used to access data fetched by the loader() associated with a route.
+   - Data is seamlessly available to the page component and any of its nested components.
+
+2. **In Nested Components**:
+
+   - The `useLoaderData` hook can also be used in child components of the route component. This is because these components are part of the same rendering hierarchy.
+   - Example: A child component like `EventsList` can directly call `useLoaderData` instead of relying on data passed as props.
+
+3. **Limitations**:
+
+   - _You cannot access loader data in components of higher-level routes_. Loader data is scoped to the route on which it is defined and any nested or child routes/components.
+   - Trying to call `useLoaderData` in a higher-level route or layout will result in `undefined`.
+
+### Example
+
+**Setup: Define the loader function and route**
+
+Define a `loader()` to fetch events data and attach it to a route.
+
+```jsx
+import { json } from "react-router-dom";
+
+export async function eventsLoader() {
+  const response = await fetch("https://dummy-api-url.com/events");
+
+  if (!response.ok) {
+    throw json(
+      { message: "Failed to fetch events" },
+      { status: response.status }
+    );
+  }
+
+  const data = await response.json();
+  return data.events;
+}
+```
+
+Configure the route to use the loader:
+
+```jsx
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "./pages/Root"
+import EventsPage from "./pages/Events";
+
+const router = createBrowserRouter([
+	{
+		path: "/root",
+		element: <Root/>
+		children: [
+			{
+				path: "/events",
+				element: <EventsPage />,
+				loader: eventsLoader,
+			},
+		]
+	}
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+export default App;
+```
+
+**Approach 1: Using useLoaderData in the Page Component**
+
+The typical way to use loader data is in the main page component:
+
+```jsx
+import { useLoaderData } from "react-router-dom";
+import EventsList from "../components/EventsList";
+
+function EventsPage() {
+  const events = useLoaderData(); // Access loader data here
+
+  return (
+    <div>
+      <h1>Events</h1>
+      <EventsList events={events} /> {/* Pass data as props */}
+    </div>
+  );
+}
+
+export default EventsPage;
+```
+
+**Approach 2: Using `useLoaderData` in a Nested Component**
+
+Instead of passing data as props, the nested `EventsList` component can directly call `useLoaderData`.
+
+```jsx
+import { useLoaderData } from "react-router-dom";
+import EventsList from "../components/EventsList";
+
+function EventsPage() {
+  const events = useLoaderData(); // Access loader data here
+
+  return (
+    <div>
+      <h1>Events</h1>
+      <EventsList events={events} /> {/* Pass data as props */}
+    </div>
+  );
+}
+
+export default EventsPage;
+```
+
+_This works because `EventsList` is rendered as part of the same route where the loader was defined._
+
+Now, if you try to access the events data in a root layout (a parent route of `/events`), it will return `undefined`. This is because loader data is scoped to the route where it is defined.
 
 ---
 
