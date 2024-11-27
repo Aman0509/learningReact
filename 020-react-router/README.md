@@ -15,6 +15,7 @@
 | [Adding Links for Dynamic Routes](#adding-links-for-dynamic-routes)                                        |
 | [Understanding Absolute and Related Paths](#understanding-absolute-and-related-paths)                      |
 | [Working with Index Routes](#working-with-index-routes)                                                    |
+| [Data Fetching with a `loader()`](#data-fetching-with-a-loader)                                            |
 
 &nbsp;
 
@@ -1078,6 +1079,99 @@ However:
 
 - Using `index: true` explicitly communicates that this route is the default.
 - It improves readability and clarity in larger route configurations.
+
+## Data Fetching with a loader()
+
+React Router v6 introduced the `loader()` function, which simplifies data fetching for components by integrating it into the routing process. This approach reduces boilerplate code and ensures the component has the necessary data before rendering.
+
+### Why use `loader()`?
+
+1. **Fetch Before Render**: Unlike using `useEffect`, where the component is rendered first and data is fetched afterward, `loader()` fetches the data before rendering the route.
+
+2. **Centralized Data Fetching**: Moves data-fetching logic from components to routes, making components cleaner and more reusable.
+
+3. **Automatic Data Passing**: The data fetched by the `loader()` is automatically passed to the route component or its children.
+
+### How `loader()` Works?
+
+- A `loader()` is a function added to the loader property of a route in your Routes definition.
+- This function:
+  - Is executed before the route is rendered.
+  - Can use asynchronous operations (like fetching data from an API).
+  - Returns the data, which React Router then makes available to the component.
+
+### Example: Using `loader()` in React Router
+
+**Step 1: Create the loader function**
+
+Move the data-fetching logic to a separate loader function. This function fetches data from an API and returns the result.
+
+```jsx
+import { json } from "react-router-dom";
+
+export async function eventsLoader() {
+  const response = await fetch("https://dummy-api-url.com/events");
+
+  // Handle errors
+  if (!response.ok) {
+    throw json(
+      { message: "Failed to fetch events" },
+      { status: response.status }
+    );
+  }
+
+  const data = await response.json();
+  return data.events; // Return the events array
+}
+```
+
+**Step 2: Add the loader to the route definition**
+
+Use the loader function in your route configuration.
+
+```jsx
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import EventsPage from "./pages/Events";
+
+const router = createBrowserRouter([
+  {
+    path: "/events",
+    element: <EventsPage />,
+    loader: eventsLoader, // Attach the loader function
+  },
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+export default App;
+```
+
+**Step 3: Access the data in the component**
+
+The data returned by the `loader()` can be accessed using the [`useLoaderData`](https://api.reactrouter.com/v7/functions/react_router.useLoaderData.html) hook in the corresponding component.
+
+```jsx
+import { useLoaderData } from "react-router-dom";
+
+function EventsPage() {
+  const events = useLoaderData(); // Fetches the data returned by the loader
+
+  return (
+    <div>
+      <h1>Events</h1>
+      <ul>
+        {events.map((event) => (
+          <li key={event.id}>{event.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default EventsPage;
+```
 
 ---
 
