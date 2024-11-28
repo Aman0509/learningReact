@@ -21,6 +21,7 @@
 | [When are `loader()` Functions Executed?](#when-are-loader-functions-executed)                             |
 | [Reflecting the Current Navigation State in the UI](#reflecting-the-current-navigation-state-in-the-ui)    |
 | [Returning Responses in a `loader()` Function](#returning-responses-in-a-loader-function)                  |
+| [Which Kind of Code Goes into `loader()`?](#which-kind-of-code-goes-into-loader)                           |
 
 &nbsp;
 
@@ -1544,6 +1545,13 @@ export default EventsPage;
 | Simplicity     | Shorter code for simple use cases.       | Better for handling complex scenarios like errors. |
 | Error Handling | Requires manual checks and custom logic. | Use status codes and response metadata.            |
 | Flexibility    | Limited customization options.           | Highly customizable with headers and statuses.     |
+
+## Which Kind of Code Goes into `loader()`?
+
+- The `loader()` function executes in the browser, not on the server, even though it may appear like backend code.
+- You can use browser-specific features like local storage, cookies, and other JavaScript APIs within the `loader()`.
+- However, React Hooks (e.g., `useState`) cannot be used in the `loader()` since it is not a React component.
+- Beyond the lack of React Hooks, any browser-compatible JavaScript code can be executed in the `loader()`.
 
 ---
 
