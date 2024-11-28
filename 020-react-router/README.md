@@ -19,6 +19,7 @@
 | [More `loader()` Data Usage](#more-loader-data-usage)                                                      |
 | [Where Should `loader()` Code be Stored?](#where-should-loader-code-be-stored)                             |
 | [When are `loader()` Functions Executed?](#when-are-loader-functions-executed)                             |
+| [Reflecting the Current Navigation State in the UI](#reflecting-the-current-navigation-state-in-the-ui)    |
 
 &nbsp;
 
@@ -1394,6 +1395,68 @@ The `loader()` function in React Router is executed before navigating to a page.
 - The user experiences a delay during navigation where "nothing happens" because the page waits for the data.
 - After 1.5 seconds (or when the loader completes), the new page appears with the data.
 - This can be addressed by showing feedback (e.g., a loading spinner), which React Router provides tools for (e.g., `useNavigation()` or `Suspense`).
+
+## Reflecting the Current Navigation State in the UI
+
+In React Router, you can reflect the current navigation state in the UI to provide feedback to the user during route transitions. This is particularly useful for improving user experience when loading data or submitting forms. React Router's [`useNavigation()`](https://api.reactrouter.com/v7/functions/react_router.useNavigation.html) hook allows you to track the navigation state and conditionally display elements like loading indicators.
+
+- `useNavigation()` Hook:
+
+  - Provided by React Router to track the navigation state.
+  - Returns a `navigation` object with a `state` property.
+
+- `state` Property:
+
+  - Can have the following values:
+    - `idle`: No active navigation or data loading.
+    - `loading`: Data is being fetched during a route transition.
+    - `submitting`: Data is being submitted (e.g., a form submission).
+
+- Add a loading indicator in a component that remains visible during the transition (e.g., a root layout or a header).
+- The loading indicator won't appear on the new page being navigated to.
+- Instead, it appears on the current visible page or component during the transition.
+
+### Example: Reflecting Navigation State
+
+**Root Layout Component**
+
+```jsx
+import React from "react";
+import { Outlet, useNavigation } from "react-router-dom";
+
+const RootLayout = () => {
+  const navigation = useNavigation(); // Get the navigation object
+
+  return (
+    <div>
+      <header>
+        <h1>My App</h1>
+        {/* Show a loading message if navigation is in 'loading' state */}
+        {navigation.state === "loading" && (
+          <p className="loading">Loading...</p>
+        )}
+      </header>
+      <main>
+        {/* Render child routes */}
+        <Outlet />
+      </main>
+    </div>
+  );
+};
+
+export default RootLayout;
+```
+
+**Styling the Loading Indicator**
+
+```jsx
+/* Example CSS for loading text */
+.loading {
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+}
+```
 
 ---
 
