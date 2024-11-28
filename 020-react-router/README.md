@@ -18,6 +18,7 @@
 | [Data Fetching with a `loader()`](#data-fetching-with-a-loader)                                            |
 | [More `loader()` Data Usage](#more-loader-data-usage)                                                      |
 | [Where Should `loader()` Code be Stored?](#where-should-loader-code-be-stored)                             |
+| [When are `loader()` Functions Executed?](#when-are-loader-functions-executed)                             |
 
 &nbsp;
 
@@ -1361,6 +1362,38 @@ export default App;
 - Data-fetching logic is placed close to the component it serves, reducing the cognitive load when maintaining or debugging the app.
 - When you add more routes and loaders, you won't clutter your central routing file (`app.js`). Instead, each route's loader is managed in its corresponding file.
 - As your app grows, this structure prevents your routing file from becoming overloaded with logic.
+
+## When are `loader()` Functions Executed?
+
+The `loader()` function in React Router is executed before navigating to a page. Specifically, it is triggered as soon as the route transition starts, even before the page component tied to that route is rendered. This ensures that the required data is fetched and ready for the component by the time it is rendered.
+
+- The loader function is executed during the route transition but before the component tied to the route is rendered.
+- This means the data is guaranteed to be available when the component is displayed, preventing the need to handle loading states directly in the component.
+- React Router waits for the loader function to complete its data-fetching process before rendering the page.
+- For example, if the loader introduces a delay (e.g., due to a slow API), the user will experience a pause before the new page appears.
+
+### Demonstration with Delayed Backend Response
+
+1. **Adding a Delay in the Backend Response**: A timeout is added in the backend to simulate a delayed response (e.g., 1.5 seconds).
+
+   ```jsx
+   const events = [{ id: 1, name: "React Conference" }];
+   setTimeout(() => {
+     res.json(events); // Response sent after 1.5 seconds
+   }, 1500);
+   ```
+
+2. **Frontend Behavior**
+
+- When the user clicks on a link to navigate to the `Events` page, the loader function is triggered.
+- React Router waits for the loader to fetch the data. During this waiting period, the new page is not rendered yet.
+- Once the loader completes, the `Events` page is displayed with the fetched data.
+
+3. **User Observation**
+
+- The user experiences a delay during navigation where "nothing happens" because the page waits for the data.
+- After 1.5 seconds (or when the loader completes), the new page appears with the data.
+- This can be addressed by showing feedback (e.g., a loading spinner), which React Router provides tools for (e.g., `useNavigation()` or `Suspense`).
 
 ---
 
