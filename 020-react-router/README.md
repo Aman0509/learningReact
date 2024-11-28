@@ -17,6 +17,7 @@
 | [Working with Index Routes](#working-with-index-routes)                                                    |
 | [Data Fetching with a `loader()`](#data-fetching-with-a-loader)                                            |
 | [More `loader()` Data Usage](#more-loader-data-usage)                                                      |
+| [Where Should `loader()` Code be Stored?](#where-should-loader-code-be-stored)                             |
 
 &nbsp;
 
@@ -1296,6 +1297,70 @@ export default EventsPage;
 _This works because `EventsList` is rendered as part of the same route where the loader was defined._
 
 Now, if you try to access the events data in a root layout (a parent route of `/events`), it will return `undefined`. This is because loader data is scoped to the route where it is defined.
+
+## Where Should `loader()` Code be Stored?
+
+The `loader()` function should ideally be stored in the same file as the page/component that uses it. This keeps the data-fetching logic close to the component where it’s applied, making it easier to understand, maintain, and debug.
+
+Instead of placing all loaders in a centralized file like `app.js` (which can become bloated and hard to manage), you export the `loader()` function from the relevant component file and import it in `app.js` or wherever routes are defined.
+
+### Example
+
+1. **Component File (e.g., `EventsPage.js` in the `pages` folder):**
+
+```jsx
+// Import necessary dependencies
+import React from "react";
+
+// Define and export the loader function
+export async function eventsLoader() {
+  const response = await fetch("https://api.example.com/events");
+  if (!response.ok) {
+    throw new Error("Failed to fetch events");
+  }
+  const data = await response.json();
+  return data; // Return the data for use in the component
+}
+
+// Page Component
+const EventsPage = () => {
+  return (
+    <div>
+      <h1>Events Page</h1>
+      {/* The loader's fetched data will be available to this component */}
+    </div>
+  );
+};
+
+export default EventsPage;
+```
+
+2. **Main Routing File (e.g., `App.js`):**
+
+```jsx
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import EventsPage, { eventsLoader } from "./pages/EventsPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/events",
+    element: <EventsPage />,
+    loader: eventsLoader, // Import and use the loader function
+  },
+]);
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+export default App;
+```
+
+- Each component or page manages its own loader logic, keeping the app modular and clean.
+- Data-fetching logic is placed close to the component it serves, reducing the cognitive load when maintaining or debugging the app.
+- When you add more routes and loaders, you won't clutter your central routing file (`app.js`). Instead, each route's loader is managed in its corresponding file.
+- As your app grows, this structure prevents your routing file from becoming overloaded with logic.
 
 ---
 
